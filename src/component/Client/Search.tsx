@@ -1,19 +1,41 @@
 import { Button, Col, DatePicker, Form, Row, Select } from "antd";
+import { Key } from "antd/lib/table/interface";
 import React from "react";
-import { useAppSelector } from "../../store/hooks";
+import { toast } from "react-toastify";
+import { IFormSearchClient } from "../../model/Client.model";
+import { deleteClient, getClient } from "../../pages/Client/client.reducer";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
 import { filterSelectOption, STATUS } from "../../utils/filterOptions";
 
 interface IFormProps {
   setValueSearch: React.Dispatch<React.SetStateAction<any>>;
+  selectedRowKeys: Key[];
+  valueSearch: IFormSearchClient;
+  setSelectedRowKeys: React.Dispatch<React.SetStateAction<Key[]>>;
 }
-const SearchClient = ({ setValueSearch }: IFormProps) => {
+const SearchClient = ({
+  setValueSearch,
+  selectedRowKeys,
+  valueSearch,
+  setSelectedRowKeys,
+}: IFormProps) => {
   const [form] = Form.useForm();
+  const dispatch = useAppDispatch();
   const { dataUsername, dataEmail, dataPhone } = useAppSelector(
     (state) => state.clientReducer
   );
   const handleSearch = (data: any) => {
     setValueSearch(data);
+  };
+  const handleDelete = () => {
+    dispatch(deleteClient(selectedRowKeys)).then((res) => {
+      if (res.meta.requestStatus) {
+        toast.success("Xóa thành công");
+        setSelectedRowKeys([]);
+        dispatch(getClient(valueSearch));
+      }
+    });
   };
   return (
     <Form form={form} layout="vertical" onFinish={handleSearch}>
@@ -95,7 +117,9 @@ const SearchClient = ({ setValueSearch }: IFormProps) => {
               <Button htmlType="submit" className="search">
                 Tìm kiếm
               </Button>
-              <Button className="delete">Xóa</Button>
+              <Button className="delete" onClick={handleDelete}>
+                Xóa
+              </Button>
             </div>
           </CommonFormItem>
         </Col>

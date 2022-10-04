@@ -37,7 +37,12 @@ const Client = () => {
 
   return (
     <div>
-      <SearchClient setValueSearch={setValueSearch} />
+      <SearchClient
+        setValueSearch={setValueSearch}
+        selectedRowKeys={selectedRowKeys}
+        valueSearch={{ ...valueSearch, page, size }}
+        setSelectedRowKeys={setSelectedRowKeys}
+      />
       <TableClient
         page={page}
         size={size}
