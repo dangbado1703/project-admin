@@ -1,4 +1,4 @@
-import { Button, Col, DatePicker, Form, Row, Select } from "antd";
+import { Button, Col, DatePicker, Form, Popconfirm, Row, Select } from "antd";
 import { Key } from "antd/lib/table/interface";
 import React from "react";
 import { toast } from "react-toastify";
@@ -29,13 +29,15 @@ const SearchClient = ({
     setValueSearch(data);
   };
   const handleDelete = () => {
-    dispatch(deleteClient(selectedRowKeys)).then((res) => {
-      if (res.meta.requestStatus) {
-        toast.success("Xóa thành công");
-        setSelectedRowKeys([]);
-        dispatch(getClient(valueSearch));
-      }
-    });
+    if (selectedRowKeys.length) {
+      dispatch(deleteClient(selectedRowKeys)).then((res) => {
+        if (res.meta.requestStatus) {
+          toast.success("Xóa thành công");
+          setSelectedRowKeys([]);
+          dispatch(getClient(valueSearch));
+        }
+      });
+    }
   };
   return (
     <Form form={form} layout="vertical" onFinish={handleSearch}>
@@ -117,9 +119,34 @@ const SearchClient = ({
               <Button htmlType="submit" className="search">
                 Tìm kiếm
               </Button>
-              <Button className="delete" onClick={handleDelete}>
-                Xóa
-              </Button>
+              <Popconfirm
+                title={
+                  selectedRowKeys.length
+                    ? "Bạn có chắc muốn xóa những người dùng này không?"
+                    : "Vui lòng chọn người dùng"
+                }
+                onConfirm={handleDelete}
+                cancelText="Hủy"
+                okText="Đồng ý"
+                okButtonProps={{
+                  className: "search",
+                  style: {
+                    height: "28px",
+                    fontSize: "14px",
+                    borderRadius: 0,
+                  },
+                }}
+                cancelButtonProps={{
+                  className: "delete",
+                  style: {
+                    height: "28px",
+                    fontSize: "14px",
+                    borderRadius: 0,
+                  },
+                }}
+              >
+                <Button className="delete">Xóa</Button>
+              </Popconfirm>
             </div>
           </CommonFormItem>
         </Col>

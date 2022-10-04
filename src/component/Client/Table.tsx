@@ -94,8 +94,29 @@ const TableClient = ({
             <Popconfirm
               title="Bạn có chắc muốn xóa người dùng này không?"
               onConfirm={() => handleDelete(record.userId)}
+              onCancel={() => setSelectedRowKeys([])}
+              cancelText="Hủy"
+              okText="Đồng ý"
+              okButtonProps={{
+                className: "search",
+                style: {
+                  height: "28px",
+                  fontSize: "14px",
+                  borderRadius: 0,
+                },
+              }}
+              cancelButtonProps={{
+                className: "delete",
+                style: {
+                  height: "28px",
+                  fontSize: "14px",
+                  borderRadius: 0,
+                },
+              }}
             >
-              <DeleteOutlined />
+              <DeleteOutlined
+                onClick={() => setSelectedRowKeys([record.userId])}
+              />
             </Popconfirm>
           </Tooltip>
           <Tooltip title="Xem chi tiết">
