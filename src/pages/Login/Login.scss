@@ -1,0 +1,14 @@
+.login-form {
+  background-image: url("../../assets/tree-736885__340.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  .ant-form-vertical .ant-form-item-label > label {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+  }
+  .ant-checkbox + span {
+    font-size: 16px;
+    color: white;
+  }
+}
