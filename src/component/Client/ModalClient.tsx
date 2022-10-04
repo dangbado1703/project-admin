@@ -1,5 +1,4 @@
 import { Button, Col, DatePicker, Form, Input, Modal, Row } from "antd";
-import moment from "moment";
 import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import { IFormColumns, IFormSearchClient } from "../../model/Client.model";

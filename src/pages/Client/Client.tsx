@@ -31,7 +31,7 @@ const Client = () => {
     Promise.all([
       dispatch(getAllUsername()),
       dispatch(getAllPhone()),
-      // dispatch(getAllEmail()),
+      dispatch(getAllEmail()),
     ]);
   }, [dispatch]);
 
