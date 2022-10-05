@@ -17,7 +17,7 @@ const Client = () => {
     fullName: "",
     email: "",
     phone: "",
-    birthday: "",
+    // birthday: null,
     status: null,
   });
   const [page, setPage] = useState(1);

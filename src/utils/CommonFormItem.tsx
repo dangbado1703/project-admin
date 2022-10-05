@@ -27,7 +27,6 @@ const CommonFormItem = ({
   isDate = false,
   ...rest
 }: IFormProps) => {
-  console.log("max", max);
   return (
     <Form.Item
       {...rest}

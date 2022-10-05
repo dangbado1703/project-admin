@@ -1,8 +1,9 @@
 import { Button, Checkbox, Col, Form, Input, Row } from "antd";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { path } from "../../router/path";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { LoginAPI } from "./login.reducer";
 import "./Login.scss";
 
@@ -14,6 +15,7 @@ const Login = () => {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const isLoading = useAppSelector((state) => state.loginReducer.isLoading);
   const handleSubmit = (data: any) => {
     if (data.save) {
       // check người dùng có click vào save tài khoản hoặc mật khẩu không? nếu có thì lưu vào localStorage để lần sau khi vào lại trang sẽ tự động fill dữ liệu đã lưu vào trong input
@@ -30,6 +32,9 @@ const Login = () => {
       // check sau khi call thành công sẽ chuyển sang trang home
       if (res.meta.requestStatus === "fulfilled") {
         navigate(path.home);
+      }
+      if (res.meta.requestStatus === "rejected") {
+        toast.error("Sai tài khoản hoặc mật khẩu");
       }
     });
   };
@@ -101,6 +106,7 @@ const Login = () => {
             <Col span={24}>
               <Form.Item>
                 <Button
+                  loading={isLoading}
                   type="primary"
                   htmlType="submit"
                   block
