@@ -17,11 +17,9 @@ instance.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error: AxiosError) => {
     const status = error.status || (error.response ? error.response.status : 0);
-    if (status === 401) {
-      toast.error("Hết phiên đăng nhập", { toastId: 401 });
-      // localStorage.clear();
-      // window.location.reload();
-    }
+    // if (status === 401) {
+    //   toast.error("Hết phiên đăng nhập", { toastId: 401 });
+    // }
     if (status === 400) {
       const errMessage: any = error.response?.data;
       toast.error(errMessage.message[0]);

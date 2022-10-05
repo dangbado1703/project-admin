@@ -46,6 +46,7 @@ const SearchClient = ({
           <CommonFormItem name="username" label="Username" isRequired={false}>
             <Select
               allowClear
+              className="custom-selected"
               showSearch
               options={dataUsername}
               filterOption={filterSelectOption}
@@ -56,6 +57,7 @@ const SearchClient = ({
         <Col span={8}>
           <CommonFormItem name="fullName" label="Full Name" isRequired={false}>
             <Select
+              className="custom-selected"
               allowClear
               showSearch
               options={[]}
@@ -67,6 +69,7 @@ const SearchClient = ({
         <Col span={8}>
           <CommonFormItem name="email" label="Email" isRequired={false}>
             <Select
+              className="custom-selected"
               allowClear
               showSearch
               options={dataEmail}
@@ -78,6 +81,7 @@ const SearchClient = ({
         <Col span={8}>
           <CommonFormItem name="phone" label="Phone" isRequired={false}>
             <Select
+              className="custom-selected"
               allowClear
               showSearch
               options={dataPhone}
@@ -87,15 +91,16 @@ const SearchClient = ({
           </CommonFormItem>
         </Col>
         <Col span={8}>
-          <CommonFormItem name="status" label="Status" isRequired={false}>
+          <Form.Item name="status" label="Status">
             <Select
+              className="custom-selected"
               allowClear
               showSearch
               options={STATUS}
               filterOption={filterSelectOption}
               placeholder="Status"
             />
-          </CommonFormItem>
+          </Form.Item>
         </Col>
         <Col span={8}>
           <Form.Item name="birthday" label="Sinh nhật">
