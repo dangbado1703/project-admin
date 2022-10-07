@@ -5,4 +5,7 @@ export const path = {
   order: "/order",
   staff: "/staff",
   client: "/client",
+  product: "/product",
+  productDetail: "/product/detail/:id",
+  updateProduct: "product/update/:id",
 };

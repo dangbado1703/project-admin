@@ -1,0 +1,2 @@
+export const DATE_FORMAT_TYPE_DDMMYYYY = "DD/MM/YYYY";
+export const DATE_FORMAT_TYPE_YYYYMMDD = "YYYY-MM-DD";

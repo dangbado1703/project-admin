@@ -3,6 +3,7 @@ import {
   DollarCircleOutlined,
   UsergroupAddOutlined,
   UserOutlined,
+  ShoppingOutlined,
 } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import React, { useState, useEffect } from "react";
@@ -23,6 +24,7 @@ const items: MenuItem[] = [
   getItem("Đơn hàng", path.order, <DollarCircleOutlined />),
   getItem("Nhân viên", path.staff, <UsergroupAddOutlined />),
   getItem("Khách hàng", path.client, <UserOutlined />),
+  getItem("Sản phẩm", path.product, <ShoppingOutlined />),
 ];
 const MenuItems = () => {
   const [currentKey, setCurrentKey] = useState(path.home);

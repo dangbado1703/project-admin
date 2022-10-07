@@ -6,6 +6,7 @@ import { IFormSearchClient } from "../../model/Client.model";
 import { deleteClient, getClient } from "../../pages/Client/client.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
+import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import { filterSelectOption, STATUS } from "../../utils/filterOptions";
 
 interface IFormProps {
@@ -105,7 +106,7 @@ const SearchClient = ({
         <Col span={8}>
           <Form.Item name="birthday" label="Sinh nhật">
             <DatePicker
-              format="DD/MM/YYYY"
+              format={DATE_FORMAT_TYPE_DDMMYYYY}
               allowClear
               className="date-picker"
             />
