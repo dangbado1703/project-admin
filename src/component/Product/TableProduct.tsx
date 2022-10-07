@@ -2,16 +2,13 @@ import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Popconfirm, Tooltip } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { Key, TableRowSelection } from "antd/lib/table/interface";
-import React, { useState } from "react";
-import { IFormColumns, IFormSearchClient } from "../../model/Client.model";
-import {
-  changeAction,
-  deleteClient,
-  getClient,
-} from "../../pages/Client/client.reducer";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { IFormColumnsProduct } from "../../model/Product.model";
+import { changeAction } from "../../pages/Product/product.reducer";
+import { path } from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonTable from "../../utils/CommonTable";
-import ModalClient from "./ModalClient";
 
 interface IFormProps {
   page: number;
@@ -20,9 +17,10 @@ interface IFormProps {
   setSize: React.Dispatch<React.SetStateAction<number>>;
   selectedRowKeys: Key[];
   setSelectedRowKeys: React.Dispatch<React.SetStateAction<Key[]>>;
-  valueSearch: IFormSearchClient;
+  valueSearch: any;
 }
-const TableClient = ({
+
+const TableProduct = ({
   page,
   size,
   setPage,
@@ -31,37 +29,47 @@ const TableClient = ({
   setSelectedRowKeys,
   valueSearch,
 }: IFormProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [valueDetail, setValueDetail] = useState<IFormColumns>();
-  const { dataClient, totalElements } = useAppSelector(
-    (state) => state.clientReducer
-  );
-  console.log("totalElements", totalElements);
   const dispatch = useAppDispatch();
-  const columns: ColumnsType<IFormColumns> = [
+  const navigate = useNavigate();
+  const { dataProduct, totalElements } = useAppSelector(
+    (state) => state.productReducer
+  );
+  const columns: ColumnsType<IFormColumnsProduct> = [
     {
-      title: "Username",
-      dataIndex: "username",
+      title: "Name",
+      dataIndex: "name",
     },
     {
-      title: "FullName",
-      dataIndex: "fullName",
+      title: "Code",
+      dataIndex: "code",
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "Description",
+      dataIndex: "description",
     },
     {
-      title: "Phone",
-      dataIndex: "phone",
+      title: "Price",
+      dataIndex: "price",
     },
     {
-      title: "Sinh nhật",
-      dataIndex: "birthday",
+      title: "Stock Quantity",
+      dataIndex: "stockQty",
     },
     {
-      title: "Status",
-      dataIndex: "status",
+      title: "Make name",
+      dataIndex: "makeName",
+    },
+    {
+      title: "ProductType",
+      dataIndex: "productType",
+    },
+    {
+      title: "Expired Date",
+      dataIndex: "expiredDate",
+    },
+    {
+      title: "Created By",
+      dataIndex: "createdBy",
     },
     {
       title: "Hành động",
@@ -72,8 +80,10 @@ const TableClient = ({
           <Tooltip title="Xóa">
             <Popconfirm
               title="Bạn có chắc muốn xóa người dùng này không?"
-              onConfirm={() => handleDelete(record.userId)}
-              onCancel={() => setSelectedRowKeys([])}
+              onConfirm={() => handleDelete(record.productId)}
+              onCancel={() => {
+                setSelectedRowKeys([]);
+              }}
               cancelText="Hủy"
               okText="Đồng ý"
               okButtonProps={{
@@ -94,7 +104,7 @@ const TableClient = ({
               }}
             >
               <DeleteOutlined
-                onClick={() => setSelectedRowKeys([record.userId])}
+                onClick={() => setSelectedRowKeys([record.productId])}
               />
             </Popconfirm>
           </Tooltip>
@@ -111,6 +121,17 @@ const TableClient = ({
       ),
     },
   ];
+  const handleOpenView = (record: IFormColumnsProduct) => {
+    navigate(path.product + `/detail/${record.productId}`);
+    dispatch(changeAction("view"));
+  };
+  const handleOpenUpdate = (record: IFormColumnsProduct) => {
+    navigate(path.product + `/update/${record.productId}`);
+    dispatch(changeAction("update"));
+  };
+  const handleDelete = (id: number) => {
+    console.log("id", id);
+  };
   const rowSelection: TableRowSelection<any> = {
     selectedRowKeys,
     preserveSelectedRowKeys: true,
@@ -118,44 +139,21 @@ const TableClient = ({
       setSelectedRowKeys(selectedRowKeys);
     },
   };
-  const handleDelete = (id: number) => {
-    dispatch(deleteClient([id])).then((res) => {
-      if (res.meta.requestStatus === "fulfilled") {
-        dispatch(getClient(valueSearch));
-      }
-    });
-  };
-  const handleOpenView = (record: any) => {
-    setValueDetail(record);
-    setIsOpen(true);
-    dispatch(changeAction("view"));
-  };
-  const handleOpenUpdate = (record: any) => {
-    setValueDetail(record);
-    setIsOpen(true);
-    dispatch(changeAction("update"));
-  };
   return (
-    <>
+    <div>
       <CommonTable
-        rowSelection={rowSelection}
-        page={page}
-        dataSource={dataClient}
         columns={columns}
+        dataSource={dataProduct}
+        page={page}
         pageSize={size}
+        rowSelection={rowSelection}
+        total={totalElements}
         setPage={setPage}
         setSize={setSize}
-        total={totalElements}
-        rowKey="userId"
+        rowKey="productId"
       />
-      <ModalClient
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        valueDetail={valueDetail}
-        valueSearch={valueSearch}
-      />
-    </>
+    </div>
   );
 };
 
-export default TableClient;
+export default TableProduct;

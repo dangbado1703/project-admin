@@ -35,7 +35,6 @@ const ModalClient = ({
     }
   };
   const handleSubmit = (data: any) => {
-    console.log("data", data);
     dispatch(
       updateClient({
         ...data,
@@ -54,13 +53,24 @@ const ModalClient = ({
       form.setFieldsValue({
         ...valueDetail,
         birthday: valueDetail?.birthday
-          ? moment(valueDetail.birthday, "DD/MM/YYYY")
+          ? moment(valueDetail.birthday, "YYYY-MM-DD")
           : null,
       });
     return () => {
       form.resetFields();
     };
   }, [valueDetail, form]);
+  const validateDay = (_: any, value: any) => {
+    const toDay = new Date().getTime();
+    const getTime = new Date(value).getTime();
+    if (!value) {
+      return Promise.resolve();
+    }
+    if (getTime > toDay) {
+      return Promise.reject("Ngày sinh nhật không thể lớn hơn ngày hiện tại");
+    }
+    return Promise.resolve();
+  };
   return (
     <Modal
       open={isOpen}
@@ -156,7 +166,12 @@ const ModalClient = ({
             <Form.Item
               name="birthday"
               label="Sinh nhật"
-              rules={[{ required: true }]}
+              rules={[
+                { required: true },
+                {
+                  validator: validateDay,
+                },
+              ]}
             >
               <DatePicker
                 format="DD/MM/YYYY"

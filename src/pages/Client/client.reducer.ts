@@ -12,6 +12,7 @@ const initState = {
   dataUsername: [],
   dataEmail: [],
   dataPhone: [],
+  totalElements: 0,
   action: "",
 };
 
@@ -93,6 +94,7 @@ const clientSlice = createSlice({
     builder
       .addCase(getClient.fulfilled, (state, action) => {
         state.dataClient = action.payload.data.data.content;
+        state.totalElements = action.payload.data.data.totalElements;
       })
       .addCase(getAllUsername.fulfilled, (state, action) => {
         state.dataUsername = action.payload;
