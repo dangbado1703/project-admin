@@ -25,14 +25,16 @@ const Staff = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
   const dispatch = useAppDispatch();
   useEffect(() => {
+    dispatch(getUser({ ...valueSearch, page, size }));
+  }, [dispatch, valueSearch, page, size]);
+  useEffect(() => {
     Promise.any([
-      dispatch(getUser({ ...valueSearch, page, size })),
       dispatch(getUsername()),
       dispatch(getFullName()),
       dispatch(getPhone()),
       dispatch(getEmail()),
     ]);
-  }, [dispatch, valueSearch, page, size]);
+  }, [dispatch]);
   return (
     <div>
       <SearchStaff

@@ -10,3 +10,10 @@ export interface IFormProps<T> {
   valueSearch: T;
   setValueSearch: React.Dispatch<React.SetStateAction<T>>;
 }
+
+export interface IFormPropsModal<T, U> {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  valueDetail: T | undefined;
+  valueSearch: U;
+}

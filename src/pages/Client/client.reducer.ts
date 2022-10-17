@@ -19,7 +19,7 @@ const initState = {
 export const getClient = createAsyncThunk(
   "client/getClient",
   async (data: IFormSearchClient) => {
-    const result = await instance.post("/api/v1/user/search", data);
+    const result = await instance.post("/api/v1/customer/search", data);
     return result;
   }
 );
@@ -27,7 +27,7 @@ export const getClient = createAsyncThunk(
 export const deleteClient = createAsyncThunk(
   "client/deleteClient",
   async (id: Key[]) => {
-    const result = await instance.post("/api/v1/user/delete", id);
+    const result = await instance.post("/api/v1/customer/delete", id);
     return result;
   }
 );
@@ -36,7 +36,7 @@ export const getAllUsername = createAsyncThunk(
   "client/getAllUsername",
   async () => {
     const result = await instance.get(
-      "/api/v1/user/suggestion?suggestionEnum=USER_NAME&keySearch="
+      "/api/v1/customer/suggestion?enums=CUS_NAME&keySearch="
     );
     const newResult = result.data.data.map((item: any, index: number) => {
       return {
@@ -50,7 +50,7 @@ export const getAllUsername = createAsyncThunk(
 
 export const getAllEmail = createAsyncThunk("client/getAllEmail", async () => {
   const result = await instance.get(
-    "/api/v1/user/suggestion?suggestionEnum=USER_EMAIL&keySearch="
+    "/api/v1/customer/suggestion?enums=CUS_EMAIL&keySearch="
   );
   const newResult = result.data.data.map((item: any, index: number) => {
     return {
@@ -63,7 +63,7 @@ export const getAllEmail = createAsyncThunk("client/getAllEmail", async () => {
 
 export const getAllPhone = createAsyncThunk("client/getAllPhone", async () => {
   const result = await instance.get(
-    "/api/v1/user/suggestion?suggestionEnum=USER_PHONE&keySearch="
+    "/api/v1/customer/suggestion?enums=CUS_PHONE&keySearch="
   );
   const newResult = result.data.data.map((item: any, index: number) => {
     return {
@@ -77,7 +77,7 @@ export const getAllPhone = createAsyncThunk("client/getAllPhone", async () => {
 export const updateClient = createAsyncThunk(
   "client/updateClient",
   async (data: IFormUpdate) => {
-    const result = await instance.put("/api/v1/user/update", data);
+    const result = await instance.put("/api/v1/customer/update", data);
     return result;
   }
 );
