@@ -1,7 +1,6 @@
 import { Button, Checkbox, Col, Form, Input, Row } from "antd";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { path } from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { LoginAPI } from "./login.reducer";
@@ -32,9 +31,6 @@ const Login = () => {
       // check sau khi call thành công sẽ chuyển sang trang home
       if (res.meta.requestStatus === "fulfilled") {
         navigate(path.home);
-      }
-      if (res.meta.requestStatus === "rejected") {
-        toast.error("Sai tài khoản hoặc mật khẩu");
       }
     });
   };

@@ -22,7 +22,7 @@ instance.interceptors.response.use(
     // }
     if (status === 400) {
       const errMessage: any = error.response?.data;
-      toast.error(errMessage.message[0]);
+      toast.error(errMessage.messages[0], { toastId: 400 });
     }
     return Promise.reject(error);
   }

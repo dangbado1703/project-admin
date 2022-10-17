@@ -1,43 +1,27 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Popconfirm, Tooltip } from "antd";
 import { ColumnsType } from "antd/lib/table";
-import { Key, TableRowSelection } from "antd/lib/table/interface";
-import React, { useState } from "react";
-import { IFormColumns, IFormSearchClient } from "../../model/Client.model";
-import {
-  changeAction,
-  deleteClient,
-  getClient,
-} from "../../pages/Client/client.reducer";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { TableRowSelection } from "antd/lib/table/interface";
+import React from "react";
+import { IFormColumnsStaff, IFormSearchStaff } from "../../model/Staff.model";
+import { IFormProps } from "../../model/utils";
+import { useAppSelector } from "../../store/hooks";
 import CommonTable from "../../utils/CommonTable";
-import ModalClient from "./ModalClient";
 
-interface IFormProps {
-  page: number;
-  size: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-  setSize: React.Dispatch<React.SetStateAction<number>>;
-  selectedRowKeys: Key[];
-  setSelectedRowKeys: React.Dispatch<React.SetStateAction<Key[]>>;
-  valueSearch: IFormSearchClient;
-}
-const TableClient = ({
+const TableStaff = ({
   page,
   size,
   setPage,
   setSize,
+  valueSearch,
   selectedRowKeys,
   setSelectedRowKeys,
-  valueSearch,
-}: IFormProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [valueDetail, setValueDetail] = useState<IFormColumns>();
-  const { dataClient, totalElements } = useAppSelector(
-    (state) => state.clientReducer
-  );
-  const dispatch = useAppDispatch();
-  const columns: ColumnsType<IFormColumns> = [
+}: Omit<IFormProps<IFormSearchStaff>, "setValueSearch">) => {
+  const dataUser = useAppSelector((state) => state.staffReducer.dataStaff);
+  const handleDelete = (id: number) => {};
+  const handleOpenView = (record: IFormColumnsStaff) => {};
+  const handleOpenUpdate = (record: IFormColumnsStaff) => {};
+  const columns: ColumnsType<IFormColumnsStaff> = [
     {
       title: "Username",
       dataIndex: "username",
@@ -117,44 +101,21 @@ const TableClient = ({
       setSelectedRowKeys(selectedRowKeys);
     },
   };
-  const handleDelete = (id: number) => {
-    dispatch(deleteClient([id])).then((res) => {
-      if (res.meta.requestStatus === "fulfilled") {
-        dispatch(getClient(valueSearch));
-      }
-    });
-  };
-  const handleOpenView = (record: any) => {
-    setValueDetail(record);
-    setIsOpen(true);
-    dispatch(changeAction("view"));
-  };
-  const handleOpenUpdate = (record: any) => {
-    setValueDetail(record);
-    setIsOpen(true);
-    dispatch(changeAction("update"));
-  };
   return (
-    <>
+    <div>
       <CommonTable
         rowSelection={rowSelection}
-        page={page}
-        dataSource={dataClient}
         columns={columns}
+        total={0}
+        dataSource={dataUser}
+        page={page}
         pageSize={size}
         setPage={setPage}
         setSize={setSize}
-        total={totalElements}
         rowKey="userId"
       />
-      <ModalClient
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        valueDetail={valueDetail}
-        valueSearch={valueSearch}
-      />
-    </>
+    </div>
   );
 };
 
-export default TableClient;
+export default TableStaff;
