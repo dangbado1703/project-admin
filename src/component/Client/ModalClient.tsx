@@ -49,17 +49,14 @@ const ModalClient = ({
     });
   };
   useEffect(() => {
-    if (valueDetail)
+    if (valueDetail && isOpen)
       form.setFieldsValue({
         ...valueDetail,
         birthday: valueDetail?.birthday
           ? moment(valueDetail.birthday, "YYYY-MM-DD")
           : null,
       });
-    return () => {
-      form.resetFields();
-    };
-  }, [valueDetail, form]);
+  }, [valueDetail, form, isOpen]);
   const validateDay = (_: any, value: any) => {
     const toDay = new Date().getTime();
     const getTime = new Date(value).getTime();
@@ -76,7 +73,7 @@ const ModalClient = ({
       open={isOpen}
       title={setTitle()}
       onCancel={() => setIsOpen(false)}
-      destroyOnClose={true}
+      afterClose={() => form.resetFields()}
       footer={
         <>
           <Button className="delete" onClick={() => setIsOpen(false)}>

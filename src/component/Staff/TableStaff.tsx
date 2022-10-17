@@ -2,11 +2,17 @@ import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Popconfirm, Tooltip } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { TableRowSelection } from "antd/lib/table/interface";
-import React from "react";
+import React, { useState } from "react";
 import { IFormColumnsStaff, IFormSearchStaff } from "../../model/Staff.model";
 import { IFormProps } from "../../model/utils";
-import { useAppSelector } from "../../store/hooks";
+import {
+  changeAction,
+  deleteUser,
+  getUser,
+} from "../../pages/Staff/staff.reducer";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonTable from "../../utils/CommonTable";
+import ViewModal from "./ViewModal";
 
 const TableStaff = ({
   page,
@@ -17,10 +23,27 @@ const TableStaff = ({
   selectedRowKeys,
   setSelectedRowKeys,
 }: Omit<IFormProps<IFormSearchStaff>, "setValueSearch">) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [valueDetail, setValueDetail] = useState<IFormColumnsStaff>();
+  const dispatch = useAppDispatch();
   const dataUser = useAppSelector((state) => state.staffReducer.dataStaff);
-  const handleDelete = (id: number) => {};
-  const handleOpenView = (record: IFormColumnsStaff) => {};
-  const handleOpenUpdate = (record: IFormColumnsStaff) => {};
+  const handleDelete = () => {
+    dispatch(deleteUser(selectedRowKeys)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(getUser(valueSearch));
+      }
+    });
+  };
+  const handleOpenView = (record: IFormColumnsStaff) => {
+    setIsOpen(true);
+    setValueDetail(record);
+    dispatch(changeAction("view"));
+  };
+  const handleOpenUpdate = (record: IFormColumnsStaff) => {
+    setIsOpen(true);
+    setValueDetail(record);
+    dispatch(changeAction("update"));
+  };
   const columns: ColumnsType<IFormColumnsStaff> = [
     {
       title: "Username",
@@ -55,8 +78,13 @@ const TableStaff = ({
           <Tooltip title="Xóa">
             <Popconfirm
               title="Bạn có chắc muốn xóa người dùng này không?"
-              onConfirm={() => handleDelete(record.userId)}
+              onConfirm={() => handleDelete()}
               onCancel={() => setSelectedRowKeys([])}
+              onOpenChange={(open: boolean) => {
+                if (!open) {
+                  setSelectedRowKeys([]);
+                }
+              }}
               cancelText="Hủy"
               okText="Đồng ý"
               okButtonProps={{
@@ -113,6 +141,12 @@ const TableStaff = ({
         setPage={setPage}
         setSize={setSize}
         rowKey="userId"
+      />
+      <ViewModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        valueDetail={valueDetail}
+        valueSearch={valueSearch}
       />
     </div>
   );

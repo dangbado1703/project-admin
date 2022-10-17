@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, isFulfilled } from "@reduxjs/toolkit";
 import { Key } from "antd/lib/table/interface";
+import { toast } from "react-toastify";
 import instance from "../../contants/axios.config";
 import { IFormDataStaff, IFormSearchStaff } from "../../model/Staff.model";
 
@@ -9,6 +10,7 @@ const initState = {
   dataFullName: [],
   dataPhone: [],
   dataEmail: [],
+  action: "",
 };
 
 const getDataFunc = async (type: string) => {
@@ -33,16 +35,7 @@ export const getUser = createAsyncThunk(
 );
 
 export const getUsername = createAsyncThunk("Staff/getUsername", async () => {
-  const result = await instance.get(
-    "/api/v1/user/suggestion?enums=USER_NAME&keySearch="
-  );
-  const newResult = result.data.data.map((item: any) => {
-    return {
-      label: item,
-      value: item,
-    };
-  });
-  return newResult;
+  return await getDataFunc("USER_NAME");
 });
 
 export const getFullName = createAsyncThunk("Staff/getFullName", async () => {
@@ -61,14 +54,26 @@ export const deleteUser = createAsyncThunk(
   "Staff/deleteUser",
   async (id: Key[]) => {
     const result = await instance.post("/api/v1/user/delete", id);
+    toast.success("Xóa thành công");
     return result;
   }
 );
 
+export const updateUser = createAsyncThunk(
+  "Staff/updateUser",
+  async (data: Partial<IFormDataStaff>) => {
+    const result = await instance.post("/api/v1/user/update", data);
+    return result;
+  }
+);
 const staffSlice = createSlice({
   name: "Staff",
   initialState: initState,
-  reducers: {},
+  reducers: {
+    changeAction: (state, action) => {
+      state.action = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.dataStaff = action.payload.data.data.content;
@@ -94,4 +99,5 @@ const staffSlice = createSlice({
 });
 
 const staffReducer = staffSlice.reducer;
+export const { changeAction } = staffSlice.actions;
 export default staffReducer;

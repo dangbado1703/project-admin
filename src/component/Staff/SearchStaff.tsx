@@ -1,9 +1,8 @@
 import { Button, Col, DatePicker, Form, Popconfirm, Row, Select } from "antd";
 import { useForm } from "antd/es/form/Form";
-import React from "react";
 import { IFormSearchStaff } from "../../model/Staff.model";
 import { IFormProps } from "../../model/utils";
-import { deleteUser } from "../../pages/Staff/staff.reducer";
+import { deleteUser, getUser } from "../../pages/Staff/staff.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
 import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
@@ -27,7 +26,12 @@ const SearchStaff = ({
     setValueSearch(data);
   };
   const handleDelete = () => {
-    dispatch(deleteUser(selectedRowKeys));
+    dispatch(deleteUser(selectedRowKeys)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        setSelectedRowKeys([]);
+        dispatch(getUser(valueSearch));
+      }
+    });
   };
   return (
     <div>
