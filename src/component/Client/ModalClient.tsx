@@ -38,7 +38,7 @@ const ModalClient = ({
     dispatch(
       updateClient({
         ...data,
-        userId: valueDetail?.userId,
+        userId: valueDetail?.customerId,
       })
     ).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
@@ -116,7 +116,7 @@ const ModalClient = ({
             <CommonFormItem
               label="Full Name"
               name="fullName"
-              isName={true}
+              isName={false}
               isRequired
             >
               <Input

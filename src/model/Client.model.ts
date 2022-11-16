@@ -1,5 +1,5 @@
 export interface IFormDataClient {
-  userId: number;
+  customerId: number;
   username: string;
   fullName: string;
   email: string;

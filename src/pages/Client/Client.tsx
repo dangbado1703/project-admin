@@ -8,6 +8,7 @@ import {
   getAllPhone,
   getAllUsername,
   getClient,
+  getFullName,
 } from "./client.reducer";
 
 // đây là page KHÁCH HÀNG
@@ -32,6 +33,7 @@ const Client = () => {
       dispatch(getAllUsername()),
       dispatch(getAllPhone()),
       dispatch(getAllEmail()),
+      dispatch(getFullName())
     ]);
   }, [dispatch]);
 

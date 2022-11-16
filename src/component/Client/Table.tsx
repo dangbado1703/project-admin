@@ -1,10 +1,12 @@
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
-import { Popconfirm, Tooltip } from "antd";
+import { DeleteOutlined, EditOutlined, EyeOutlined, LockOutlined, UnlockOutlined } from "@ant-design/icons";
+import { Popconfirm, Tag, Tooltip } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { Key, TableRowSelection } from "antd/lib/table/interface";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { IFormColumns, IFormSearchClient } from "../../model/Client.model";
 import {
+  blockUser,
   changeAction,
   deleteClient,
   getClient,
@@ -29,7 +31,7 @@ const TableClient = ({
   setSize,
   selectedRowKeys,
   setSelectedRowKeys,
-  valueSearch,
+  valueSearch
 }: IFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [valueDetail, setValueDetail] = useState<IFormColumns>();
@@ -71,7 +73,7 @@ const TableClient = ({
           <Tooltip title="Xóa">
             <Popconfirm
               title="Bạn có chắc muốn xóa người dùng này không?"
-              onConfirm={() => handleDelete(record.userId)}
+              onConfirm={() => handleDelete(record.customerId)}
               onCancel={() => setSelectedRowKeys([])}
               cancelText="Hủy"
               okText="Đồng ý"
@@ -93,7 +95,7 @@ const TableClient = ({
               }}
             >
               <DeleteOutlined
-                onClick={() => setSelectedRowKeys([record.userId])}
+                onClick={() => setSelectedRowKeys([record.customerId])}
               />
             </Popconfirm>
           </Tooltip>
@@ -106,10 +108,41 @@ const TableClient = ({
           <Tooltip title="Chỉnh sửa">
             <EditOutlined onClick={() => handleOpenUpdate(record)} />
           </Tooltip>
+          {record.status === 1 ?
+            <Popconfirm title='Bạn có chắc muốn chặn khách hàng này không?' okText='Đồng ý' cancelText='Huỷ' onConfirm={() => handleSubmitBlock(record.customerId, record.status)}>
+              <Tooltip title='Khoá khách hàng'>
+                <UnlockOutlined />
+              </Tooltip>
+            </Popconfirm> :
+            <Popconfirm title='Bạn có chắc muốn mở chặn khách hàng này không?' okText='Đồng ý' cancelText='Huỷ' onConfirm={() => handleSubmitBlock(record.customerId, record.status)}>
+              <Tooltip title='Mở khoá khách hàng'>
+                <LockOutlined />
+              </Tooltip>
+            </Popconfirm>}
         </>
       ),
     },
   ];
+  const handleSubmitBlock = (userId: number, status: number) => {
+    console.log('userId', userId)
+    if (status === 1) {
+      dispatch(blockUser({ userId, status: 0 })).then(res => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          toast.success('Chặn người dùng thành công')
+          dispatch(getClient({ ...valueSearch, page: 1, size: 10 }));
+        }
+      }
+      )
+    } else {
+      dispatch(blockUser({ userId, status: 1 })).then(res => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          toast.success('Mở khoá người dùng thành công')
+          dispatch(getClient({ ...valueSearch, page: 1, size: 10 }));
+        }
+      }
+      )
+    }
+  }
   const rowSelection: TableRowSelection<any> = {
     selectedRowKeys,
     preserveSelectedRowKeys: true,
@@ -120,6 +153,7 @@ const TableClient = ({
   const handleDelete = (id: number) => {
     dispatch(deleteClient([id])).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
+        toast.success('Xoá người dùng thành công')
         dispatch(getClient(valueSearch));
       }
     });
