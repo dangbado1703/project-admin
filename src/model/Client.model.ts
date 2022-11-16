@@ -5,6 +5,7 @@ export interface IFormDataClient {
   email: string;
   phone: string;
   status: number;
+  birthday?: string;
   createdBy: string;
   createdDate: string;
   lastModifiedDate: string;

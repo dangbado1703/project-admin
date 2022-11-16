@@ -1,13 +1,17 @@
 import React from "react";
 import { Navigate, useLocation, useRoutes } from "react-router-dom";
+import DetailProduct from "../component/Product/DetailProduct";
+import DetailVoucher from "../component/Voucher/DetailVoucher";
 import useAuth from "../contants/useAuth";
 import Client from "../pages/Client/Client";
 import Home from "../pages/Home/Home";
 import LayoutMain from "../pages/Layout/Layout";
 import Login from "../pages/Login/Login";
 import Order from "../pages/Order/Order";
+import Product from "../pages/Product/Product";
 import Register from "../pages/Register/Register";
 import Staff from "../pages/Staff/Staff";
+import Voucher from "../pages/Voucher/Voucher";
 import { path } from "./path";
 
 const Router = () => {
@@ -37,6 +41,30 @@ const Router = () => {
         {
           path: path.client,
           element: <Client />,
+        },
+        {
+          path: path.product,
+          element: <Product />,
+        },
+        {
+          path: path.productDetail,
+          element: <DetailProduct />,
+        },
+        {
+          path: path.updateProduct,
+          element: <DetailProduct />,
+        },
+        {
+          path: path.voucher,
+          element: <Voucher />,
+        },
+        {
+          path: path.voucherDetail,
+          element: <DetailVoucher />,
+        },
+        {
+          path: path.updateVoucher,
+          element: <DetailVoucher />,
         },
       ],
     },

@@ -40,6 +40,9 @@ const Register = () => {
         navigate(path.login);
         toast.success("Đăng ký thành công");
       }
+      if (res.meta.requestStatus === "rejected") {
+        console.log("res", res);
+      }
     });
   };
   const validatePassword = (_: any, value: string) => {

@@ -3,7 +3,7 @@ import React from "react";
 import { REGEX_NAME } from "./regex";
 
 interface IFormProps {
-  children: JSX.Element;
+  children?: JSX.Element;
   name?: string;
   label?: string;
   min?: number;
@@ -27,7 +27,6 @@ const CommonFormItem = ({
   isDate = false,
   ...rest
 }: IFormProps) => {
-  console.log("max", max);
   return (
     <Form.Item
       {...rest}

@@ -6,6 +6,7 @@ import { IFormSearchClient } from "../../model/Client.model";
 import { deleteClient, getClient } from "../../pages/Client/client.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
+import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import { filterSelectOption, STATUS } from "../../utils/filterOptions";
 
 interface IFormProps {
@@ -46,6 +47,7 @@ const SearchClient = ({
           <CommonFormItem name="username" label="Username" isRequired={false}>
             <Select
               allowClear
+              className="custom-selected"
               showSearch
               options={dataUsername}
               filterOption={filterSelectOption}
@@ -56,6 +58,7 @@ const SearchClient = ({
         <Col span={8}>
           <CommonFormItem name="fullName" label="Full Name" isRequired={false}>
             <Select
+              className="custom-selected"
               allowClear
               showSearch
               options={[]}
@@ -67,6 +70,7 @@ const SearchClient = ({
         <Col span={8}>
           <CommonFormItem name="email" label="Email" isRequired={false}>
             <Select
+              className="custom-selected"
               allowClear
               showSearch
               options={dataEmail}
@@ -78,6 +82,7 @@ const SearchClient = ({
         <Col span={8}>
           <CommonFormItem name="phone" label="Phone" isRequired={false}>
             <Select
+              className="custom-selected"
               allowClear
               showSearch
               options={dataPhone}
@@ -87,20 +92,21 @@ const SearchClient = ({
           </CommonFormItem>
         </Col>
         <Col span={8}>
-          <CommonFormItem name="status" label="Status" isRequired={false}>
+          <Form.Item name="status" label="Status">
             <Select
+              className="custom-selected"
               allowClear
               showSearch
               options={STATUS}
               filterOption={filterSelectOption}
               placeholder="Status"
             />
-          </CommonFormItem>
+          </Form.Item>
         </Col>
         <Col span={8}>
           <Form.Item name="birthday" label="Sinh nhật">
             <DatePicker
-              format="DD/MM/YYYY"
+              format={DATE_FORMAT_TYPE_DDMMYYYY}
               allowClear
               className="date-picker"
             />

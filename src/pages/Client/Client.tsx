@@ -1,5 +1,5 @@
 import { Key } from "antd/lib/table/interface";
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import SearchClient from "../../component/Client/Search";
 import TableClient from "../../component/Client/Table";
 import { useAppDispatch } from "../../store/hooks";
@@ -17,7 +17,7 @@ const Client = () => {
     fullName: "",
     email: "",
     phone: "",
-    birthday: "",
+    // birthday: null,
     status: null,
   });
   const [page, setPage] = useState(1);

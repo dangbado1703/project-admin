@@ -2,16 +2,16 @@ import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Popconfirm, Tooltip } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { Key, TableRowSelection } from "antd/lib/table/interface";
-import React, { useState } from "react";
-import { IFormColumns, IFormSearchClient } from "../../model/Client.model";
-import {
-  changeAction,
-  deleteClient,
-  getClient,
-} from "../../pages/Client/client.reducer";
+import moment from "moment";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { IFormColumnsVoucher } from "../../model/Voucher.model";
+import { changeAction } from "../../pages/Product/product.reducer";
+import { deleteVoucher, getAllVoucher } from "../../pages/Voucher/voucher.reducer";
+import { path } from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonTable from "../../utils/CommonTable";
-import ModalClient from "./ModalClient";
+import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 
 interface IFormProps {
   page: number;
@@ -20,9 +20,10 @@ interface IFormProps {
   setSize: React.Dispatch<React.SetStateAction<number>>;
   selectedRowKeys: Key[];
   setSelectedRowKeys: React.Dispatch<React.SetStateAction<Key[]>>;
-  valueSearch: IFormSearchClient;
+  valueSearch: any;
 }
-const TableClient = ({
+
+const TableVoucher = ({
   page,
   size,
   setPage,
@@ -31,36 +32,31 @@ const TableClient = ({
   setSelectedRowKeys,
   valueSearch,
 }: IFormProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [valueDetail, setValueDetail] = useState<IFormColumns>();
-  const { dataClient, totalElements } = useAppSelector(
-    (state) => state.clientReducer
-  );
   const dispatch = useAppDispatch();
-  const columns: ColumnsType<IFormColumns> = [
+  const navigate = useNavigate();
+  const { dataVoucher, totalElements } = useAppSelector(
+    (state) => state.voucherReducer
+  );
+  const columns: ColumnsType<IFormColumnsVoucher> = [
     {
-      title: "Username",
-      dataIndex: "username",
+      title: "ABC",
+      dataIndex: "code",
     },
     {
-      title: "FullName",
-      dataIndex: "fullName",
+      title: "Ngày hết hạn",
+      dataIndex: "expiredDate",
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "Giá khuyến mãi",
+      dataIndex: "discountPrice",
     },
     {
-      title: "Phone",
-      dataIndex: "phone",
-    },
-    {
-      title: "Sinh nhật",
-      dataIndex: "birthday",
-    },
-    {
-      title: "Status",
+      title: "Trạng thái",
       dataIndex: "status",
+    },
+    {
+      title: "Sản phẩm áp dụng",
+      dataIndex: "productApply",
     },
     {
       title: "Hành động",
@@ -71,8 +67,10 @@ const TableClient = ({
           <Tooltip title="Xóa">
             <Popconfirm
               title="Bạn có chắc muốn xóa người dùng này không?"
-              onConfirm={() => handleDelete(record.userId)}
-              onCancel={() => setSelectedRowKeys([])}
+              onConfirm={() => handleDelete(record.voucherId)}
+              onCancel={() => {
+                setSelectedRowKeys([]);
+              }}
               cancelText="Hủy"
               okText="Đồng ý"
               okButtonProps={{
@@ -93,7 +91,7 @@ const TableClient = ({
               }}
             >
               <DeleteOutlined
-                onClick={() => setSelectedRowKeys([record.userId])}
+                onClick={() => setSelectedRowKeys([record.voucherId])}
               />
             </Popconfirm>
           </Tooltip>
@@ -110,6 +108,21 @@ const TableClient = ({
       ),
     },
   ];
+  const handleOpenView = (record: IFormColumnsVoucher) => {
+    navigate(path.voucher + `/detail/${record.voucherId}`);
+    dispatch(changeAction("view"));
+  };
+  const handleOpenUpdate = (record: IFormColumnsVoucher) => {
+    navigate(path.voucher + `/update/${record.voucherId}`);
+    dispatch(changeAction("update"));
+  };
+  const handleDelete = (id: number) => {
+    dispatch(deleteVoucher(selectedRowKeys)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(getAllVoucher(valueSearch));
+      }
+    });
+  };
   const rowSelection: TableRowSelection<any> = {
     selectedRowKeys,
     preserveSelectedRowKeys: true,
@@ -117,44 +130,21 @@ const TableClient = ({
       setSelectedRowKeys(selectedRowKeys);
     },
   };
-  const handleDelete = (id: number) => {
-    dispatch(deleteClient([id])).then((res) => {
-      if (res.meta.requestStatus === "fulfilled") {
-        dispatch(getClient(valueSearch));
-      }
-    });
-  };
-  const handleOpenView = (record: any) => {
-    setValueDetail(record);
-    setIsOpen(true);
-    dispatch(changeAction("view"));
-  };
-  const handleOpenUpdate = (record: any) => {
-    setValueDetail(record);
-    setIsOpen(true);
-    dispatch(changeAction("update"));
-  };
   return (
-    <>
+    <div>
       <CommonTable
-        rowSelection={rowSelection}
-        page={page}
-        dataSource={dataClient}
         columns={columns}
+        dataSource={dataVoucher}
+        page={page}
         pageSize={size}
+        rowSelection={rowSelection}
+        total={totalElements}
         setPage={setPage}
         setSize={setSize}
-        total={totalElements}
-        rowKey="userId"
+        rowKey="voucherId"
       />
-      <ModalClient
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        valueDetail={valueDetail}
-        valueSearch={valueSearch}
-      />
-    </>
+    </div>
   );
 };
 
-export default TableClient;
+export default TableVoucher;

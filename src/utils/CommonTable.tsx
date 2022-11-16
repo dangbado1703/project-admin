@@ -1,4 +1,5 @@
 import { Empty, Table, TableProps, Tag } from "antd";
+import { ColumnsType } from "antd/lib/table";
 import React from "react";
 import CommonTooltip from "./CommonTooltip";
 
@@ -19,10 +20,14 @@ const CommonTable = ({
   ...rest
 }: // đây là những props
 IFormProps) => {
-  const newColumns = columns?.map((item) => {
-    if (item.title === "Status") {
+  const newColumns: ColumnsType<any> | undefined = columns?.map((item) => {
+    if (item.title === "Status"||item.title === "Trạng thái") {
       return {
         ...item,
+        align: "center",
+        ellipsis: {
+          showTitle: false,
+        },
         render(value: any) {
           if (value === 1) {
             return <Tag color="success">Hoạt động</Tag>;
@@ -40,6 +45,10 @@ IFormProps) => {
     ) {
       return {
         ...item,
+        align: "center",
+        ellipsis: {
+          showTitle: false,
+        },
         render(value: any) {
           return <CommonTooltip value={value} />;
         },
@@ -52,6 +61,9 @@ IFormProps) => {
     dataIndex: "stt",
     width: 45,
     align: "center",
+    ellipsis: {
+      showTitle: false,
+    },
     render(value, record, index) {
       return page === 1 ? index + 1 : (page - 1) * page + index + 1;
     },

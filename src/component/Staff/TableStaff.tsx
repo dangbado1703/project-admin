@@ -1,43 +1,50 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Popconfirm, Tooltip } from "antd";
 import { ColumnsType } from "antd/lib/table";
-import { Key, TableRowSelection } from "antd/lib/table/interface";
+import { TableRowSelection } from "antd/lib/table/interface";
 import React, { useState } from "react";
-import { IFormColumns, IFormSearchClient } from "../../model/Client.model";
+import { IFormColumnsStaff, IFormSearchStaff } from "../../model/Staff.model";
+import { IFormProps } from "../../model/utils";
 import {
   changeAction,
-  deleteClient,
-  getClient,
-} from "../../pages/Client/client.reducer";
+  deleteUser,
+  getUser,
+} from "../../pages/Staff/staff.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonTable from "../../utils/CommonTable";
-import ModalClient from "./ModalClient";
+import ViewModal from "./ViewModal";
 
-interface IFormProps {
-  page: number;
-  size: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-  setSize: React.Dispatch<React.SetStateAction<number>>;
-  selectedRowKeys: Key[];
-  setSelectedRowKeys: React.Dispatch<React.SetStateAction<Key[]>>;
-  valueSearch: IFormSearchClient;
-}
-const TableClient = ({
+const TableStaff = ({
   page,
   size,
   setPage,
   setSize,
+  valueSearch,
   selectedRowKeys,
   setSelectedRowKeys,
-  valueSearch,
-}: IFormProps) => {
+}: Omit<IFormProps<IFormSearchStaff>, "setValueSearch">) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [valueDetail, setValueDetail] = useState<IFormColumns>();
-  const { dataClient, totalElements } = useAppSelector(
-    (state) => state.clientReducer
-  );
+  const [valueDetail, setValueDetail] = useState<IFormColumnsStaff>();
   const dispatch = useAppDispatch();
-  const columns: ColumnsType<IFormColumns> = [
+  const dataUser = useAppSelector((state) => state.staffReducer.dataStaff);
+  const handleDelete = () => {
+    dispatch(deleteUser(selectedRowKeys)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(getUser(valueSearch));
+      }
+    });
+  };
+  const handleOpenView = (record: IFormColumnsStaff) => {
+    setIsOpen(true);
+    setValueDetail(record);
+    dispatch(changeAction("view"));
+  };
+  const handleOpenUpdate = (record: IFormColumnsStaff) => {
+    setIsOpen(true);
+    setValueDetail(record);
+    dispatch(changeAction("update"));
+  };
+  const columns: ColumnsType<IFormColumnsStaff> = [
     {
       title: "Username",
       dataIndex: "username",
@@ -71,8 +78,13 @@ const TableClient = ({
           <Tooltip title="Xóa">
             <Popconfirm
               title="Bạn có chắc muốn xóa người dùng này không?"
-              onConfirm={() => handleDelete(record.userId)}
+              onConfirm={() => handleDelete()}
               onCancel={() => setSelectedRowKeys([])}
+              onOpenChange={(open: boolean) => {
+                if (!open) {
+                  setSelectedRowKeys([]);
+                }
+              }}
               cancelText="Hủy"
               okText="Đồng ý"
               okButtonProps={{
@@ -117,44 +129,27 @@ const TableClient = ({
       setSelectedRowKeys(selectedRowKeys);
     },
   };
-  const handleDelete = (id: number) => {
-    dispatch(deleteClient([id])).then((res) => {
-      if (res.meta.requestStatus === "fulfilled") {
-        dispatch(getClient(valueSearch));
-      }
-    });
-  };
-  const handleOpenView = (record: any) => {
-    setValueDetail(record);
-    setIsOpen(true);
-    dispatch(changeAction("view"));
-  };
-  const handleOpenUpdate = (record: any) => {
-    setValueDetail(record);
-    setIsOpen(true);
-    dispatch(changeAction("update"));
-  };
   return (
-    <>
+    <div>
       <CommonTable
         rowSelection={rowSelection}
-        page={page}
-        dataSource={dataClient}
         columns={columns}
+        total={0}
+        dataSource={dataUser}
+        page={page}
         pageSize={size}
         setPage={setPage}
         setSize={setSize}
-        total={totalElements}
         rowKey="userId"
       />
-      <ModalClient
+      <ViewModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         valueDetail={valueDetail}
         valueSearch={valueSearch}
       />
-    </>
+    </div>
   );
 };
 
-export default TableClient;
+export default TableStaff;
