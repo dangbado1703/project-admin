@@ -105,9 +105,6 @@ const TableClient = ({
               onClick={() => handleOpenView(record)}
             />
           </Tooltip>
-          <Tooltip title="Chỉnh sửa">
-            <EditOutlined onClick={() => handleOpenUpdate(record)} />
-          </Tooltip>
           {record.status === 1 ?
             <Popconfirm title='Bạn có chắc muốn chặn khách hàng này không?' okText='Đồng ý' cancelText='Huỷ' onConfirm={() => handleSubmitBlock(record.customerId, record.status)}>
               <Tooltip title='Khoá khách hàng'>
