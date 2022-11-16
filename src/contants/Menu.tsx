@@ -25,6 +25,7 @@ const items: MenuItem[] = [
   getItem("Nhân viên", path.staff, <UsergroupAddOutlined />),
   getItem("Khách hàng", path.client, <UserOutlined />),
   getItem("Sản phẩm", path.product, <ShoppingOutlined />),
+  getItem("Danh mục", path.productType, <ShoppingOutlined />),
   getItem("Khuyến mại", path.voucher, <ShoppingOutlined />),
 ];
 const MenuItems = () => {
