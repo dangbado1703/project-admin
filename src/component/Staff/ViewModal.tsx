@@ -1,31 +1,30 @@
 import { Button, Col, DatePicker, Form, Input, Modal, Row } from "antd";
+import { useForm } from "antd/es/form/Form";
 import moment from "moment";
 import React, { useEffect } from "react";
-import { toast } from "react-toastify";
-import { IFormColumns, IFormSearchClient } from "../../model/Client.model";
-import { getClient, updateClient } from "../../pages/Client/client.reducer";
+import { IFormColumnsStaff, IFormSearchStaff } from "../../model/Staff.model";
+import { IFormPropsModal } from "../../model/utils";
+import { getUser, updateUser } from "../../pages/Staff/staff.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
+import {
+  DATE_FORMAT_TYPE_DDMMYYYY,
+  DATE_FORMAT_TYPE_YYYYMMDD,
+} from "../../utils/contants";
 
-interface IFormProps {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  valueDetail: IFormColumns | undefined;
-  valueSearch: IFormSearchClient;
-}
-const ModalClient = ({
+const ViewModal = ({
   isOpen,
   setIsOpen,
   valueDetail,
   valueSearch,
-}: IFormProps) => {
+}: IFormPropsModal<IFormColumnsStaff, IFormSearchStaff>) => {
   const validateMessages = {
     // eslint-disable-next-line
     required: "${label} không được để trống",
   };
-  const [form] = Form.useForm();
+  const [form] = useForm();
   const dispatch = useAppDispatch();
-  const action = useAppSelector((state) => state.clientReducer.action);
+  const { action } = useAppSelector((state) => state.staffReducer);
   const setTitle = () => {
     if (action === "view") {
       return "Xem chi tiết";
@@ -34,29 +33,26 @@ const ModalClient = ({
       return "Cập nhật người dùng";
     }
   };
-  const handleSubmit = (data: any) => {
-    dispatch(
-      updateClient({
-        ...data,
-        userId: valueDetail?.userId,
-      })
-    ).then((res) => {
-      if (res.meta.requestStatus === "fulfilled") {
-        toast.success("Cập nhật người dùng thành công");
-        setIsOpen(false);
-        dispatch(getClient(valueSearch));
-      }
-    });
-  };
   useEffect(() => {
-    if (valueDetail && isOpen)
+    if (valueDetail && Object.keys(valueDetail).length && isOpen) {
       form.setFieldsValue({
         ...valueDetail,
-        birthday: valueDetail?.birthday
-          ? moment(valueDetail.birthday, "YYYY-MM-DD")
+        birthday: valueDetail.birthday
+          ? moment(valueDetail.birthday, DATE_FORMAT_TYPE_YYYYMMDD)
           : null,
       });
+    }
   }, [valueDetail, form, isOpen]);
+  const handleSubmit = (data: any) => {
+    dispatch(updateUser({ ...data, userId: valueDetail?.userId })).then(
+      (res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          setIsOpen(false);
+          dispatch(getUser(valueSearch));
+        }
+      }
+    );
+  };
   const validateDay = (_: any, value: any) => {
     const toDay = new Date().getTime();
     const getTime = new Date(value).getTime();
@@ -96,13 +92,7 @@ const ModalClient = ({
       >
         <Row>
           <Col span={24}>
-            <CommonFormItem
-              label="Username"
-              name="username"
-              max={12}
-              min={4}
-              isRequired
-            >
+            <CommonFormItem label="Username" name="username" max={12} min={4}>
               <Input
                 placeholder="Username"
                 onBlur={(e) =>
@@ -113,12 +103,7 @@ const ModalClient = ({
             </CommonFormItem>
           </Col>
           <Col span={24}>
-            <CommonFormItem
-              label="Full Name"
-              name="fullName"
-              isName={true}
-              isRequired
-            >
+            <CommonFormItem label="Full Name" name="fullName" isName={true}>
               <Input
                 placeholder="Full name"
                 onBlur={(e) =>
@@ -171,7 +156,7 @@ const ModalClient = ({
               ]}
             >
               <DatePicker
-                format="DD/MM/YYYY"
+                format={DATE_FORMAT_TYPE_DDMMYYYY}
                 placeholder="Sinh nhật"
                 className="date-picker"
                 disabled={action === "view"}
@@ -184,4 +169,4 @@ const ModalClient = ({
   );
 };
 
-export default ModalClient;
+export default ViewModal;
