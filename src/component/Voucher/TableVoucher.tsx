@@ -2,13 +2,16 @@ import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Popconfirm, Tooltip } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { Key, TableRowSelection } from "antd/lib/table/interface";
+import moment from "moment";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { IFormColumnsProduct } from "../../model/Product.model";
+import { IFormColumnsVoucher } from "../../model/Voucher.model";
 import { changeAction } from "../../pages/Product/product.reducer";
+import { deleteVoucher, getAllVoucher } from "../../pages/Voucher/voucher.reducer";
 import { path } from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonTable from "../../utils/CommonTable";
+import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 
 interface IFormProps {
   page: number;
@@ -20,7 +23,7 @@ interface IFormProps {
   valueSearch: any;
 }
 
-const TableProduct = ({
+const TableVoucher = ({
   page,
   size,
   setPage,
@@ -31,38 +34,29 @@ const TableProduct = ({
 }: IFormProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { dataProduct, totalElements } = useAppSelector(
-    (state) => state.productReducer
+  const { dataVoucher, totalElements } = useAppSelector(
+    (state) => state.voucherReducer
   );
-  const columns: ColumnsType<IFormColumnsProduct> = [
+  const columns: ColumnsType<IFormColumnsVoucher> = [
     {
-      title: "Name",
-      dataIndex: "name",
-    },
-    {
-      title: "Code",
+      title: "ABC",
       dataIndex: "code",
     },
     {
-      title: "Price",
-      dataIndex: "price",
+      title: "Ngày hết hạn",
+      dataIndex: "expiredDate",
     },
     {
-      title: "Stock Quantity",
-      dataIndex: "stockQty",
+      title: "Giá khuyến mãi",
+      dataIndex: "discountPrice",
     },
     {
-      title: "Make name",
-      dataIndex: "makeName",
+      title: "Trạng thái",
+      dataIndex: "status",
     },
     {
-      title: "ProductType",
-      dataIndex: "productType",
-    },
-  
-    {
-      title: "Created By",
-      dataIndex: "createdBy",
+      title: "Sản phẩm áp dụng",
+      dataIndex: "productApply",
     },
     {
       title: "Hành động",
@@ -73,7 +67,7 @@ const TableProduct = ({
           <Tooltip title="Xóa">
             <Popconfirm
               title="Bạn có chắc muốn xóa người dùng này không?"
-              onConfirm={() => handleDelete(record.productId)}
+              onConfirm={() => handleDelete(record.voucherId)}
               onCancel={() => {
                 setSelectedRowKeys([]);
               }}
@@ -97,7 +91,7 @@ const TableProduct = ({
               }}
             >
               <DeleteOutlined
-                onClick={() => setSelectedRowKeys([record.productId])}
+                onClick={() => setSelectedRowKeys([record.voucherId])}
               />
             </Popconfirm>
           </Tooltip>
@@ -114,16 +108,20 @@ const TableProduct = ({
       ),
     },
   ];
-  const handleOpenView = (record: IFormColumnsProduct) => {
-    navigate(path.product + `/detail/${record.productId}`);
+  const handleOpenView = (record: IFormColumnsVoucher) => {
+    navigate(path.voucher + `/detail/${record.voucherId}`);
     dispatch(changeAction("view"));
   };
-  const handleOpenUpdate = (record: IFormColumnsProduct) => {
-    navigate(path.product + `/update/${record.productId}`);
+  const handleOpenUpdate = (record: IFormColumnsVoucher) => {
+    navigate(path.voucher + `/update/${record.voucherId}`);
     dispatch(changeAction("update"));
   };
   const handleDelete = (id: number) => {
-    console.log("id", id);
+    dispatch(deleteVoucher(selectedRowKeys)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(getAllVoucher(valueSearch));
+      }
+    });
   };
   const rowSelection: TableRowSelection<any> = {
     selectedRowKeys,
@@ -136,17 +134,17 @@ const TableProduct = ({
     <div>
       <CommonTable
         columns={columns}
-        dataSource={dataProduct}
+        dataSource={dataVoucher}
         page={page}
         pageSize={size}
         rowSelection={rowSelection}
         total={totalElements}
         setPage={setPage}
         setSize={setSize}
-        rowKey="productId"
+        rowKey="voucherId"
       />
     </div>
   );
 };
 
-export default TableProduct;
+export default TableVoucher;
