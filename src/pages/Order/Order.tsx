@@ -12,7 +12,6 @@ const Order = () => {
     toPrice: 1,
     fromDate: "",
     toDate: "",
-    hideCancel: "",
   });
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
