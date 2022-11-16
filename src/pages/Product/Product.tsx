@@ -12,6 +12,7 @@ import {
   getListName,
   getListProductType,
 } from "./product.reducer";
+import './products.scss'
 
 const Product = () => {
   const [page, setPage] = useState(1);

@@ -19,6 +19,8 @@ export interface IFormSearchStaff {
   status: number;
   page?: number;
   size?: number;
+  gender: string | null;
+  roleId: string | null;
 }
 
 export interface IFormColumnsStaff extends IFormDataStaff {

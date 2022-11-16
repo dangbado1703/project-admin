@@ -8,6 +8,7 @@ import {
   getEmail,
   getFullName,
   getPhone,
+  getRole,
   getUser,
   getUsername,
 } from "./staff.reducer";
@@ -19,6 +20,8 @@ const Staff = () => {
     email: "",
     phone: "",
     status: 1,
+    gender: null,
+    roleId: null
   });
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
@@ -33,6 +36,7 @@ const Staff = () => {
       dispatch(getFullName()),
       dispatch(getPhone()),
       dispatch(getEmail()),
+      dispatch(getRole())
     ]);
   }, [dispatch]);
   return (

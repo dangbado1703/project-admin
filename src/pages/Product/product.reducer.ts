@@ -64,7 +64,6 @@ export const getListCode = createAsyncThunk("product/getListCode", async () => {
   const result = await instance.get(
     "/api/v1/product/suggestion?enums=PRODUCT_CODE&keySearch="
   );
-  console.log("result", result);
   const newResult = result.data.data.code.map((item: any) => {
     return {
       value: item,

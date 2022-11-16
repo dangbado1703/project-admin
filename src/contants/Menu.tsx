@@ -23,7 +23,7 @@ const getItem = (
 const items: MenuItem[] = [
   getItem("Trang chủ", path.home, <HomeOutlined />),
   getItem("Đơn hàng", path.order, <DollarCircleOutlined />),
-  getItem("Nhân viên", path.staff, <UsergroupAddOutlined />),
+  getItem("Người dùng", path.staff, <UsergroupAddOutlined />),
   getItem("Khách hàng", path.client, <UserOutlined />),
   getItem("Sản phẩm", path.product, <ShoppingOutlined />),
   getItem("Danh mục", path.productType, <ShoppingOutlined />),

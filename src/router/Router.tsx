@@ -52,6 +52,10 @@ const Router = () => {
           element: <DetailProduct />,
         },
         {
+          path: path.addnewProduct,
+          element: <DetailProduct />,
+        },
+        {
           path: path.updateProduct,
           element: <DetailProduct />,
         },
