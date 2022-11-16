@@ -126,6 +126,7 @@ const SearchClient = ({
                 Tìm kiếm
               </Button>
               <Popconfirm
+                placement="topRight"
                 title={
                   selectedRowKeys.length
                     ? "Bạn có chắc muốn xóa những người dùng này không?"
