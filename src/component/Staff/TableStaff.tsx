@@ -26,7 +26,7 @@ const TableStaff = ({
   const [isOpen, setIsOpen] = useState(false);
   const [valueDetail, setValueDetail] = useState<IFormColumnsStaff>();
   const dispatch = useAppDispatch();
-  const dataUser = useAppSelector((state) => state.staffReducer.dataStaff);
+  const { dataStaff, totalItem } = useAppSelector((state) => state.staffReducer);
   const handleDelete = () => {
     dispatch(deleteUser(selectedRowKeys)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
@@ -64,6 +64,10 @@ const TableStaff = ({
     {
       title: "Sinh nhật",
       dataIndex: "birthday",
+    },
+    {
+      title: 'Quyền',
+      dataIndex: 'roleName'
     },
     {
       title: "Status",
@@ -134,8 +138,8 @@ const TableStaff = ({
       <CommonTable
         rowSelection={rowSelection}
         columns={columns}
-        total={0}
-        dataSource={dataUser}
+        total={totalItem}
+        dataSource={dataStaff}
         page={page}
         pageSize={size}
         setPage={setPage}

@@ -1,4 +1,4 @@
-import { updateVoucher } from './../pages/Voucher/voucher.reducer';
+import { updateVoucher } from "./../pages/Voucher/voucher.reducer";
 export const path = {
   login: "/login",
   register: "/register",
@@ -8,9 +8,10 @@ export const path = {
   client: "/client",
   product: "/product",
   productDetail: "/product/detail/:id",
-  updateProduct: "product/update/:id",
+  updateProduct: "/product/update/:id",
+  addnewProduct: "/product/addnew",
   productType: "/productType",
-  voucher:"/voucher",
-  voucherDetail:"/voucher/detail/:id",
-  updateVoucher:"product/update/:id"
+  voucher: "/voucher",
+  voucherDetail: "/voucher/detail/:id",
+  updateVoucher: "product/update/:id",
 };
