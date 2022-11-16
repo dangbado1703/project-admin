@@ -23,7 +23,7 @@ const CommonTable = ({
 }: // đây là những props
 IFormProps) => {
   const newColumns: ColumnsType<any> | undefined = columns?.map((item) => {
-    if (item.title === "Status") {
+    if (item.title === "Status"||item.title === "Trạng thái") {
       return {
         ...item,
         align: "center",
