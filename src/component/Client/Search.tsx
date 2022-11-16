@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
 import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import { filterSelectOption, STATUS } from "../../utils/filterOptions";
+import SelectCommon from "../../utils/SelectCommon";
 
 interface IFormProps {
   setValueSearch: React.Dispatch<React.SetStateAction<any>>;
@@ -23,7 +24,7 @@ const SearchClient = ({
 }: IFormProps) => {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
-  const { dataUsername, dataEmail, dataPhone } = useAppSelector(
+  const { dataUsername, dataEmail, dataPhone, dataFullName } = useAppSelector(
     (state) => state.clientReducer
   );
   const handleSearch = (data: any) => {
@@ -45,23 +46,17 @@ const SearchClient = ({
       <Row gutter={10}>
         <Col span={8}>
           <CommonFormItem name="username" label="Username" isRequired={false}>
-            <Select
-              allowClear
-              className="custom-selected"
-              showSearch
+            <SelectCommon
               options={dataUsername}
               filterOption={filterSelectOption}
-              placeholder="Username"
+              placeholder='Username'
             />
           </CommonFormItem>
         </Col>
         <Col span={8}>
           <CommonFormItem name="fullName" label="Full Name" isRequired={false}>
-            <Select
-              className="custom-selected"
-              allowClear
-              showSearch
-              options={[]}
+            <SelectCommon
+              options={dataFullName}
               filterOption={filterSelectOption}
               placeholder="Full Name"
             />
@@ -69,10 +64,7 @@ const SearchClient = ({
         </Col>
         <Col span={8}>
           <CommonFormItem name="email" label="Email" isRequired={false}>
-            <Select
-              className="custom-selected"
-              allowClear
-              showSearch
+            <SelectCommon
               options={dataEmail}
               filterOption={filterSelectOption}
               placeholder="Email"
@@ -81,10 +73,7 @@ const SearchClient = ({
         </Col>
         <Col span={8}>
           <CommonFormItem name="phone" label="Phone" isRequired={false}>
-            <Select
-              className="custom-selected"
-              allowClear
-              showSearch
+            <SelectCommon
               options={dataPhone}
               filterOption={filterSelectOption}
               placeholder="Phone"
@@ -93,22 +82,10 @@ const SearchClient = ({
         </Col>
         <Col span={8}>
           <Form.Item name="status" label="Status">
-            <Select
-              className="custom-selected"
-              allowClear
-              showSearch
+            <SelectCommon
               options={STATUS}
               filterOption={filterSelectOption}
               placeholder="Status"
-            />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item name="birthday" label="Sinh nhật">
-            <DatePicker
-              format={DATE_FORMAT_TYPE_DDMMYYYY}
-              allowClear
-              className="date-picker"
             />
           </Form.Item>
         </Col>

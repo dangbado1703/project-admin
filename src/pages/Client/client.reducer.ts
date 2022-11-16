@@ -14,6 +14,8 @@ const initState = {
   dataPhone: [],
   totalElements: 0,
   action: "",
+  totalItem: 0,
+  dataFullName: [],
 };
 
 export const getClient = createAsyncThunk(
@@ -33,7 +35,7 @@ export const deleteClient = createAsyncThunk(
 );
 
 export const getAllUsername = createAsyncThunk(
-  "client/getAllUsername",
+  "client/getAllcustomername",
   async () => {
     const result = await instance.get(
       "/api/v1/customer/suggestion?enums=CUS_NAME&keySearch="
@@ -74,10 +76,33 @@ export const getAllPhone = createAsyncThunk("client/getAllPhone", async () => {
   return newResult;
 });
 
+export const getFullName = createAsyncThunk("client/getFullName", async () => {
+  const result = await instance.get(
+    "/api/v1/customer/suggestion?enums=CUS_FULL_NAME&keySearch="
+  );
+  const newResult = result.data.data.map((item: any, index: number) => {
+    return {
+      value: item,
+      label: item,
+    };
+  });
+  return newResult;
+});
+
 export const updateClient = createAsyncThunk(
   "client/updateClient",
   async (data: IFormUpdate) => {
     const result = await instance.put("/api/v1/customer/update", data);
+    return result;
+  }
+);
+
+export const blockUser = createAsyncThunk(
+  "client/blockUser",
+  async (data: any) => {
+    const result = await instance.get(
+      `/api/v1/customer/change-status?cusId=${data.userId}&status=${data.status}`
+    );
     return result;
   }
 );
@@ -94,7 +119,7 @@ const clientSlice = createSlice({
     builder
       .addCase(getClient.fulfilled, (state, action) => {
         state.dataClient = action.payload.data.data.content;
-        state.totalElements = action.payload.data.data.totalElements;
+        state.totalItem = action.payload.data.data.totalElements;
       })
       .addCase(getAllUsername.fulfilled, (state, action) => {
         state.dataUsername = action.payload;
@@ -104,6 +129,9 @@ const clientSlice = createSlice({
       })
       .addCase(getAllPhone.fulfilled, (state, action) => {
         state.dataPhone = action.payload;
+      })
+      .addCase(getFullName.fulfilled, (state, action) => {
+        state.dataFullName = action.payload;
       });
   },
 });
