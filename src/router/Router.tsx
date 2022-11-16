@@ -3,6 +3,7 @@ import { Navigate, useLocation, useRoutes } from "react-router-dom";
 import DetailProduct from "../component/Product/DetailProduct";
 import useAuth from "../contants/useAuth";
 import Client from "../pages/Client/Client";
+import DanhMucPage from "../pages/DanhMuc/DanhMucPage";
 import Home from "../pages/Home/Home";
 import LayoutMain from "../pages/Layout/Layout";
 import Login from "../pages/Login/Login";
@@ -51,6 +52,10 @@ const Router = () => {
         {
           path: path.updateProduct,
           element: <DetailProduct />,
+        },
+        {
+          path: path.productType,
+          element: <DanhMucPage />,
         },
       ],
     },

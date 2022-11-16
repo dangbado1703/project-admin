@@ -8,4 +8,5 @@ export const path = {
   product: "/product",
   productDetail: "/product/detail/:id",
   updateProduct: "product/update/:id",
+  productType: "/productType",
 };
