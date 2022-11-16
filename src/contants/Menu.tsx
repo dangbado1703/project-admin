@@ -4,6 +4,7 @@ import {
   UsergroupAddOutlined,
   UserOutlined,
   ShoppingOutlined,
+  CarOutlined,
 } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import React, { useState, useEffect } from "react";
