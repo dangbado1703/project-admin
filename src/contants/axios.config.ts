@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import { redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const instance = axios.create({
@@ -17,9 +18,10 @@ instance.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error: AxiosError) => {
     const status = error.status || (error.response ? error.response.status : 0);
-    // if (status === 401) {
-    //   toast.error("Hết phiên đăng nhập", { toastId: 401 });
-    // }
+    if (status === 401) {
+      toast.error("Hết phiên đăng nhập", { toastId: 401 });
+      redirect("/login");
+    }
     if (status === 400) {
       const errMessage: any = error.response?.data;
       toast.error(errMessage.messages[0], { toastId: 400 });
