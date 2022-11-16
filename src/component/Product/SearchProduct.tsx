@@ -15,6 +15,7 @@ import { useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
 import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import { filterSelectOption } from "../../utils/filterOptions";
+import SelectCommon from "../../utils/SelectCommon";
 
 interface IFormProps {
   setValueSearch: React.Dispatch<React.SetStateAction<IFormSearchProduct>>;
@@ -35,26 +36,23 @@ const SearchProduct = ({
   const handleSubmit = (data: any) => {
     setValueSearch(data);
   };
-  const handleDelete = () => {};
+  const handleDelete = () => { };
   return (
     <div>
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         <Row gutter={10}>
           <Col span={6}>
             <CommonFormItem name="name" label="Product Name" isRequired={false}>
-              <Select
+              <SelectCommon
                 options={dataName}
                 filterOption={filterSelectOption}
-                allowClear
-                showSearch
-                className="custom-selected"
                 placeholder="Product Name"
               />
             </CommonFormItem>
           </Col>
           <Col span={6}>
             <CommonFormItem name="code" label="Product Code" isRequired={false}>
-              <Select
+              <SelectCommon
                 className="custom-selected"
                 options={dataCode}
                 filterOption={filterSelectOption}
@@ -98,7 +96,7 @@ const SearchProduct = ({
           </Col>
           <Col span={6}>
             <CommonFormItem name="makeId" label="Make Name" isRequired={false}>
-              <Select
+              <SelectCommon
                 options={dataMake}
                 className="custom-selected"
                 filterOption={filterSelectOption}
@@ -114,7 +112,7 @@ const SearchProduct = ({
               label="Product Type"
               isRequired={false}
             >
-              <Select
+              <SelectCommon
                 options={dataProductType}
                 className="custom-selected"
                 filterOption={filterSelectOption}
@@ -130,7 +128,7 @@ const SearchProduct = ({
               label="Created By"
               isRequired={false}
             >
-              <Select
+              <SelectCommon
                 className="custom-selected"
                 options={dataCreated}
                 filterOption={filterSelectOption}
