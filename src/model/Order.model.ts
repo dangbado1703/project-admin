@@ -1,16 +1,16 @@
 export interface IFormDataOrder {
-  order_id: number;
-  delivery_date: string;
+  oderId: number;
+  customerName: string;
+  statusConfirm: number;
+  statusOrder: number;
+  price: number;
+  orderDate: string;
   description: string;
-  order_date: string;
-  order_status: string;
-  payment_method: string;
-  shipping_method: string;
-  shipping_total: string;
-  sub_total: number;
-  tax_rate: number;
-  customer_id: number;
-  status: 0 | 1;
+  deliveryDate: string;
+  shippingTotal: number;
+  paymentMethod: string;
+  shippingMethod: string;
+  isPayment: number;
 }
 
 export interface IFormSearchOrder {
@@ -20,10 +20,9 @@ export interface IFormSearchOrder {
   toPrice: number;
   fromDate: string;
   toDate: string;
-  hideCancel: string;
   page?: number;
   size?: number;
 }
-export interface IFormColumns extends IFormDataOrder {
+export interface IFormColumnsOrder extends IFormDataOrder {
   stt: number;
 }

@@ -1,4 +1,13 @@
-import { Col, DatePicker, Form, Input, Row, Select } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Popconfirm,
+  Row,
+  Select,
+} from "antd";
 import React from "react";
 import { IFormSearchOrder } from "../../model/Order.model";
 import { IFormProps } from "../../model/utils";
@@ -19,6 +28,7 @@ const SearchOrder = ({
   const handleSearch = (data: any) => {
     console.log("data", data);
   };
+
   return (
     <div>
       <Form form={form} onFinish={handleSearch} layout="vertical">
@@ -31,6 +41,7 @@ const SearchOrder = ({
             >
               <Select
                 className="custom-selected"
+                placeholder="Select status"
                 showSearch
                 allowClear
                 filterOption={filterSelectOption}
@@ -69,6 +80,69 @@ const SearchOrder = ({
                 className="date-picker"
               />
             </Form.Item>
+          </Col>
+          <Col span={8}>
+            <CommonFormItem
+              name="customerId"
+              label="Customer"
+              isRequired={false}
+            >
+              <Select
+                allowClear
+                showSearch
+                className="custom-selected"
+                placeholder="Select customer"
+                filterOption={filterSelectOption}
+                options={[]}
+              />
+            </CommonFormItem>
+          </Col>
+          <Col
+            span={24}
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "flex-end",
+            }}
+          >
+            <CommonFormItem isRequired={false}>
+              <div>
+                <Button htmlType="submit" className="search">
+                  Tìm kiếm
+                </Button>
+                <Popconfirm
+                  placement="topRight"
+                  title={
+                    selectedRowKeys.length
+                      ? "Bạn có chắc muốn xóa những người dùng này không?"
+                      : "Vui lòng chọn người dùng"
+                  }
+                  // onConfirm={handleDelete}
+                  cancelText="Hủy"
+                  okText="Đồng ý"
+                  okButtonProps={{
+                    className: "search",
+                    style: {
+                      height: "28px",
+                      fontSize: "14px",
+                      borderRadius: 0,
+                      display: selectedRowKeys.length ? "" : "none",
+                    },
+                  }}
+                  cancelButtonProps={{
+                    className: "delete",
+                    style: {
+                      height: "28px",
+                      fontSize: "14px",
+                      borderRadius: 0,
+                      display: selectedRowKeys.length ? "" : "none",
+                    },
+                  }}
+                >
+                  <Button className="delete">Xóa</Button>
+                </Popconfirm>
+              </div>
+            </CommonFormItem>
           </Col>
         </Row>
       </Form>

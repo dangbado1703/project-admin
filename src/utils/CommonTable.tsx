@@ -9,6 +9,7 @@ interface IFormProps extends TableProps<any> {
   pageSize: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   setSize: React.Dispatch<React.SetStateAction<number>>;
+  columns1?: ColumnsType<any> | undefined;
 } // Định nghĩa các props sẽ truyền vào
 const CommonTable = ({
   total,
@@ -17,6 +18,7 @@ const CommonTable = ({
   setPage,
   setSize,
   columns,
+  columns1 = undefined,
   ...rest
 }: // đây là những props
 IFormProps) => {
@@ -73,7 +75,7 @@ IFormProps) => {
       {...rest}
       size="small"
       bordered
-      columns={newColumns}
+      columns={columns1 || newColumns}
       pagination={{
         total,
         showTotal: (total, range) =>
