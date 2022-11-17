@@ -1,5 +1,8 @@
 @import "~antd/dist/antd.css";
 
+img {
+  object-fit: cover;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
