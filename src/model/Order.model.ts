@@ -14,14 +14,14 @@ export interface IFormDataOrder {
 }
 
 export interface IFormSearchOrder {
-  customerId: number;
-  statusOrder: number;
-  fromPrice: number;
-  toPrice: number;
-  fromDate: string;
-  toDate: string;
-  page?: number;
-  size?: number;
+  customerId: number | null;
+  status: number | null;
+  fromPrice: number | string;
+  toPrice: number | string;
+  fromDate: string | null;
+  toDate: string | null;
+  page?:number,
+  size?:number
 }
 export interface IFormColumnsOrder extends IFormDataOrder {
   stt: number;

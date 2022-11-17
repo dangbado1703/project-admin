@@ -67,7 +67,7 @@ IFormProps) => {
       showTitle: false,
     },
     render(value, record, index) {
-      return page === 1 ? index + 1 : (page - 1) * page + index + 1;
+      return page === 1 ? index + 1 : (page - 1) * pageSize + index + 1;
     },
   });
   return (

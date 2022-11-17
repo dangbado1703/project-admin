@@ -6,6 +6,10 @@
   box-shadow: 0px 1px 2px rgba(88, 88, 88, 0.15);
   border-radius: 6px;
   height: 177px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .upload-image {
@@ -21,4 +25,5 @@
   border-radius: 4px;
   color: white;
   font-weight: 600;
+  cursor: pointer;
 }

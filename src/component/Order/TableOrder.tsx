@@ -6,14 +6,7 @@ import { IFormProps } from "../../model/utils";
 
 const TableOrder = ({
   valueSearch,
-  setValueSearch,
-  page,
-  setPage,
-  size,
-  setSize,
-  selectedRowKeys,
-  setSelectedRowKeys,
-}: IFormProps<IFormSearchOrder>) => {
+}: { valueSearch: IFormSearchOrder }) => {
   const columns: ColumnsType<IFormColumnsOrder> = [
     {
       title: "Customer Name",

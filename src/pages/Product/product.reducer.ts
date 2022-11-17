@@ -9,6 +9,7 @@ const initState = {
   dataCreated: [],
   dataName: [],
   dataCode: [],
+  dataProductMake: [],
   dataDetail: {},
   action: "",
   totalElements: 0,
@@ -89,6 +90,22 @@ export const getListCreated = createAsyncThunk(
   }
 );
 
+export const getListProductMake = createAsyncThunk(
+  "product/getListProductMake",
+  async () => {
+    const result = await instance.get(
+      "/api/v1/product/suggestion?enums=PRODUCT_MAKE&keySearch="
+    );
+    const newResult = result.data.data.makeDTOS.map((item: any) => {
+      return {
+        value: item.id,
+        label: item.name,
+      };
+    });
+    return newResult;
+  }
+);
+
 export const getDetail = createAsyncThunk(
   "product/getDetail",
   async (id: string) => {
@@ -102,6 +119,14 @@ export const updateProduct = createAsyncThunk(
   "product/updateProduct",
   async (data) => {
     const result = await instance.post("/api/v1/product/update", data);
+    return result;
+  }
+);
+
+export const addNewProduct = createAsyncThunk(
+  "product/addNewProduct",
+  async (data: FormData) => {
+    const result = await instance.post("/api/v1/product/create", data);
     return result;
   }
 );
@@ -134,6 +159,9 @@ const productSlice = createSlice({
       })
       .addCase(getListCreated.fulfilled, (state, action) => {
         state.dataCreated = action.payload;
+      })
+      .addCase(getListProductMake.fulfilled, (state,action) => {
+        state.dataProductMake = action.payload
       })
       .addCase(getDetail.fulfilled, (state, action) => {
         state.dataDetail = action.payload.data.data;

@@ -1,42 +1,56 @@
-import { Button, Col, DatePicker, Form, Input, message, Row, Upload, UploadProps } from "antd";
+import { CloseOutlined, UploadOutlined } from "@ant-design/icons";
+import { Button, Col, Form, Input, Row, Upload, UploadProps } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import React, { useEffect } from "react";
+import { RcFile, UploadChangeParam, UploadFile } from "antd/lib/upload";
+import moment from "moment";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { changeAction, getDetail } from "../../pages/Product/product.reducer";
+import { toast } from "react-toastify";
+import { addNewProduct, changeAction, getDetail, getListProductMake, getListProductType } from "../../pages/Product/product.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
-  DATE_FORMAT_TYPE_DDMMYYYY,
-  DATE_FORMAT_TYPE_YYYYMMDD,
+  DATE_FORMAT_TYPE_YYYYMMDD
 } from "../../utils/contants";
-import moment from "moment";
 import SelectCommon from "../../utils/SelectCommon";
-import { UploadOutlined } from "@ant-design/icons";
 
 const DetailProduct = () => {
+  const [imageUrl, setImageUrl] = useState<string[]>([]);
+  const [fileList, setFileList] = useState<any[]>([])
   const [form] = Form.useForm();
   const { id } = useParams();
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
-  const { action, dataDetail } = useAppSelector(
+  const { action, dataDetail, dataProductType, dataProductMake } = useAppSelector(
     (state) => state.productReducer
   );
-  const props: UploadProps = {
-    name: 'file',
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    headers: {
-      authorization: 'authorization-text',
-    },
-    onChange(info) {
-      console.log('info', info)
-      if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
+  useEffect(() => {
+    Promise.all([
+      dispatch(getListProductType()),
+      dispatch(getListProductMake())
+    ]);
+  }, [dispatch]);
+  const getBase64 = (img: RcFile, callback: (url: string) => void) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result as string));
+    reader.readAsDataURL(img);
+  };
+  const beforeUpload = (file: RcFile) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      return false
+    }
+    return true
+  };
+  const handleChangeImage: UploadProps['onChange'] = (info: UploadChangeParam<UploadFile>) => {
+    if (info.file.status === 'uploading') {
+      return;
+    }
+    if (info.file.status === 'done') {
+      setFileList((oldFile) => [...oldFile, info.file.originFileObj])
+      getBase64(info.file.originFileObj as RcFile, url => {
+        setImageUrl((oldState) => [...oldState, url]);
+      });
+    }
   };
   useEffect(() => {
     if (pathname.includes("detail")) {
@@ -66,12 +80,24 @@ const DetailProduct = () => {
     });
   }, [id, dispatch, form]);
   const handleSubmit = (data: any) => {
-    console.log("data", data);
+    if (!fileList.length) {
+      return toast.error('Vui lòng tải ảnh lên')
+    }
+    const formData = new FormData()
+    Object.keys(data).forEach(item => {
+      formData.append(item, data[item])
+    })
+    fileList.forEach(item => {
+      formData.append('path', item)
+    })
+    dispatch(addNewProduct(formData))
   };
-  const handleChange = (e:any) => {
-    // console.log(e.target.value.files[0].mozFullPath)
-    console.log(e.target.files[0])
+
+  const handleRemoveImage = (index: number) => {
+    setImageUrl(imageUrl.filter((item, position) => position !== index))
+    setFileList(fileList.filter((item, position) => position !== index))
   }
+
   return (
     <div>
       <Form
@@ -110,7 +136,7 @@ const DetailProduct = () => {
                 },
               ]}
             >
-              <SelectCommon placeholder='Danh mục' options={[]} />
+              <SelectCommon placeholder='Danh mục' options={dataProductType} />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -136,7 +162,7 @@ const DetailProduct = () => {
                 },
               ]}
             >
-              <SelectCommon placeholder='Nhà sản xuất' options={[]} />
+              <SelectCommon placeholder='Nhà sản xuất' options={dataProductMake} />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -345,7 +371,7 @@ const DetailProduct = () => {
               />
             </Form.Item>
           </Col>
-          {action === "update" || action === 'addnew' && (
+          {action === "update" || action === 'addnew' ? (
             <Col
               span={6}
               style={{ display: "flex", justifyContent: "flex-end", alignItems: 'flex-end' }}
@@ -356,20 +382,27 @@ const DetailProduct = () => {
                 </Button>
               </Form.Item>
             </Col>
-          )}
+          ) : null}
           <Col span={24} className="image-upload">
-            <div>
-
-            </div>
+            {imageUrl.map((item: string, index: number) => (
+              <div style={{ width: '219px', height: '129px', position: 'relative' }}>
+                <img src={item} style={{ width: '100%', height: '100%', marginRight: '4px' }} alt='anh dep' />
+                <CloseOutlined style={{ position: 'absolute', right: 0, top: 0, cursor: 'pointer', color: 'red' }} onClick={() => handleRemoveImage(index)} />
+              </div>
+            ))}
           </Col>
           <Col span={24} style={{ textAlign: 'center', marginTop: '12px' }}>
-            <Input type="file" onChange={handleChange} />
-            {/* <Upload {...props}>
+            <Upload
+              showUploadList={false}
+              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              beforeUpload={beforeUpload}
+              onChange={handleChangeImage}>
+
               <div className="upload-image">
                 <UploadOutlined />
                 <span>Tải ảnh lên</span>
               </div>
-            </Upload> */}
+            </Upload>
           </Col>
         </Row>
       </Form>

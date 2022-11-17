@@ -6,6 +6,7 @@ import productReducer from "../pages/Product/product.reducer";
 import staffReducer from "../pages/Staff/staff.reducer";
 import danhMucReducer from "../pages/DanhMuc/danhmuc.reducer";
 import voucherReducer from "../pages/Voucher/voucher.reducer";
+import orderReducer from "../pages/Order/order.reducer";
 
 const rootReducer = combineReducers({
   loginReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   productReducer,
   staffReducer,
   danhMucReducer,
-  voucherReducer
+  voucherReducer,
+  orderReducer
 });
 
 export default rootReducer;

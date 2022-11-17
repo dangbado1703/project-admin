@@ -14,19 +14,14 @@ import { IFormProps } from "../../model/utils";
 import CommonFormItem from "../../utils/CommonFormItem";
 import { DATE_FORMAT_TYPE_DDMMYYYY, STATUS_ORDER } from "../../utils/contants";
 import { filterSelectOption } from "../../utils/filterOptions";
+import SelectCommon from "../../utils/SelectCommon";
 
 const SearchOrder = ({
   setValueSearch,
-  selectedRowKeys,
-  valueSearch,
-  setSelectedRowKeys,
-}: Omit<
-  IFormProps<IFormSearchOrder>,
-  "page" | "size" | "setPage" | "setSize"
->) => {
+}: { setValueSearch: React.Dispatch<React.SetStateAction<IFormSearchOrder>> }) => {
   const [form] = Form.useForm();
   const handleSearch = (data: any) => {
-    console.log("data", data);
+    setValueSearch(data)
   };
 
   return (
@@ -34,68 +29,47 @@ const SearchOrder = ({
       <Form form={form} onFinish={handleSearch} layout="vertical">
         <Row gutter={10}>
           <Col span={8}>
-            <CommonFormItem
-              name="statusOrder"
-              label="Status Order"
-              isRequired={false}
-            >
-              <Select
-                className="custom-selected"
-                placeholder="Select status"
-                showSearch
+            <Form.Item name='customerId'>
+              <SelectCommon options={[]} placeholder='Người đặt hàng' />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item name="fromDate">
+              <DatePicker
+                format={DATE_FORMAT_TYPE_DDMMYYYY}
                 allowClear
-                filterOption={filterSelectOption}
-                options={STATUS_ORDER}
+                className="date-picker"
+                placeholder="Ngày đặt từ"
               />
-            </CommonFormItem>
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item name="toDate">
+              <DatePicker
+                format={DATE_FORMAT_TYPE_DDMMYYYY}
+                allowClear
+                className="date-picker"
+                placeholder="Ngày đặt đến"
+              />
+            </Form.Item>
           </Col>
           <Col span={8}>
             <CommonFormItem
               name="fromPrice"
-              label="From Price"
               isRequired={false}
             >
-              <Input />
+              <Input placeholder="Giá trị đơn hàng từ" type="number" />
             </CommonFormItem>
           </Col>
           <Col span={8}>
-            <CommonFormItem name="toPrice" label="To Price" isRequired={false}>
-              <Input />
+            <CommonFormItem name="toPrice" isRequired={false}>
+              <Input placeholder="Giá trị đơn hàng đến" type="number" />
             </CommonFormItem>
           </Col>
           <Col span={8}>
-            <Form.Item label="From Date" name="fromDate">
-              <DatePicker
-                format={DATE_FORMAT_TYPE_DDMMYYYY}
-                allowClear
-                className="date-picker"
-              />
+            <Form.Item name='status'>
+              <SelectCommon placeholder='Trạng thái đơn hàng' options={STATUS_ORDER} />
             </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="To Date" name="toDate">
-              <DatePicker
-                format={DATE_FORMAT_TYPE_DDMMYYYY}
-                allowClear
-                className="date-picker"
-              />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <CommonFormItem
-              name="customerId"
-              label="Customer"
-              isRequired={false}
-            >
-              <Select
-                allowClear
-                showSearch
-                className="custom-selected"
-                placeholder="Select customer"
-                filterOption={filterSelectOption}
-                options={[]}
-              />
-            </CommonFormItem>
           </Col>
           <Col
             span={24}
@@ -110,37 +84,6 @@ const SearchOrder = ({
                 <Button htmlType="submit" className="search">
                   Tìm kiếm
                 </Button>
-                <Popconfirm
-                  placement="topRight"
-                  title={
-                    selectedRowKeys.length
-                      ? "Bạn có chắc muốn xóa những người dùng này không?"
-                      : "Vui lòng chọn người dùng"
-                  }
-                  // onConfirm={handleDelete}
-                  cancelText="Hủy"
-                  okText="Đồng ý"
-                  okButtonProps={{
-                    className: "search",
-                    style: {
-                      height: "28px",
-                      fontSize: "14px",
-                      borderRadius: 0,
-                      display: selectedRowKeys.length ? "" : "none",
-                    },
-                  }}
-                  cancelButtonProps={{
-                    className: "delete",
-                    style: {
-                      height: "28px",
-                      fontSize: "14px",
-                      borderRadius: 0,
-                      display: selectedRowKeys.length ? "" : "none",
-                    },
-                  }}
-                >
-                  <Button className="delete">Xóa</Button>
-                </Popconfirm>
               </div>
             </CommonFormItem>
           </Col>
