@@ -1,8 +1,11 @@
 import { createAsyncThunk, createSlice, isFulfilled } from "@reduxjs/toolkit";
-import { Key } from "antd/lib/table/interface";
+import { Key } from "antd/es/table/interface";
 import { toast } from "react-toastify";
 import instance from "../../contants/axios.config";
-import { IFormDataDanhMuc, IFormSearchDanhMuc } from "../../model/DanhMuc.model";
+import {
+  IFormDataDanhMuc,
+  IFormSearchDanhMuc,
+} from "../../model/DanhMuc.model";
 import { IFormDataStaff, IFormSearchStaff } from "../../model/Staff.model";
 
 const initState = {
@@ -43,9 +46,12 @@ export const getCode = createAsyncThunk("DanhMuc/getCode", async () => {
   const result = await getDataFunc("CODE");
   return result;
 });
-export const getCreatedBy = createAsyncThunk("DanhMuc/getCreatedBy", async () => {
-  return await getDataFunc("CREATED_BY");
-});
+export const getCreatedBy = createAsyncThunk(
+  "DanhMuc/getCreatedBy",
+  async () => {
+    return await getDataFunc("CREATED_BY");
+  }
+);
 
 export const getParent = createAsyncThunk("DanhMuc/getParent", async () => {
   return await getDataFunc("PARENT");
@@ -87,7 +93,7 @@ const danhMucSlice = createSlice({
       state.dataForm = action.payload.data.data.content;
     });
     builder.addMatcher(
-      isFulfilled(getCode, getName,getCreatedBy,getParent),
+      isFulfilled(getCode, getName, getCreatedBy, getParent),
       (state, action) => {
         if (action.type === "DanhMuc/getName/fulfilled") {
           state.dataName = action.payload;

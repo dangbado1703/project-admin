@@ -1,13 +1,16 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Popconfirm, Tooltip } from "antd";
-import { ColumnsType } from "antd/lib/table";
-import { Key, TableRowSelection } from "antd/lib/table/interface";
+import { ColumnsType } from "antd/es/table";
+import { Key, TableRowSelection } from "antd/es/table/interface";
 import moment from "moment";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { IFormColumnsVoucher } from "../../model/Voucher.model";
 import { changeAction } from "../../pages/Product/product.reducer";
-import { deleteVoucher, getAllVoucher } from "../../pages/Voucher/voucher.reducer";
+import {
+  deleteVoucher,
+  getAllVoucher,
+} from "../../pages/Voucher/voucher.reducer";
 import { path } from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonTable from "../../utils/CommonTable";

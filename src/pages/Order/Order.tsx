@@ -1,4 +1,3 @@
-import { Key } from "antd/lib/table/interface";
 import moment from "moment";
 import React, { useState, useEffect } from "react";
 import SearchOrder from "../../component/Order/SearchOrder";
@@ -11,28 +10,32 @@ const Order = () => {
   const [valueSearch, setValueSearch] = useState<IFormSearchOrder>({
     customerId: null,
     status: null,
-    fromPrice: '',
-    toPrice: '',
+    fromPrice: "",
+    toPrice: "",
     fromDate: null,
-    toDate: null
+    toDate: null,
   });
-  const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-  const dispatch = useAppDispatch()
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getDataSearch({
-      ...valueSearch,
-      fromDate: valueSearch.fromDate ? moment(valueSearch.fromDate).format('YYYY-MM-DD') : null,
-      toDate: valueSearch.toDate ? moment(valueSearch.toDate).format('YYYY-MM-DD') : null,
-      page,
-      size: pageSize
-    }))
-  }, [valueSearch, dispatch, page, pageSize])
+    dispatch(
+      getDataSearch({
+        ...valueSearch,
+        fromDate: valueSearch.fromDate
+          ? moment(valueSearch.fromDate).format("YYYY-MM-DD")
+          : null,
+        toDate: valueSearch.toDate
+          ? moment(valueSearch.toDate).format("YYYY-MM-DD")
+          : null,
+        page,
+        size: pageSize,
+      })
+    );
+  }, [valueSearch, dispatch, page, pageSize]);
   return (
     <div>
-      <SearchOrder
-        setValueSearch={setValueSearch}
-      />
+      <SearchOrder setValueSearch={setValueSearch} />
       {/* <TableOrder
         valueSearch={valueSearch}
         setValueSearch={setValueSearch}

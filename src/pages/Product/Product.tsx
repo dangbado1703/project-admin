@@ -1,4 +1,4 @@
-import { Key } from "antd/lib/table/interface";
+import { Key } from "antd/es/table/interface";
 import React, { useState, useEffect } from "react";
 import SearchProduct from "../../component/Product/SearchProduct";
 import TableProduct from "../../component/Product/TableProduct";
@@ -12,7 +12,7 @@ import {
   getListName,
   getListProductType,
 } from "./product.reducer";
-import './products.scss'
+import "./products.scss";
 
 const Product = () => {
   const [page, setPage] = useState(1);

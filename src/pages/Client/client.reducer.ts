@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Key } from "antd/lib/table/interface";
+import { Key } from "antd/es/table/interface";
 import instance from "../../contants/axios.config";
 import {
   IFormDataClient,

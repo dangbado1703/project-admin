@@ -3,6 +3,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
 import Router from "./router/Router";
+import "antd/dist/reset.css";
 
 function App() {
   return (

@@ -1,5 +1,5 @@
 import { Empty, Table, TableProps, Tag } from "antd";
-import { ColumnsType } from "antd/lib/table";
+import { ColumnsType } from "antd/es/table";
 import React from "react";
 import CommonTooltip from "./CommonTooltip";
 
@@ -23,7 +23,7 @@ const CommonTable = ({
 }: // đây là những props
 IFormProps) => {
   const newColumns: ColumnsType<any> | undefined = columns?.map((item) => {
-    if (item.title === "Status"||item.title === "Trạng thái") {
+    if (item.title === "Status" || item.title === "Trạng thái") {
       return {
         ...item,
         align: "center",
@@ -66,7 +66,7 @@ IFormProps) => {
     ellipsis: {
       showTitle: false,
     },
-    render(value, record, index) {
+    render(value: any, record: any, index: any) {
       return page === 1 ? index + 1 : (page - 1) * pageSize + index + 1;
     },
   });

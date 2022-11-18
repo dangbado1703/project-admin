@@ -1,7 +1,6 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Popconfirm, Tooltip } from "antd";
-import { ColumnsType } from "antd/lib/table";
-import { Key, TableRowSelection } from "antd/lib/table/interface";
+import { ColumnsType, Key, TableRowSelection } from "antd/es/table/interface";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { IFormColumnsProduct } from "../../model/Product.model";
@@ -59,7 +58,7 @@ const TableProduct = ({
       title: "ProductType",
       dataIndex: "productType",
     },
-  
+
     {
       title: "Created By",
       dataIndex: "createdBy",

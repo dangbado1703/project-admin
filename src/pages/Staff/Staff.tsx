@@ -1,4 +1,4 @@
-import { Key } from "antd/lib/table/interface";
+import { Key } from "antd/es/table/interface";
 import React, { useEffect, useState } from "react";
 import SearchStaff from "../../component/Staff/SearchStaff";
 import TableStaff from "../../component/Staff/TableStaff";
@@ -21,7 +21,7 @@ const Staff = () => {
     phone: "",
     status: 1,
     gender: null,
-    roleId: null
+    roleId: null,
   });
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
@@ -36,7 +36,7 @@ const Staff = () => {
       dispatch(getFullName()),
       dispatch(getPhone()),
       dispatch(getEmail()),
-      dispatch(getRole())
+      dispatch(getRole()),
     ]);
   }, [dispatch]);
   return (

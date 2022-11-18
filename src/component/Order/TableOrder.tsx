@@ -1,12 +1,10 @@
 import { Tag } from "antd";
-import { ColumnsType } from "antd/lib/table";
+import { ColumnsType } from "antd/es/table";
 import React from "react";
 import { IFormColumnsOrder, IFormSearchOrder } from "../../model/Order.model";
 import { IFormProps } from "../../model/utils";
 
-const TableOrder = ({
-  valueSearch,
-}: { valueSearch: IFormSearchOrder }) => {
+const TableOrder = ({ valueSearch }: { valueSearch: IFormSearchOrder }) => {
   const columns: ColumnsType<IFormColumnsOrder> = [
     {
       title: "Customer Name",

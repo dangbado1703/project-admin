@@ -8,7 +8,7 @@ import {
   Row,
   Select,
 } from "antd";
-import { Key } from "antd/lib/table/interface";
+import { Key } from "antd/es/table/interface";
 import React from "react";
 import { IFormSearchVoucher } from "../../model/Voucher.model";
 import { useAppSelector } from "../../store/hooks";
@@ -38,8 +38,12 @@ const SearchVoucher = ({
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         <Row gutter={10}>
           <Col span={12}>
-            <CommonFormItem name="code" label="Mã khuyến mại" isRequired={false}>
-              <Input placeholder="Mã khuyến mại"/>
+            <CommonFormItem
+              name="code"
+              label="Mã khuyến mại"
+              isRequired={false}
+            >
+              <Input placeholder="Mã khuyến mại" />
             </CommonFormItem>
           </Col>
           <Col span={12}>
@@ -55,11 +59,7 @@ const SearchVoucher = ({
             </Form.Item>
           </Col>
           <Col span={6}>
-            <CommonFormItem
-              name="fromPrice"
-              label="Giá từ"
-              isRequired={false}
-            >
+            <CommonFormItem name="fromPrice" label="Giá từ" isRequired={false}>
               <Input placeholder="Giá từ" />
             </CommonFormItem>
           </Col>

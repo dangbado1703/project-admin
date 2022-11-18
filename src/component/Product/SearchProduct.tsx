@@ -8,7 +8,7 @@ import {
   Row,
   Select,
 } from "antd";
-import { Key } from "antd/lib/table/interface";
+import { Key } from "antd/es/table/interface";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IFormSearchProduct } from "../../model/Product.model";
@@ -25,19 +25,17 @@ interface IFormProps {
   size: number;
   selectedRowKeys: Key[];
 }
-const SearchProduct = ({
-  setValueSearch,
-}: IFormProps) => {
+const SearchProduct = ({ setValueSearch }: IFormProps) => {
   const [form] = Form.useForm();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { dataMake, dataProductType, dataCode, dataName, dataCreated } =
     useAppSelector((state) => state.productReducer);
   const handleSubmit = (data: any) => {
     setValueSearch(data);
   };
   const handleAddNew = () => {
-    navigate(path.addnewProduct)
-  }
+    navigate(path.addnewProduct);
+  };
   return (
     <div>
       <Form form={form} onFinish={handleSubmit} layout="vertical">
@@ -179,7 +177,9 @@ const SearchProduct = ({
                 <Button htmlType="submit" className="search">
                   Tìm kiếm
                 </Button>
-                <Button className="search" onClick={handleAddNew}>Thêm mới</Button>
+                <Button className="search" onClick={handleAddNew}>
+                  Thêm mới
+                </Button>
               </div>
             </CommonFormItem>
           </Col>

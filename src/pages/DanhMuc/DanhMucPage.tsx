@@ -1,4 +1,4 @@
-import { Key } from "antd/lib/table/interface";
+import { Key } from "antd/es/table/interface";
 import React, { useEffect, useState } from "react";
 import FormSearch from "../../component/DanhMuc/FormSearch";
 import FormTable from "../../component/DanhMuc/FormTable";
@@ -26,7 +26,7 @@ const DanhMucPage = () => {
     dispatch(getDanhMuc({ ...valueSearch, page, size }));
   }, [dispatch, valueSearch, page, size]);
   useEffect(() => {
-    Promise.any([         
+    Promise.any([
       dispatch(getCode()),
       dispatch(getName()),
       dispatch(getCreatedBy()),
