@@ -17,6 +17,7 @@ import {
   getDetail,
   getListProductMake,
   getListProductType,
+  updateProduct,
 } from "../../pages/Product/product.reducer";
 import { path } from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -103,6 +104,15 @@ const DetailProduct = () => {
     fileList.forEach((item) => {
       formData.append("path", item);
     });
+    if (action === 'update') {
+      dispatch(updateProduct(formData)).then(res => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          toast.success("Sửa sản phẩm thành công");
+          navigate(path.product);
+        }
+      })
+      return
+    }
     dispatch(addNewProduct(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         toast.success("Thêm sản phẩm thành công");
@@ -111,7 +121,6 @@ const DetailProduct = () => {
     });
   };
 
-  console.log("imageUrl", imageUrl);
 
   const handleRemoveImage = (index: number) => {
     setImageUrl(imageUrl.filter((item, position) => position !== index));
@@ -389,7 +398,7 @@ const DetailProduct = () => {
               />
             </Form.Item>
           </Col>
-          {action === "update" || action === "addnew" ? (
+          {action === "addnew" ? (
             <Col
               span={6}
               style={{
@@ -405,6 +414,22 @@ const DetailProduct = () => {
               </Form.Item>
             </Col>
           ) : null}
+          {action === 'update' ?
+            <Col
+              span={6}
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            >
+              <Form.Item>
+                <Button className="search" htmlType="submit">
+                  Sửa
+                </Button>
+              </Form.Item>
+            </Col>
+            : null}
           <Col span={24} className="image-upload">
             {imageUrl.map((item: string, index: number) => (
               <div
