@@ -1,12 +1,11 @@
-import { Button, Col, DatePicker, Form, Popconfirm, Row, Select } from "antd";
-import { Key } from "antd/lib/table/interface";
+import { Button, Col, Form, Popconfirm, Row } from "antd";
+import { Key } from "antd/es/table/interface";
 import React from "react";
 import { toast } from "react-toastify";
 import { IFormSearchClient } from "../../model/Client.model";
 import { deleteClient, getClient } from "../../pages/Client/client.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
-import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import { filterSelectOption, STATUS } from "../../utils/filterOptions";
 import SelectCommon from "../../utils/SelectCommon";
 
@@ -49,7 +48,7 @@ const SearchClient = ({
             <SelectCommon
               options={dataUsername}
               filterOption={filterSelectOption}
-              placeholder='Username'
+              placeholder="Username"
             />
           </CommonFormItem>
         </Col>

@@ -1,5 +1,4 @@
 import { Button, Col, DatePicker, Form, Input, Row } from "antd";
-import TextArea from "antd/lib/input/TextArea";
 import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { changeAction, getDetail } from "../../pages/Voucher/voucher.reducer";
@@ -9,6 +8,7 @@ import {
   DATE_FORMAT_TYPE_YYYYMMDD,
 } from "../../utils/contants";
 import moment from "moment";
+import TextArea from "antd/es/input/TextArea";
 
 const DetailVoucher = () => {
   const validateMessages = {
@@ -127,11 +127,11 @@ const DetailVoucher = () => {
             >
               <Input
                 placeholder="Trạng thái"
-                onBlur={(e) =>{
-                  form.getFieldValue("status")==1?
-                  form.setFieldValue("status", "Hoạt động"):form.setFieldValue("status", "Không hoạt động")
-                }
-                }
+                onBlur={(e) => {
+                  form.getFieldValue("status") == 1
+                    ? form.setFieldValue("status", "Hoạt động")
+                    : form.setFieldValue("status", "Không hoạt động");
+                }}
                 disabled={action === "view"}
               />
             </Form.Item>

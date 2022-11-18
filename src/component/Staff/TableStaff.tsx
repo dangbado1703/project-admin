@@ -1,7 +1,7 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Popconfirm, Tooltip } from "antd";
-import { ColumnsType } from "antd/lib/table";
-import { TableRowSelection } from "antd/lib/table/interface";
+import { ColumnsType } from "antd/es/table";
+import { TableRowSelection } from "antd/es/table/interface";
 import React, { useState } from "react";
 import { IFormColumnsStaff, IFormSearchStaff } from "../../model/Staff.model";
 import { IFormProps } from "../../model/utils";
@@ -26,7 +26,9 @@ const TableStaff = ({
   const [isOpen, setIsOpen] = useState(false);
   const [valueDetail, setValueDetail] = useState<IFormColumnsStaff>();
   const dispatch = useAppDispatch();
-  const { dataStaff, totalItem } = useAppSelector((state) => state.staffReducer);
+  const { dataStaff, totalItem } = useAppSelector(
+    (state) => state.staffReducer
+  );
   const handleDelete = () => {
     dispatch(deleteUser(selectedRowKeys)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
@@ -66,8 +68,8 @@ const TableStaff = ({
       dataIndex: "birthday",
     },
     {
-      title: 'Quyền',
-      dataIndex: 'roleName'
+      title: "Quyền",
+      dataIndex: "roleName",
     },
     {
       title: "Status",

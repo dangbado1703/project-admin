@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, isFulfilled } from "@reduxjs/toolkit";
-import { Key } from "antd/lib/table/interface";
+import { Key } from "antd/es/table/interface";
 import { toast } from "react-toastify";
 import instance from "../../contants/axios.config";
 import { IFormDataStaff, IFormSearchStaff } from "../../model/Staff.model";
@@ -33,13 +33,19 @@ export const getUser = createAsyncThunk(
 
 export const getUsername = createAsyncThunk("Staff/getUsername", async () => {
   const data = await getDataFunc("USER_NAME");
-  const result = data.usernames.map((item: any) => ({ label: item, value: item }));
+  const result = data.usernames.map((item: any) => ({
+    label: item,
+    value: item,
+  }));
   return result;
 });
 
 export const getFullName = createAsyncThunk("Staff/getFullName", async () => {
   const result = await getDataFunc("USER_FULL_NAME");
-  const data = result.fullNames.map((item: any) => ({ label: item, value: item }));
+  const data = result.fullNames.map((item: any) => ({
+    label: item,
+    value: item,
+  }));
   return data;
 });
 export const getPhone = createAsyncThunk("Staff/getPhone", async () => {
@@ -79,10 +85,13 @@ export const updateUser = createAsyncThunk(
     return result;
   }
 );
-export const addNewUser = createAsyncThunk('Staff/addNewUser',async (data:any) => {
-  const result = await instance.post('/api/v1/user/create', data)
-  return result
-})
+export const addNewUser = createAsyncThunk(
+  "Staff/addNewUser",
+  async (data: any) => {
+    const result = await instance.post("/api/v1/user/create", data);
+    return result;
+  }
+);
 const staffSlice = createSlice({
   name: "Staff",
   initialState: initState,
@@ -97,14 +106,14 @@ const staffSlice = createSlice({
         state.dataStaff = action.payload.data.data.content;
         state.totalItem = action.payload.data.data.totalElements;
       })
-      .addCase(addNewUser.pending, state => {
-        state.isLoading = true
+      .addCase(addNewUser.pending, (state) => {
+        state.isLoading = true;
       })
-      .addCase(addNewUser.fulfilled, state => {
-        state.isLoading = false
+      .addCase(addNewUser.fulfilled, (state) => {
+        state.isLoading = false;
       })
-      .addCase(addNewUser.rejected, state => {
-        state.isLoading = false
+      .addCase(addNewUser.rejected, (state) => {
+        state.isLoading = false;
       })
       .addMatcher(
         isFulfilled(getEmail, getFullName, getPhone, getUsername, getRole),

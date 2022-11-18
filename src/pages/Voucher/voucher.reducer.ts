@@ -1,8 +1,8 @@
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../../contants/axios.config";
 import { IFormDataVoucher, IFormSearch } from "../../model/Voucher.model";
-import { Key } from "antd/lib/table/interface";
+import { Key } from "antd/es/table/interface";
 const initState = {
   dataVoucher: [] as IFormDataVoucher[],
   dataDetail: {},
@@ -35,7 +35,7 @@ export const updateVoucher = createAsyncThunk(
   }
 );
 export const deleteVoucher = createAsyncThunk(
-  "Voucher/delete\Voucher",
+  "Voucher/deleteVoucher",
   async (id: Key[]) => {
     const result = await instance.post("/api/v1/voucher/delete", id);
     toast.success("Xóa thành công");

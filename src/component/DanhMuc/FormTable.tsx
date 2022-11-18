@@ -1,9 +1,12 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Popconfirm, Tooltip } from "antd";
-import { ColumnsType } from "antd/lib/table";
-import { TableRowSelection } from "antd/lib/table/interface";
+import { ColumnsType } from "antd/es/table";
+import { TableRowSelection } from "antd/es/table/interface";
 import React, { useState } from "react";
-import { IFormColumnsDanhMuc, IFormSearchDanhMuc } from "../../model/DanhMuc.model";
+import {
+  IFormColumnsDanhMuc,
+  IFormSearchDanhMuc,
+} from "../../model/DanhMuc.model";
 import { IFormColumnsStaff, IFormSearchStaff } from "../../model/Staff.model";
 import { IFormProps } from "../../model/utils";
 import { deleteDanhMuc, getDanhMuc } from "../../pages/DanhMuc/danhmuc.reducer";
@@ -110,9 +113,7 @@ const FormTable = ({
                 },
               }}
             >
-              <DeleteOutlined
-                onClick={() => setSelectedRowKeys([record.id])}
-              />
+              <DeleteOutlined onClick={() => setSelectedRowKeys([record.id])} />
             </Popconfirm>
           </Tooltip>
           <Tooltip title="Xem chi tiết">

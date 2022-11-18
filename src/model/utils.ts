@@ -1,4 +1,4 @@
-import { Key } from "antd/lib/table/interface";
+import { Key } from "antd/es/table/interface";
 
 export interface IFormProps<T> {
   page: number;

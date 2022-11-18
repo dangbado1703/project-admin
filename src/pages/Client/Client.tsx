@@ -1,4 +1,4 @@
-import { Key } from "antd/lib/table/interface";
+import { Key } from "antd/es/table/interface";
 import { useEffect, useState } from "react";
 import SearchClient from "../../component/Client/Search";
 import TableClient from "../../component/Client/Table";
@@ -33,7 +33,7 @@ const Client = () => {
       dispatch(getAllUsername()),
       dispatch(getAllPhone()),
       dispatch(getAllEmail()),
-      dispatch(getFullName())
+      dispatch(getFullName()),
     ]);
   }, [dispatch]);
 
