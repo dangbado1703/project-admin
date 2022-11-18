@@ -4,7 +4,12 @@ import TextArea from "antd/es/input/TextArea";
 import { RcFile, UploadChangeParam, UploadFile } from "antd/es/upload";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   addNewProduct,
@@ -13,6 +18,7 @@ import {
   getListProductMake,
   getListProductType,
 } from "../../pages/Product/product.reducer";
+import { path } from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { DATE_FORMAT_TYPE_YYYYMMDD } from "../../utils/contants";
 import SelectCommon from "../../utils/SelectCommon";
@@ -24,6 +30,7 @@ const DetailProduct = () => {
   const { id } = useParams();
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { action, dataDetail, dataProductType, dataProductMake } =
     useAppSelector((state) => state.productReducer);
   useEffect(() => {
@@ -71,13 +78,16 @@ const DetailProduct = () => {
     dispatch(getDetail(id)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         const resPayload: any = res.payload;
+        const arrImg = resPayload.data.data.images.map(
+          (item: any, index: any) => {
+            return `data:image/jpeg;base64,${item}`;
+          }
+        );
+        setImageUrl(arrImg);
         form.setFieldsValue({
           ...resPayload.data.data,
-          expiredDate: resPayload.data.data.expiredDate
-            ? moment(resPayload.data.data.expiredDate).format(
-                DATE_FORMAT_TYPE_YYYYMMDD
-              )
-            : null,
+          makeId: resPayload.data.data.make.id,
+          productTypeId: resPayload.data.data.productType.id,
         });
       }
     });
@@ -93,8 +103,15 @@ const DetailProduct = () => {
     fileList.forEach((item) => {
       formData.append("path", item);
     });
-    dispatch(addNewProduct(formData));
+    dispatch(addNewProduct(formData)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        toast.success("Thêm sản phẩm thành công");
+        navigate(path.product);
+      }
+    });
   };
+
+  console.log("imageUrl", imageUrl);
 
   const handleRemoveImage = (index: number) => {
     setImageUrl(imageUrl.filter((item, position) => position !== index));
@@ -131,6 +148,25 @@ const DetailProduct = () => {
           </Col>
           <Col span={8}>
             <Form.Item
+              name="code"
+              rules={[
+                {
+                  required: action === "update" || action === "addnew",
+                  message: "Mã sản phẩm không được để trống",
+                },
+              ]}
+            >
+              <Input
+                placeholder="Mã sản phẩm"
+                onBlur={(e) =>
+                  form.setFieldValue("name", e.target.value.trim())
+                }
+                disabled={action === "view"}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
               name="productTypeId"
               rules={[
                 {
@@ -139,7 +175,11 @@ const DetailProduct = () => {
                 },
               ]}
             >
-              <SelectCommon placeholder="Danh mục" options={dataProductType} />
+              <SelectCommon
+                placeholder="Danh mục"
+                options={dataProductType}
+                disabled={action === "view"}
+              />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -166,6 +206,7 @@ const DetailProduct = () => {
               <SelectCommon
                 placeholder="Nhà sản xuất"
                 options={dataProductMake}
+                disabled={action === "view"}
               />
             </Form.Item>
           </Col>
@@ -385,27 +426,30 @@ const DetailProduct = () => {
                     top: 0,
                     cursor: "pointer",
                     color: "red",
+                    display: action === "view" ? "none" : "block",
                   }}
                   onClick={() => handleRemoveImage(index)}
                 />
               </div>
             ))}
           </Col>
-          <Col span={24} style={{ textAlign: "center", marginTop: "12px" }}>
-            <Upload
-              showUploadList={false}
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              beforeUpload={beforeUpload}
-              onChange={handleChangeImage}
-              accept="image/png, image/gif, image/jpeg"
-              headers={{ authorization: "authorization-text" }}
-            >
-              <div className="upload-image">
-                <UploadOutlined />
-                <span>Tải ảnh lên</span>
-              </div>
-            </Upload>
-          </Col>
+          {action === "update" || action === "addnew" ? (
+            <Col span={24} style={{ textAlign: "center", marginTop: "12px" }}>
+              <Upload
+                showUploadList={false}
+                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                beforeUpload={beforeUpload}
+                onChange={handleChangeImage}
+                accept="image/png, image/gif, image/jpeg"
+                headers={{ authorization: "authorization-text" }}
+              >
+                <div className="upload-image">
+                  <UploadOutlined />
+                  <span>Tải ảnh lên</span>
+                </div>
+              </Upload>
+            </Col>
+          ) : null}
         </Row>
       </Form>
     </div>
