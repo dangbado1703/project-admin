@@ -13,5 +13,5 @@ export const path = {
   productType: "/productType",
   voucher: "/voucher",
   voucherDetail: "/voucher/detail/:id",
-  updateVoucher: "product/update/:id",
+  updateVoucher: "voucher/update/:id",
 };

@@ -15,6 +15,7 @@ const initState = {
   dataCreatedBy: [],
   dataParent: [],
   action: "",
+  isLoading: false,
 };
 
 const getDataFunc = async (type: string) => {
@@ -91,7 +92,16 @@ const danhMucSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(getDanhMuc.fulfilled, (state, action) => {
       state.dataForm = action.payload.data.data.content;
-    });
+    }).addCase(createDanhMuc.pending, (state) => {
+      state.isLoading = true;
+    })
+    .addCase(createDanhMuc.fulfilled, (state) => {
+      state.isLoading = false;
+    })
+    .addCase(createDanhMuc.rejected, (state) => {
+      state.isLoading = false;
+    })
+    ;
     builder.addMatcher(
       isFulfilled(getCode, getName, getCreatedBy, getParent),
       (state, action) => {
