@@ -117,7 +117,7 @@ export const getDetail = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
   "product/updateProduct",
-  async (data) => {
+  async (data:FormData) => {
     const result = await instance.post("/api/v1/product/update", data);
     return result;
   }
