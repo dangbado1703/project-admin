@@ -9,9 +9,10 @@ import {
   Select,
 } from "antd";
 import { Key } from "antd/es/table/interface";
-import React from "react";
+import React, { useState } from "react";
 import { IFormSearchVoucher } from "../../model/Voucher.model";
-import { useAppSelector } from "../../store/hooks";
+import { changeAction } from "../../pages/Voucher/voucher.reducer";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
 import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import { filterSelectOption, STATUS } from "../../utils/filterOptions";
@@ -33,6 +34,13 @@ const SearchVoucher = ({
     setValueSearch(data);
   };
   const handleDelete = () => {};
+  
+const [isOpen, setIsOpen] = useState(false);
+const dispatch = useAppDispatch();
+  const handleOpenAddNew = () => {
+    setIsOpen(true)
+    dispatch(changeAction('addnew'))
+  }
   return (
     <div>
       <Form form={form} onFinish={handleSubmit} layout="vertical">
@@ -81,6 +89,7 @@ const SearchVoucher = ({
                 <Button htmlType="submit" className="search">
                   Tìm kiếm
                 </Button>
+                <Button className="search" onClick={handleOpenAddNew}>Thêm mới</Button>
                 <Popconfirm
                   title={
                     selectedRowKeys.length
