@@ -14,8 +14,10 @@ import { IFormSearchVoucher } from "../../model/Voucher.model";
 import { changeAction } from "../../pages/Voucher/voucher.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
+import { path } from "../../router/path";
 import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import { filterSelectOption, STATUS } from "../../utils/filterOptions";
+import { useNavigate } from "react-router-dom";
 
 interface IFormProps {
   setValueSearch: React.Dispatch<React.SetStateAction<IFormSearchVoucher>>;
@@ -30,6 +32,7 @@ const SearchVoucher = ({
   selectedRowKeys,
 }: IFormProps) => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
   const handleSubmit = (data: any) => {
     setValueSearch(data);
   };
@@ -38,8 +41,7 @@ const SearchVoucher = ({
 const [isOpen, setIsOpen] = useState(false);
 const dispatch = useAppDispatch();
   const handleOpenAddNew = () => {
-    setIsOpen(true)
-    dispatch(changeAction('addnew'))
+    navigate(path.createVoucher);
   }
   return (
     <div>

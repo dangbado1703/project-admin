@@ -28,6 +28,7 @@ const items: MenuItem[] = [
   getItem("Sản phẩm", path.product, <ShoppingOutlined />),
   getItem("Danh mục", path.productType, <ShoppingOutlined />),
   getItem("Khuyến mại", path.voucher, <ShoppingOutlined />),
+  getItem("Đơn hàng hủy", path.orderCancel, <ShoppingOutlined />),
 ];
 const MenuItems = () => {
   const [currentKey, setCurrentKey] = useState(path.home);

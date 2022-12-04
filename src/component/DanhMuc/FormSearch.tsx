@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
 import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import { filterSelectOption, STATUS } from "../../utils/filterOptions";
+import SelectCommon from "../../utils/SelectCommon";
 import ViewModal from "./ViewModal";
 
 const FormSearch = ({
@@ -26,6 +27,11 @@ const FormSearch = ({
   const { dataCode, dataName, dataCreatedBy, dataParent,dataForm } = useAppSelector(
     (state) => state.danhMucReducer
   );
+  console.log("dataCode =", dataCode);
+  console.log("dataName =", dataName);
+  console.log("dataCreatedBy =", dataCreatedBy);
+  console.log("dataParent =", dataParent);
+  console.log("dataForm =", dataForm);
   const handleSearch = (data: any) => {
     setValueSearch(data);
   };
@@ -47,7 +53,7 @@ const FormSearch = ({
         <Row gutter={10}>
           <Col span={8}>
             <CommonFormItem name="code" label="Mã danh mục" isRequired={false}>
-              <Select
+              <SelectCommon
                 allowClear
                 className="custom-selected"
                 showSearch

@@ -1,18 +1,9 @@
-import { Button, Col, DatePicker, Form, Input, Modal, Row } from "antd";
-import { useForm } from "antd/es/form/Form";
-import moment from "moment";
-import React, { useEffect } from "react";
+import { Button, Col, Form, Input, Modal, Row } from "antd";
 import { IFormColumnsDanhMuc, IFormSearchDanhMuc } from "../../model/DanhMuc.model";
-import { IFormColumnsStaff, IFormSearchStaff } from "../../model/Staff.model";
 import { IFormPropsModal } from "../../model/utils";
 import { createDanhMuc, getDanhMuc, updateDanhMuc } from "../../pages/DanhMuc/danhmuc.reducer";
-import { getUser, updateUser } from "../../pages/Staff/staff.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
-import {
-  DATE_FORMAT_TYPE_DDMMYYYY,
-  DATE_FORMAT_TYPE_YYYYMMDD,
-} from "../../utils/contants";
 import { STATUS } from "../../utils/filterOptions";
 import SelectCommon from "../../utils/SelectCommon";
 
@@ -26,15 +17,18 @@ const ViewModal = ({
     // eslint-disable-next-line
     required: "${label} không được để trống",
   };
-  const [form] = useForm();
+  const [form] = Form.useForm();
   const dispatch = useAppDispatch();
-  const { action, dataParent } = useAppSelector((state) => state.danhMucReducer);
+  const { action, dataParent,isLoading } = useAppSelector((state) => state.danhMucReducer);
   const setTitle = () => {
     if (action === "view") {
       return "Xem chi tiết";
     }
     if (action === "update") {
       return "Cập nhật danh mục";
+    }
+    if (action === 'addnew') {
+      return 'Thêm mới danh mục'
     }
   };
   const handleSubmit = (data: any) => {
@@ -68,7 +62,7 @@ const ViewModal = ({
             Hủy
           </Button>
           {action !== "view" ? (
-            <Button className="search" onClick={() => form.submit()}>
+            <Button loading={isLoading} className="search" htmlType="submit" onClick={() => form.usubmit()}>
               Đồng ý
             </Button>
           ) : null}
