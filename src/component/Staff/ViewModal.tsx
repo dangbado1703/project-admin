@@ -90,7 +90,7 @@ const ViewModal = ({
             Hủy
           </Button>
           {action !== "view" ? (
-            <Button loading={isLoading} className="search" onClick={() => form.submit()}>
+            <Button loading={isLoading} className="search" onClick={() => form.usubmit()}>
               Đồng ý
             </Button>
           ) : null}

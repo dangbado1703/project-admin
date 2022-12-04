@@ -14,15 +14,16 @@ const initState = {
   dataCode: [],
   dataCreatedBy: [],
   dataParent: [],
+  dataDetail:{},
   action: "",
   isLoading: false,
 };
 
-const getDataFunc = async (type: string) => {
+const getDataName = async (type: string) => {
   const result = await instance.get(
     `/api/v1/product-type/suggestion?enums=${type}&keyWord=`
   );
-  const newResult = result.data.data.map((item: any) => {
+  const newResult = result.data.data.name.map((item: any) => {
     return {
       label: item,
       value: item,
@@ -30,6 +31,43 @@ const getDataFunc = async (type: string) => {
   });
   return newResult;
 };
+const getDataCode = async (type: string) => {
+  const result = await instance.get(
+    `/api/v1/product-type/suggestion?enums=${type}&keyWord=`
+  );
+  const newResult = result.data.data.code.map((item: any) => {
+    return {
+      label: item,
+      value: item,
+    };
+  });
+  return newResult;
+};
+const getDataCreatedBy = async (type: string) => {
+  const result = await instance.get(
+    `/api/v1/product-type/suggestion?enums=${type}&keyWord=`
+  );
+  const newResult = result.data.data.createdBy.map((item: any) => {
+    return {
+      label: item,
+      value: item,
+    };
+  });
+  return newResult;
+};
+const getDataParent = async (type: string) => {
+  const result = await instance.get(
+    `/api/v1/product-type/suggestion?enums=${type}&keyWord=`
+  );
+  const newResult = result.data.data.productTypeDTOS.map((item: any) => {
+    return {
+      label: item.name,
+      value: item.id,
+    };
+  });
+  return newResult;
+};
+
 
 export const getDanhMuc = createAsyncThunk(
   "DanhMuc/getDanhMuc",
@@ -40,22 +78,22 @@ export const getDanhMuc = createAsyncThunk(
 );
 
 export const getName = createAsyncThunk("DanhMuc/getName", async () => {
-  return await getDataFunc("NAME");
+  return await getDataName("NAME");
 });
 
 export const getCode = createAsyncThunk("DanhMuc/getCode", async () => {
-  const result = await getDataFunc("CODE");
+  const result = await getDataCode("CODE");
   return result;
 });
 export const getCreatedBy = createAsyncThunk(
   "DanhMuc/getCreatedBy",
   async () => {
-    return await getDataFunc("CREATED_BY");
+    return await getDataCreatedBy("CREATED_BY");
   }
 );
 
 export const getParent = createAsyncThunk("DanhMuc/getParent", async () => {
-  return await getDataFunc("PARENT");
+  return await getDataParent("PARENT");
 });
 
 export const deleteDanhMuc = createAsyncThunk(
@@ -66,7 +104,14 @@ export const deleteDanhMuc = createAsyncThunk(
     return result;
   }
 );
-
+export const getDetail = createAsyncThunk(
+  "DanhMuc/getDetail",
+  async (id: string) => {
+    const result = await instance.get(`/api/v1/product-type/detail/${id}`);
+    console.log("result", result);
+    return result;
+  }
+);
 export const updateDanhMuc = createAsyncThunk(
   "DanhMuc/updateDanhMuc",
   async (data: Partial<IFormDataDanhMuc>) => {
@@ -100,6 +145,9 @@ const danhMucSlice = createSlice({
     })
     .addCase(createDanhMuc.rejected, (state) => {
       state.isLoading = false;
+    })
+    .addCase(getDetail.fulfilled, (state, action) => {
+      state.dataDetail = action.payload.data.data;
     })
     ;
     builder.addMatcher(
