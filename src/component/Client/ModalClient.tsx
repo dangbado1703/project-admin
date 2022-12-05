@@ -80,7 +80,7 @@ const ModalClient = ({
             Hủy
           </Button>
           {action === "update" ? (
-            <Button className="search" onClick={() => form.usubmit()}>
+            <Button className="search" onClick={() => form.submit()}>
               Đồng ý
             </Button>
           ) : null}
