@@ -12,7 +12,6 @@ export const getDataSearch = createAsyncThunk(
   "Order/getDataSearch",
   async (data: IFormSearchOrder) => {
     const result = await instance.post("/api/v1/order/search", data);
-    console.log("result", result);
     return result;
   }
 );
