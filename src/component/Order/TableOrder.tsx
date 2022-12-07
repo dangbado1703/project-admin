@@ -7,12 +7,18 @@ import moment from 'moment'
 import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import { CheckCircleOutlined, CheckOutlined, CloseCircleOutlined, EyeOutlined } from "@ant-design/icons";
 import CommonTable from "../../utils/CommonTable";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { acceptOrder, getDataSearch } from "../../pages/Order/order.reducer";
+import ModalReason from "./ModalReason";
+import { useNavigate } from "react-router-dom";
 
 
 
 const TableOrder = ({ valueSearch, setPage, setSize, page, size }: Omit<IFormProps<IFormSearchOrder>, "setValueSearch" | "setSelectedRowKeys" | "selectedRowKeys">) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [orderId, setOrderId] = useState<number | null>(null)
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const { dataOrder, totalElements, isLoading } = useAppSelector(state => state.orderReducer)
   const columns: ColumnsType<IFormColumnsOrder> = [
     {
@@ -27,7 +33,7 @@ const TableOrder = ({ valueSearch, setPage, setSize, page, size }: Omit<IFormPro
       },
     },
     {
-      title: 'Trạng thái',
+      title: 'Trạng thái đơn hàng',
       dataIndex: 'status',
       render(value) {
         if (value === 0) {
@@ -35,6 +41,9 @@ const TableOrder = ({ valueSearch, setPage, setSize, page, size }: Omit<IFormPro
         }
         if (value === 1) {
           return <Tag color="success">Chấp nhận</Tag>
+        }
+        if (value === 3) {
+          return <Tag color="red">Đã huỷ</Tag>
         }
       }
     },
@@ -56,7 +65,7 @@ const TableOrder = ({ valueSearch, setPage, setSize, page, size }: Omit<IFormPro
       title: 'Phí vận chuyển',
       dataIndex: 'shippingTotal',
       render(value) {
-        return <span>${value}</span>
+        return <span>{value ? `$${value}` : ''}</span>
       }
     },
     {
@@ -69,29 +78,71 @@ const TableOrder = ({ valueSearch, setPage, setSize, page, size }: Omit<IFormPro
         if (value === 1) {
           return <span>Đã thanh toán</span>
         }
+
       }
     },
     {
       title: 'Hành động',
-      render: () => {
-        return <div>
-          <Tooltip title='Xem chi tiết'>
-            <EyeOutlined style={{cursor: 'pointer'}} />
-          </Tooltip>
-          <Popconfirm title='Bạn có chắc muốn huỷ đơn hàng?' onConfirm={() => setIsOpen(true)}>
+      render: (value, record) => {
+        let custom = null
+        if (record.status === 0) {
+          custom = <>
             <Tooltip title='Duyệt đơn hàng'>
-              <CheckCircleOutlined style={{color: 'green', margin: '0 8px'}} />
+              <CheckCircleOutlined style={{ color: 'green', margin: '0 8px' }} onClick={() => handleAcceptOrder(record.oderId)} />
             </Tooltip>
-          </Popconfirm>
-          <Tooltip title='Huỷ'>
-            <CloseCircleOutlined style={{color: '#f50', cursor: 'pointer'}}  />
-          </Tooltip>
+
+            <Popconfirm title='Bạn có chắc muốn huỷ đơn hàng?' onConfirm={() => {
+              setOrderId(record.oderId)
+              setIsOpen(true)
+            }}>
+              <Tooltip title='Huỷ'>
+                <CloseCircleOutlined style={{ color: '#f50', cursor: 'pointer' }} />
+              </Tooltip>
+            </Popconfirm>
+          </>
+        }
+        if (record.status === 1) {
+          custom = (
+            <>
+
+              <Popconfirm title='Bạn có chắc muốn huỷ đơn hàng?' onConfirm={() => {
+                setOrderId(record.oderId)
+                setIsOpen(true)
+              }}>
+                <Tooltip title='Huỷ'>
+                  <CloseCircleOutlined style={{ color: '#f50', cursor: 'pointer', marginLeft: '8px' }} />
+                </Tooltip>
+              </Popconfirm>
+            </>
+          )
+        }
+        return <div>
+          <div>
+            <Tooltip title='Xem chi tiết'>
+              <EyeOutlined style={{ cursor: 'pointer' }} onClick={() => navigate(`/order/detail/${record.oderId}`)} />
+            </Tooltip>
+            {custom}
+          </div>
         </div>
+        // return <div>
+        //   <Tooltip title='Duyệt đơn hàng'>
+        //     <CheckCircleOutlined style={{ color: 'green', margin: '0 8px' }} onClick={() => handleAcceptOrder(record.oderId)} />
+        //   </Tooltip>
+
+        // </div>
       }
     }
   ];
+  const handleAcceptOrder = (orderId: number) => {
+    dispatch(acceptOrder(orderId)).then(res => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        dispatch(getDataSearch({ ...valueSearch, page, size }))
+      }
+    })
+  }
   return <div>
     <CommonTable columns={columns} dataSource={dataOrder} total={totalElements} loading={isLoading} pageSize={size} page={page} setPage={setPage} setSize={setSize} />
+    <ModalReason valueSearch={valueSearch} page={page} size={size} orderId={orderId} isOpen={isOpen} setIsOpen={setIsOpen} />
   </div>;
 };
 

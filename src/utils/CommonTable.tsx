@@ -21,44 +21,44 @@ const CommonTable = ({
   columns1 = undefined,
   ...rest
 }: // đây là những props
-IFormProps) => {
-  const newColumns: ColumnsType<any> | undefined = columns?.map((item) => {
-    if (item.title === "Status" || item.title === "Trạng thái") {
-      return {
-        ...item,
-        align: "center",
-        ellipsis: {
-          showTitle: false,
-        },
-        render(value: any) {
-          if (value === 1) {
-            return <Tag color="success">Hoạt động</Tag>;
-          }
-          if (value === 0) {
-            return <Tag color="warning">Không hoạt động</Tag>;
-          }
-        },
-      };
-    }
-    if (
-      item.title !== "STT" &&
-      item.title !== "Hành động" &&
-      item.title !== "Status"
-    ) {
-      return {
-        ...item,
-        align: "center",
-        ellipsis: {
-          showTitle: false,
-        },
-        render(value: any) {
-          return <CommonTooltip value={value} />;
-        },
-      };
-    }
-    return item;
-  });
-  newColumns?.unshift({
+  IFormProps) => {
+  // const newColumns: ColumnsType<any> | undefined = columns?.map((item) => {
+  //   if (item.title === "Status" || item.title === "Trạng thái") {
+  //     return {
+  //       ...item,
+  //       align: "center",
+  //       ellipsis: {
+  //         showTitle: false,
+  //       },
+  //       render(value: any) {
+  //         if (value === 1) {
+  //           return <Tag color="success">Hoạt động</Tag>;
+  //         }
+  //         if (value === 0) {
+  //           return <Tag color="warning">Không hoạt động</Tag>;
+  //         }
+  //       },
+  //     };
+  //   }
+  //   if (
+  //     item.title !== "STT" &&
+  //     item.title !== "Hành động" &&
+  //     item.title !== "Status"
+  //   ) {
+  //     return {
+  //       ...item,
+  //       align: "center",
+  //       ellipsis: {
+  //         showTitle: false,
+  //       },
+  //       render(value: any) {
+  //         return <CommonTooltip value={value} />;
+  //       },
+  //     };
+  //   }
+  //   return item;
+  // });
+  columns?.unshift({
     title: "STT",
     dataIndex: "stt",
     width: 45,
@@ -75,7 +75,8 @@ IFormProps) => {
       {...rest}
       size="small"
       bordered
-      columns={columns1 || newColumns}
+      columns={columns}
+      scroll={{ x: 1500 }}
       pagination={{
         total,
         showTotal: (total, range) =>
