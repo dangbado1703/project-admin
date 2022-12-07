@@ -26,15 +26,15 @@ const DetailOrder = () => {
         },
         {
             title: <span className="title-table">Số lượng</span>,
-            dataIndex: "coreQuantity",
+            dataIndex: "totalQuantity",
         },
         {
             title: <span className="title-table">Giá</span>,
-            dataIndex: "",
+            dataIndex: "price",
         },
         {
             title: <span className="title-table">Thành tiền</span>,
-            dataIndex: "",
+            dataIndex: "totalPrice",
         },
     ];
     return (
