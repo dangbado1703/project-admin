@@ -1,17 +1,12 @@
 import { Button, Col, DatePicker, Form, Input, Modal, Row } from "antd";
-import { useForm } from "antd/es/form/Form";
-import moment from "moment";
-import React, { useEffect } from "react";
 import { IFormColumnsDanhMuc, IFormSearchDanhMuc } from "../../model/DanhMuc.model";
-import { IFormColumnsStaff, IFormSearchStaff } from "../../model/Staff.model";
 import { IFormPropsModal } from "../../model/utils";
 import { getDanhMuc } from "../../pages/DanhMuc/danhmuc.reducer";
-import { getUser, updateUser } from "../../pages/Staff/staff.reducer";
+import { updateUser } from "../../pages/Staff/staff.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
 import {
-  DATE_FORMAT_TYPE_DDMMYYYY,
-  DATE_FORMAT_TYPE_YYYYMMDD,
+  DATE_FORMAT_TYPE_DDMMYYYY
 } from "../../utils/contants";
 
 const ViewModal = ({
@@ -24,7 +19,7 @@ const ViewModal = ({
     // eslint-disable-next-line
     required: "${label} không được để trống",
   };
-  const [form] = useForm();
+  const [form] = Form.useForm();
   const dispatch = useAppDispatch();
   const { action } = useAppSelector((state) => state.staffReducer);
   const setTitle = () => {
