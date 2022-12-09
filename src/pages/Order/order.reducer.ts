@@ -7,7 +7,8 @@ const initState = {
   dataOrder: [],
   isLoading: false,
   totalElements: 0,
-  dataDetailOrder: {} as IFormDetailOrder
+  dataDetailOrder: {} as IFormDetailOrder,
+  dataUserOrder: [],
 };
 
 export const getDataSearch = createAsyncThunk(
@@ -48,18 +49,35 @@ export const getDetailOrder = createAsyncThunk(
   }
 );
 
+export const getUserOrder = createAsyncThunk("order/getUserOrder", async () => {
+  const result = await instance.get(
+    "/api/v1/order/suggestion?enums=ORDER_CUSTOMER&keySearch="
+  );
+  const newArr = result.data.data.customer.map((item: any) => {
+    return {
+      label: item.fullName,
+      value: item.customerId,
+    };
+  });
+  return newArr;
+});
+
 const orderSlice = createSlice({
   name: "Order",
   initialState: initState,
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(getDataSearch.fulfilled, (state, action) => {
-      state.dataOrder = action.payload.data.data.content;
-      state.totalElements = action.payload.data.data.totalElements;
-    })
-    .addCase(getDetailOrder.fulfilled, (state,action) => {
-      state.dataDetailOrder = action.payload.data.data
-    })
+    builder
+      .addCase(getDataSearch.fulfilled, (state, action) => {
+        state.dataOrder = action.payload.data.data.content;
+        state.totalElements = action.payload.data.data.totalElements;
+      })
+      .addCase(getDetailOrder.fulfilled, (state, action) => {
+        state.dataDetailOrder = action.payload.data.data;
+      })
+      .addCase(getUserOrder.fulfilled, (state, action) => {
+        state.dataUserOrder = action.payload;
+      });
   },
 });
 
