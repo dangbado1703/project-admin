@@ -1,27 +1,25 @@
-import {
-  Button,
-  Col,
-  DatePicker,
-  Form,
-  Input,
-  Popconfirm,
-  Row,
-  Select,
-} from "antd";
-import React from "react";
+import { Button, Col, DatePicker, Form, Input, Row } from "antd";
+import React, { useEffect } from "react";
 import { IFormSearchOrder } from "../../model/Order.model";
-import { IFormProps } from "../../model/utils";
+import { getUserOrder } from "../../pages/Order/order.reducer";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
 import { DATE_FORMAT_TYPE_DDMMYYYY, STATUS_ORDER } from "../../utils/contants";
-import { filterSelectOption } from "../../utils/filterOptions";
 import SelectCommon from "../../utils/SelectCommon";
 
 const SearchOrder = ({
   setValueSearch,
-}: { setValueSearch: React.Dispatch<React.SetStateAction<IFormSearchOrder>> }) => {
+}: {
+  setValueSearch: React.Dispatch<React.SetStateAction<IFormSearchOrder>>;
+}) => {
   const [form] = Form.useForm();
+  const dispatch = useAppDispatch();
+  const { dataUserOrder } = useAppSelector((state) => state.orderReducer);
+  useEffect(() => {
+    dispatch(getUserOrder());
+  }, []);
   const handleSearch = (data: any) => {
-    setValueSearch(data)
+    setValueSearch(data);
   };
 
   return (
@@ -29,8 +27,11 @@ const SearchOrder = ({
       <Form form={form} onFinish={handleSearch} layout="vertical">
         <Row gutter={10}>
           <Col span={8}>
-            <Form.Item name='customerId'>
-              <SelectCommon options={[]} placeholder='Người đặt hàng' />
+            <Form.Item name="customerId">
+              <SelectCommon
+                options={dataUserOrder}
+                placeholder="Người đặt hàng"
+              />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -54,10 +55,7 @@ const SearchOrder = ({
             </Form.Item>
           </Col>
           <Col span={8}>
-            <CommonFormItem
-              name="fromPrice"
-              isRequired={false}
-            >
+            <CommonFormItem name="fromPrice" isRequired={false}>
               <Input placeholder="Giá trị đơn hàng từ" type="number" />
             </CommonFormItem>
           </Col>
@@ -67,8 +65,11 @@ const SearchOrder = ({
             </CommonFormItem>
           </Col>
           <Col span={8}>
-            <Form.Item name='status'>
-              <SelectCommon placeholder='Trạng thái đơn hàng' options={STATUS_ORDER} />
+            <Form.Item name="status">
+              <SelectCommon
+                placeholder="Trạng thái đơn hàng"
+                options={STATUS_ORDER}
+              />
             </Form.Item>
           </Col>
           <Col
