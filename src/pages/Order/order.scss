@@ -1,0 +1,69 @@
+.title-order {
+  margin-bottom: 12px;
+  & > div:first-child {
+    background: #475BE8;;
+    border-radius: 3px;
+    padding: 8px 0 8px 12px;
+    margin-bottom: 8px;
+    span {
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 24px;
+      color: #ffffff;
+    }
+  }
+  & > div:last-child {
+    span,
+    p {
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 24px;
+      color: #766464;
+    }
+  }
+}
+
+.payment-method {
+  & > div:last-child {
+    & > div:first-child,
+    & > div:last-child {
+      display: flex;
+      justify-content: space-between;
+      margin: 12px 0;
+    }
+  }
+}
+.title-table {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.list-order {
+  .ant-table-thead > tr > th {
+    background-color: #475BE8;;
+  }
+}
+
+.delivery-address {
+  & > div:last-child {
+    background-color: #ebf0fa;
+    padding: 8px;
+  }
+}
+
+.payment-method {
+  background-color: #ebf0fa;
+  padding: 8px;
+}

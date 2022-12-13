@@ -43,6 +43,7 @@ input[type="number"] {
   border-radius: 8px;
   font-size: 16px;
   margin: 0 10px;
+  border: none;
 }
 
 .ant-btn.delete {
@@ -53,11 +54,16 @@ input[type="number"] {
   border-radius: 8px;
   font-size: 16px;
   margin-left: 10px;
+  border: none;
+}
+.ant-btn.search:hover,
+.ant-btn.delete:hover {
+  color: white;
 }
 .custom-select {
   .ant-select-selector {
     height: 40px !important;
-    font-size: 15px !important;
+    font-size: 14px !important;
     border-radius: 8px !important;
     display: flex;
     justify-content: center;
