@@ -10,6 +10,7 @@ import Home from "../pages/Home/Home";
 import LayoutMain from "../pages/Layout/Layout";
 import Login from "../pages/Login/Login";
 import Order from "../pages/Order/Order";
+import OrderCancel from "../pages/OrderCancel/OrderCancel";
 import Product from "../pages/Product/Product";
 import Register from "../pages/Register/Register";
 import Staff from "../pages/Staff/Staff";
@@ -79,7 +80,15 @@ const Router = () => {
         {
           path: path.detailOrder,
           element: <DetailOrder />
-        }
+        },
+        {
+          path: path.createVoucher,
+          element: <DetailVoucher />,
+        },
+        {
+          path: path.orderCancel,
+          element: <OrderCancel />,
+        },
       ],
     },
     {

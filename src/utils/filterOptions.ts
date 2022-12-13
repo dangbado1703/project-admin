@@ -14,3 +14,13 @@ export const STATUS = [
     label: "Không hoạt động",
   },
 ];
+export const TYPEVOCHER = [
+  {
+    value: 1,
+    label: "Theo phần trăm",
+  },
+  {
+    value: 0,
+    label: "Theo giá tiền",
+  },
+];

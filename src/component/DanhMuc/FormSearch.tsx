@@ -1,13 +1,16 @@
 import { Button, Col, DatePicker, Form, Popconfirm, Row, Select } from "antd";
 import { useForm } from "antd/es/form/Form";
+import { useState } from "react";
 import { IFormSearchDanhMuc } from "../../model/DanhMuc.model";
 import { IFormProps } from "../../model/utils";
-import { getDanhMuc } from "../../pages/DanhMuc/danhmuc.reducer";
+import { changeAction, getDanhMuc } from "../../pages/DanhMuc/danhmuc.reducer";
 import { deleteUser, getUser } from "../../pages/Staff/staff.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
 import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import { filterSelectOption, STATUS } from "../../utils/filterOptions";
+import SelectCommon from "../../utils/SelectCommon";
+import ViewModal from "./ViewModal";
 
 const FormSearch = ({
   setValueSearch,
@@ -20,9 +23,15 @@ const FormSearch = ({
 >) => {
   const [form] = useForm();
   const dispatch = useAppDispatch();
+  const [isOpen, setIsOpen] = useState(false)
   const { dataCode, dataName, dataCreatedBy, dataParent,dataForm } = useAppSelector(
     (state) => state.danhMucReducer
   );
+  console.log("dataCode =", dataCode);
+  console.log("dataName =", dataName);
+  console.log("dataCreatedBy =", dataCreatedBy);
+  console.log("dataParent =", dataParent);
+  console.log("dataForm =", dataForm);
   const handleSearch = (data: any) => {
     setValueSearch(data);
   };
@@ -34,13 +43,17 @@ const FormSearch = ({
       }
     });
   };
+  const handleOpenAddNew = () => {
+    setIsOpen(true)
+    dispatch(changeAction('addnew'))
+  }
   return (
     <div>
       <Form form={form} onFinish={handleSearch} layout="vertical">
         <Row gutter={10}>
           <Col span={8}>
             <CommonFormItem name="code" label="Mã danh mục" isRequired={false}>
-              <Select
+              <SelectCommon
                 allowClear
                 className="custom-selected"
                 showSearch
@@ -115,6 +128,7 @@ const FormSearch = ({
                 <Button htmlType="submit" className="search">
                   Tìm kiếm
                 </Button>
+                <Button className="search" onClick={handleOpenAddNew}>Thêm mới</Button>
                 <Popconfirm
                   placement="topRight"
                   title={
@@ -151,6 +165,11 @@ const FormSearch = ({
           </Col>
         </Row>
       </Form>
+      <ViewModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        valueSearch={valueSearch}
+      />
     </div>
   );
 };
