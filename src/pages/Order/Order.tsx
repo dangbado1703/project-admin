@@ -36,10 +36,13 @@ const Order = () => {
   return (
     <div>
       <SearchOrder setValueSearch={setValueSearch} />
-      {/* <TableOrder
+      <TableOrder
+        page={page}
+        size={pageSize}
+        setPage={setPage}
+        setSize={setPageSize}
         valueSearch={valueSearch}
-        setValueSearch={setValueSearch}
-      /> */}
+      />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate, useLocation, useRoutes } from "react-router-dom";
+import DetailOrder from "../component/Order/DetailOrder";
 import DetailProduct from "../component/Product/DetailProduct";
 import DetailVoucher from "../component/Voucher/DetailVoucher";
 import useAuth from "../contants/useAuth";
@@ -75,6 +76,10 @@ const Router = () => {
           path: path.updateVoucher,
           element: <DetailVoucher />,
         },
+        {
+          path: path.detailOrder,
+          element: <DetailOrder />
+        }
       ],
     },
     {
