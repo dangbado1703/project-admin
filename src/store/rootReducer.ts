@@ -8,6 +8,7 @@ import danhMucReducer from "../pages/DanhMuc/danhmuc.reducer";
 import voucherReducer from "../pages/Voucher/voucher.reducer";
 import orderReducer from "../pages/Order/order.reducer";
 import homeReducer from "../pages/Home/home.reducer";
+import notifyReducer from "../pages/Notify/notify.reducer";
 
 const rootReducer = combineReducers({
   loginReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   voucherReducer,
   orderReducer,
   homeReducer,
+  notifyReducer,
 });
 
 export default rootReducer;

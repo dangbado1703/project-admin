@@ -102,7 +102,7 @@ const Products = () => {
             style={{ fontSize: "30px", fontWeight: 600 }}
           >{`Không có sản phẩm nào được bán trong khoảng từ ${
             valueSearch.fromDate ? valueSearch.fromDate : "đầu năm"
-          } đến ${valueSearch.toDate}`}</span>
+          } đến ${valueSearch.toDate ? valueSearch.toDate : "hiện tại"}`}</span>
         </div>
       )}
     </div>
