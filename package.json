@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ant-design/charts": "^1.4.2",
     "@ant-design/icons": "^4.8.0",
     "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
@@ -16,8 +15,8 @@
     "antd": "^5.0.7",
     "axios": "^0.27.2",
     "dayjs": "^1.11.7",
-    "lodash": "^4.17.21",
     "javascript-time-ago": "^2.5.9",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "node-sass": "^7.0.3",
     "react": "^18.2.0",
