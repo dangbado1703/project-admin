@@ -9,6 +9,7 @@ import DanhMucPage from "../pages/DanhMuc/DanhMucPage";
 import Home from "../pages/Home/Home";
 import LayoutMain from "../pages/Layout/Layout";
 import Login from "../pages/Login/Login";
+import Notify from "../pages/Notify/Notify";
 import Order from "../pages/Order/Order";
 import Product from "../pages/Product/Product";
 import Register from "../pages/Register/Register";
@@ -78,8 +79,12 @@ const Router = () => {
         },
         {
           path: path.detailOrder,
-          element: <DetailOrder />
-        }
+          element: <DetailOrder />,
+        },
+        {
+          path: path.notify,
+          element: <Notify />,
+        },
       ],
     },
     {

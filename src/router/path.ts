@@ -14,5 +14,6 @@ export const path = {
   voucher: "/voucher",
   voucherDetail: "/voucher/detail/:id",
   updateVoucher: "product/update/:id",
-  detailOrder: '/order/detail/:orderId'
+  detailOrder: "/order/detail/:orderId",
+  notify: "/notify",
 };

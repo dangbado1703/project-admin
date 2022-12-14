@@ -1,0 +1,19 @@
+.notify {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.notify_info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+.nameUser {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 20px;
+  color: #000000;
+}
