@@ -2,7 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
-import "antd/dist/reset.css";
+import 'antd/dist/reset.css';
 import Router from "./router/Router";
 // chỗ này hay gặp lỗi
 
