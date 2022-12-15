@@ -1,8 +1,10 @@
 import { Button, Col, DatePicker, Form, Input, Modal, Row } from "antd";
+import { useEffect } from "react";
 import { IFormColumnsDanhMuc, IFormSearchDanhMuc } from "../../model/DanhMuc.model";
 import { IFormPropsModal } from "../../model/utils";
-import { createDanhMuc, getDanhMuc, updateDanhMuc } from "../../pages/DanhMuc/danhmuc.reducer";
+import { changeAction, createDanhMuc, getDanhMuc, updateDanhMuc } from "../../pages/DanhMuc/danhmuc.reducer";
 import { updateUser } from "../../pages/Staff/staff.reducer";
+import { getProduct } from "../../pages/Voucher/voucher.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
 import {
@@ -24,6 +26,7 @@ const ViewModal = ({
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
   const { action, dataParent,isLoading } = useAppSelector((state) => state.danhMucReducer);
+  console.log("action", action);
   const setTitle = () => {
     if (action === "view") {
       return "Xem chi tiết";

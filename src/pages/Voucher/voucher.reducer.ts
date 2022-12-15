@@ -37,6 +37,7 @@ export const getProduct = createAsyncThunk(
     const result = await instance.get(`/api/v1/voucher/product`);
     console.log("result2 = ",result);
     const newResult = result.data.data.map((item: any) => {
+      console.log("item", item)
       return {
         value: item.id,
         label: item.name,

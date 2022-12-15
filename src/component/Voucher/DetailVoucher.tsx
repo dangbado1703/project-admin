@@ -1,9 +1,10 @@
 import { Button, Col, DatePicker, Form, Input, Row } from "antd";
 import React, { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { changeAction, createVoucher, getDetail, updateVoucher } from "../../pages/Voucher/voucher.reducer";
+import { changeAction, createVoucher, getDetail, getProduct, updateVoucher } from "../../pages/Voucher/voucher.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { path } from "../../router/path";
+import dayjs from 'dayjs'
 import {
   DATE_FORMAT_TYPE_DDMMYYYY,
   DATE_FORMAT_TYPE_YYYYMMDD,
@@ -12,7 +13,7 @@ import moment from "moment";
 import TextArea from "antd/es/input/TextArea";
 import { toast } from "react-toastify";
 import SelectCommon from "../../utils/SelectCommon";
-import { filterSelectOption, STATUS, TYPEVOCHER } from "../../utils/filterOptions";
+import { filterSelectOption, STATUS, TYPEDISCOUNT, TYPEVOCHER } from "../../utils/filterOptions";
 
 const DetailVoucher = () => {
   const validateMessages = {
@@ -36,9 +37,10 @@ const DetailVoucher = () => {
     if (pathname.includes("update")) {
       dispatch(changeAction("update"));
     }
-    if (pathname.includes("addnew")) {
+    if (pathname.includes("create")) {
       dispatch(changeAction("addnew"));
     }
+    dispatch(getProduct())
   }, [pathname, dispatch]);
   
   useEffect(() => {
@@ -46,12 +48,11 @@ const DetailVoucher = () => {
     dispatch(getDetail(id)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         const resPayload: any = res.payload;
+        console.log('resPayload',resPayload)
         form.setFieldsValue({
           ...resPayload.data.data,
           expiredDate: resPayload.data.data.expiredDate
-            ? moment(resPayload.data.data.expiredDate).format(
-              DATE_FORMAT_TYPE_YYYYMMDD
-            )
+            ? dayjs(resPayload.data.data.expiredDate)
             : null,
         });
       }
@@ -64,7 +65,7 @@ const DetailVoucher = () => {
         voucherId: id})
         ).then(res => {
           if (res.meta.requestStatus === 'fulfilled') {
-            toast.success("Sửa sản phẩm thành công");
+            toast.success("Sửa khuyến mãi thành công");
             navigate(path.voucher);
           }
         })
@@ -72,7 +73,7 @@ const DetailVoucher = () => {
     }
     dispatch(createVoucher({...data})).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        toast.success("Thêm sản phẩm thành công");
+        toast.success("Thêm khuyến mãi thành công");
         navigate(path.voucher);
       }
     });
@@ -89,6 +90,9 @@ const DetailVoucher = () => {
   //   }
   //   return Promise.resolve();
   // };
+  const handleCancelUpdate = () => {
+    navigate(path.voucher);
+  }
   return (
     <div>
       <Form
@@ -118,14 +122,50 @@ const DetailVoucher = () => {
             </Form.Item>
           </Col>
           <Col span={8}>
-          {/* <Form.Item
+            <Form.Item
+              name="typeVoucher"
+              label="Loại khuyến mãi"
+              // rules={[
+              //   {
+              //     required: action === "update",
+              //   },
+              // ]}
+            >
+              <SelectCommon
+              options={TYPEVOCHER}
+              filterOption={filterSelectOption}
+              placeholder="Loại giảm giá"
+              disabled={action === "view"}
+            />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
+              name="type"
+              label="Loại giảm giá"
+              // rules={[
+              //   {
+              //     required: action === "update",
+              //   },
+              // ]}
+            >
+              <SelectCommon
+              options={TYPEDISCOUNT}
+              filterOption={filterSelectOption}
+              placeholder="Loại giảm giá"
+              disabled={action === "view"&&form.getFieldValue("typeVoucher")!==1}
+            />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+          <Form.Item
               name="expiredDate"
               label="Ngày hiệu lực"
               rules={[
                 { required: true },
-                {
-                  validator: validateDay,
-                },
+                // {
+                //   validator: validateDay,
+                // },
               ]}
             >
               <DatePicker
@@ -134,8 +174,8 @@ const DetailVoucher = () => {
                 className="date-picker"
                 disabled={action === "view"}
               />
-            </Form.Item> */}
-            <Form.Item
+            </Form.Item>
+            {/* <Form.Item
               name="expiredDate"
               label="Ngày hiệu lực"
               rules={[
@@ -151,7 +191,7 @@ const DetailVoucher = () => {
                 }
                 disabled={action === "view"}
               />
-            </Form.Item>
+            </Form.Item> */}
           </Col>
           <Col span={8}>
             <Form.Item
@@ -190,25 +230,7 @@ const DetailVoucher = () => {
             />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item
-              name="type"
-              label="Loại giảm giá"
-              // rules={[
-              //   {
-              //     required: action === "update",
-              //   },
-              // ]}
-            >
-              <SelectCommon
-              options={TYPEVOCHER}
-              filterOption={filterSelectOption}
-              placeholder="Loại giảm giá"
-              disabled={action === "view"}
-            />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
+          <Col span={24}>
             <Form.Item
               name="id"
               label="Sản phẩm áp dụng"
@@ -220,7 +242,7 @@ const DetailVoucher = () => {
             >
               <SelectCommon
               options={dataProduct}
-              placeholder="Loại giảm giá"
+              placeholder="Sản phẩm áp dụng"
               disabled={action === "view"}
             />
             </Form.Item>
@@ -255,7 +277,7 @@ const DetailVoucher = () => {
                 <Button className="search" htmlType="submit">
                   Save
                 </Button>
-                <Button className="delete">Cancel</Button>
+                <Button className="delete" onClick={handleCancelUpdate}>Cancel</Button>
               </Form.Item>
             </Col>
           )}

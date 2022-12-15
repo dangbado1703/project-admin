@@ -104,7 +104,7 @@ const FormSearch = ({
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="parent" label="Danh mục cha">
+            <Form.Item name="parentId" label="Danh mục cha">
               <Select
                 className="custom-selected"
                 allowClear
