@@ -1,4 +1,3 @@
-import { updateVoucher } from "./../pages/Voucher/voucher.reducer";
 export const path = {
   login: "/login",
   register: "/register",

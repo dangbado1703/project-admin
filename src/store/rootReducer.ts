@@ -9,6 +9,7 @@ import voucherReducer from "../pages/Voucher/voucher.reducer";
 import orderReducer from "../pages/Order/order.reducer";
 import homeReducer from "../pages/Home/home.reducer";
 import orderCancelReducer from "../pages/OrderCancel/order_cancel.reducer";
+import notifyReducer from "../pages/Notify/notify.reducer";
 
 const rootReducer = combineReducers({
   loginReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   voucherReducer,
   orderReducer,
   homeReducer,
-  orderCancelReducer
+  orderCancelReducer,
+  notifyReducer
 });
 
 export default rootReducer;
