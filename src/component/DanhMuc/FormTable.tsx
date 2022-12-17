@@ -32,7 +32,6 @@ const FormTable = ({
   const [valueDetail, setValueDetail] = useState<IFormColumnsDanhMuc>();
   const dispatch = useAppDispatch();
   const dataDanhMuc = useAppSelector((state) => state.danhMucReducer.dataForm);
-  const action = useAppSelector((state) => state.danhMucReducer.action);
   const handleDelete = () => {
     dispatch(deleteDanhMuc(selectedRowKeys)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
@@ -44,7 +43,6 @@ const FormTable = ({
     setIsOpen(true);
     setValueDetail(record);
     dispatch(changeAction("view"));
-    console.log("action", action)
   };
   const handleOpenUpdate = (record: IFormColumnsDanhMuc) => {
     setIsOpen(true);
@@ -78,7 +76,7 @@ const FormTable = ({
     },
     {
       title: "Danh mục cha",
-      dataIndex: "parentName",
+      dataIndex: "parent",
     },
     {
       title: "Hành động",
@@ -149,7 +147,7 @@ const FormTable = ({
         pageSize={size}
         setPage={setPage}
         setSize={setSize}
-        rowKey="id"
+        rowKey="userId"
       />
       <ViewModal
         isOpen={isOpen}

@@ -1,17 +1,13 @@
 import { Button, Col, DatePicker, Form, Input, Modal, Row } from "antd";
-import { useEffect } from "react";
 import { IFormColumnsDanhMuc, IFormSearchDanhMuc } from "../../model/DanhMuc.model";
 import { IFormPropsModal } from "../../model/utils";
-import { changeAction, createDanhMuc, getDanhMuc, updateDanhMuc } from "../../pages/DanhMuc/danhmuc.reducer";
+import { getDanhMuc } from "../../pages/DanhMuc/danhmuc.reducer";
 import { updateUser } from "../../pages/Staff/staff.reducer";
-import { getProduct } from "../../pages/Voucher/voucher.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
 import {
   DATE_FORMAT_TYPE_DDMMYYYY
 } from "../../utils/contants";
-import { STATUS } from "../../utils/filterOptions";
-import SelectCommon from "../../utils/SelectCommon";
 
 const ViewModal = ({
   isOpen,
@@ -25,8 +21,7 @@ const ViewModal = ({
   };
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
-  const { action, dataParent,isLoading } = useAppSelector((state) => state.danhMucReducer);
-  console.log("action", action);
+  const { action } = useAppSelector((state) => state.staffReducer);
   const setTitle = () => {
     if (action === "view") {
       return "Xem chi tiết";
@@ -34,21 +29,9 @@ const ViewModal = ({
     if (action === "update") {
       return "Cập nhật danh mục";
     }
-    if (action === 'addnew') {
-      return 'Thêm mới danh mục'
-    }
   };
   const handleSubmit = (data: any) => {
-    if (action === 'addnew') {
-      dispatch(createDanhMuc(data)).then(res => {
-        if (res.meta.requestStatus === 'fulfilled') {
-          setIsOpen(false);
-          dispatch(getDanhMuc(valueSearch));
-        }
-      })
-      return
-    }
-    dispatch(updateDanhMuc({ ...data, userId: valueDetail?.id })).then(
+    dispatch(updateUser({ ...data, userId: valueDetail?.id })).then(
       (res) => {
         if (res.meta.requestStatus === "fulfilled") {
           setIsOpen(false);
@@ -56,6 +39,17 @@ const ViewModal = ({
         }
       }
     );
+  };
+  const validateDay = (_: any, value: any) => {
+    const toDay = new Date().getTime();
+    const getTime = new Date(value).getTime();
+    if (!value) {
+      return Promise.resolve();
+    }
+    if (getTime > toDay) {
+      return Promise.reject("Ngày sinh nhật không thể lớn hơn ngày hiện tại");
+    }
+    return Promise.resolve();
   };
   return (
     <Modal
@@ -68,8 +62,8 @@ const ViewModal = ({
           <Button className="delete" onClick={() => setIsOpen(false)}>
             Hủy
           </Button>
-          {action !== "view" ? (
-            <Button loading={isLoading} className="search" htmlType="submit" onClick={() => form.submit()}>
+          {action === "update" ? (
+            <Button className="search" onClick={() => form.submit()}>
               Đồng ý
             </Button>
           ) : null}
@@ -85,38 +79,76 @@ const ViewModal = ({
       >
         <Row>
           <Col span={24}>
-            <CommonFormItem label="Tên danh mục" name="name" min={4}>
+            <CommonFormItem label="Username" name="username" max={12} min={4}>
               <Input
-                placeholder="Tên danh mục"
+                placeholder="Username"
                 onBlur={(e) =>
-                  form.setFieldValue("name", e.target.value.trim())
+                  form.setFieldValue("username", e.target.value.trim())
                 }
                 disabled={action === "view"}
               />
             </CommonFormItem>
           </Col>
           <Col span={24}>
-            <CommonFormItem label="Mã danh mục" name="code" isName={true}>
+            <CommonFormItem label="Full Name" name="fullName" isName={true}>
               <Input
-                placeholder="Mã danh mục"
+                placeholder="Full name"
                 onBlur={(e) =>
-                  form.setFieldValue("code", e.target.value.trim())
+                  form.setFieldValue("fullName", e.target.value.trim())
                 }
                 disabled={action === "view"}
               />
             </CommonFormItem>
           </Col>
           <Col span={24}>
-            {action !== 'addnew' ? <Col span={24}>
-              <Form.Item name='status' label='Trạng thái'>
-                <SelectCommon placeholder='Trạng thái' options={STATUS} disabled={action === 'view'} />
-              </Form.Item>
-            </Col> : null}
-            <Col>
-              <Form.Item name='parentId' label='Danh mục cha'>
-                <SelectCommon placeholder="Danh mục cha" options={dataParent} disabled={action === 'view'} />
-              </Form.Item>
-            </Col>
+            <CommonFormItem
+              name="phone"
+              label="Phone"
+              max={12}
+              min={9}
+              isRequired
+            >
+              <Input
+                placeholder="Số điện thoại"
+                type="number"
+                disabled={action === "view"}
+              />
+            </CommonFormItem>
+          </Col>
+          <Col span={24}>
+            <CommonFormItem
+              isEmail={true}
+              name="email"
+              label="Email"
+              isRequired
+            >
+              <Input
+                placeholder="Nhập email của bạn"
+                onBlur={(e) =>
+                  form.setFieldValue("email", e.target.value.trim())
+                }
+                disabled={action === "view"}
+              />
+            </CommonFormItem>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              name="birthday"
+              label="Sinh nhật"
+              rules={[
+                { required: true },
+                {
+                  validator: validateDay,
+                },
+              ]}
+            >
+              <DatePicker
+                format={DATE_FORMAT_TYPE_DDMMYYYY}
+                placeholder="Sinh nhật"
+                className="date-picker"
+                disabled={action === "view"}
+              />
+            </Form.Item>
           </Col>
         </Row>
       </Form>
