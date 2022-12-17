@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import instance from "../../contants/axios.config";
 
 const initState = {
@@ -19,14 +18,7 @@ export const getDetailNotify = createAsyncThunk(
   "notify/getDetailNotify",
   async (id: string) => {
     const result = await instance.get(`/api/v1/notification/detail/${id}`);
-    const result2 = await axios.post("localhost:8082/api/v1/customer/product", {
-      enums: "PRODUCT_MULTI_SEARCH",
-      brandId: [],
-      categoryId: [],
-      price: null,
-      star: null,
-    });
-    console.log("result2", result2);
+    console.log("result", result);
     return result;
   }
 );

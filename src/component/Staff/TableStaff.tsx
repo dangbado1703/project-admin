@@ -26,7 +26,7 @@ const TableStaff = ({
   const [isOpen, setIsOpen] = useState(false);
   const [valueDetail, setValueDetail] = useState<IFormColumnsStaff>();
   const dispatch = useAppDispatch();
-  const { action, dataStaff, totalItem } = useAppSelector(
+  const { dataStaff, totalItem } = useAppSelector(
     (state) => state.staffReducer
   );
   const handleDelete = () => {
@@ -40,7 +40,6 @@ const TableStaff = ({
     setIsOpen(true);
     setValueDetail(record);
     dispatch(changeAction("view"));
-    console.log("action",action);
   };
   const handleOpenUpdate = (record: IFormColumnsStaff) => {
     setIsOpen(true);

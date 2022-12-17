@@ -9,15 +9,12 @@ import {
   Select,
 } from "antd";
 import { Key } from "antd/es/table/interface";
-import React, { useState } from "react";
+import React from "react";
 import { IFormSearchVoucher } from "../../model/Voucher.model";
-import { changeAction } from "../../pages/Voucher/voucher.reducer";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
-import { path } from "../../router/path";
 import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import { filterSelectOption, STATUS } from "../../utils/filterOptions";
-import { useNavigate } from "react-router-dom";
 
 interface IFormProps {
   setValueSearch: React.Dispatch<React.SetStateAction<IFormSearchVoucher>>;
@@ -32,17 +29,11 @@ const SearchVoucher = ({
   selectedRowKeys,
 }: IFormProps) => {
   const [form] = Form.useForm();
-  const navigate = useNavigate();
   const handleSubmit = (data: any) => {
+    console.log('data', data)
     setValueSearch(data);
   };
   const handleDelete = () => {};
-  
-const [isOpen, setIsOpen] = useState(false);
-const dispatch = useAppDispatch();
-  const handleOpenAddNew = () => {
-    navigate(path.createVoucher);
-  }
   return (
     <div>
       <Form form={form} onFinish={handleSubmit} layout="vertical">
@@ -65,6 +56,7 @@ const dispatch = useAppDispatch();
                 options={STATUS}
                 filterOption={filterSelectOption}
                 placeholder="Trạng thái"
+                mode="multiple"
               />
             </Form.Item>
           </Col>
@@ -91,7 +83,6 @@ const dispatch = useAppDispatch();
                 <Button htmlType="submit" className="search">
                   Tìm kiếm
                 </Button>
-                <Button className="search" onClick={handleOpenAddNew}>Thêm mới</Button>
                 <Popconfirm
                   title={
                     selectedRowKeys.length

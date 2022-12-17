@@ -14,23 +14,3 @@ export const STATUS = [
     label: "Không hoạt động",
   },
 ];
-export const TYPEDISCOUNT = [
-  {
-    value: 1,
-    label: "Theo phần trăm",
-  },
-  {
-    value: 0,
-    label: "Theo giá tiền",
-  },
-];
-export const TYPEVOCHER = [
-  {
-    value: 1,
-    label: "Khuyến mãi giảm giá sản phẩm",
-  },
-  {
-    value: 0,
-    label: "Miễn phí vận chuyển, ...",
-  },
-];

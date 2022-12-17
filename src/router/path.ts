@@ -1,3 +1,4 @@
+import { updateVoucher } from "./../pages/Voucher/voucher.reducer";
 export const path = {
   login: "/login",
   register: "/register",
@@ -12,8 +13,7 @@ export const path = {
   productType: "/productType",
   voucher: "/voucher",
   voucherDetail: "/voucher/detail/:id",
-  updateVoucher: "/voucher/update/:id",
-  detailOrder: '/order/detail/:orderId',
-  createVoucher: "/voucher/create",
-  orderCancel: "/orderCancel",
+  updateVoucher: "product/update/:id",
+  detailOrder: "/order/detail/:orderId",
+  notify: "/notify",
 };

@@ -5,6 +5,7 @@ import {
   UserOutlined,
   ShoppingOutlined,
   CarOutlined,
+  BellOutlined,
 } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import React, { useState, useEffect } from "react";
@@ -28,7 +29,7 @@ const items: MenuItem[] = [
   getItem("Sản phẩm", path.product, <ShoppingOutlined />),
   getItem("Danh mục", path.productType, <ShoppingOutlined />),
   getItem("Khuyến mại", path.voucher, <ShoppingOutlined />),
-  getItem("Đơn hàng hủy", path.orderCancel, <ShoppingOutlined />),
+  getItem("Thông báo", path.notify, <BellOutlined />),
 ];
 const MenuItems = () => {
   const [currentKey, setCurrentKey] = useState(path.home);
