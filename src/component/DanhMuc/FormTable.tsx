@@ -1,7 +1,8 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
-import { Popconfirm, Tooltip } from "antd";
+import { Popconfirm, Tag, Tooltip } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { TableRowSelection } from "antd/es/table/interface";
+import moment from "moment";
 import React, { useState } from "react";
 import {
   IFormColumnsDanhMuc,
@@ -17,6 +18,7 @@ import {
 } from "../../pages/Staff/staff.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonTable from "../../utils/CommonTable";
+import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import ViewModal from "./ViewModal";
 
 const FormTable = ({
@@ -69,10 +71,21 @@ const FormTable = ({
     {
       title: "Ngày cập nhật",
       dataIndex: "lastModifiedDate",
+      render(value) {
+        return <span>{moment(value).format(DATE_FORMAT_TYPE_DDMMYYYY)}</span>
+      },
     },
     {
       title: "Trạng thái",
       dataIndex: "status",
+      render(value) {
+        if (value === 0) {
+          return <Tag color="orange">Không hoạt động</Tag>
+        }
+        if (value === 1) {
+          return <Tag color="success">Hoạt động</Tag>
+        }
+      }
     },
     {
       title: "Danh mục cha",

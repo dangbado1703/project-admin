@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
-import { Popconfirm, Tooltip } from "antd";
+import { Popconfirm, Tag, Tooltip } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { TableRowSelection } from "antd/es/table/interface";
 import React, { useState } from "react";
@@ -72,8 +72,16 @@ const TableStaff = ({
       dataIndex: "roleName",
     },
     {
-      title: "Status",
+      title: "Trạng thái",
       dataIndex: "status",
+      render(value) {
+        if (value === 0) {
+          return <Tag color="orange">Không hoạt động</Tag>
+        }
+        if (value === 1) {
+          return <Tag color="success">Hoạt động</Tag>
+        }
+      }
     },
     {
       title: "Hành động",

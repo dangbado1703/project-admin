@@ -8,6 +8,7 @@ import {
 import { Popconfirm, Tag, Tooltip } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { Key, TableRowSelection } from "antd/es/table/interface";
+import moment from "moment";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { IFormColumns, IFormSearchClient } from "../../model/Client.model";
@@ -19,6 +20,7 @@ import {
 } from "../../pages/Client/client.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonTable from "../../utils/CommonTable";
+import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import ModalClient from "./ModalClient";
 
 interface IFormProps {
@@ -65,10 +67,21 @@ const TableClient = ({
     {
       title: "Sinh nhật",
       dataIndex: "birthday",
+      render(value) {
+        return <span>{moment(value).format(DATE_FORMAT_TYPE_DDMMYYYY)}</span>
+      },
     },
     {
-      title: "Status",
+      title: "Trạng thái",
       dataIndex: "status",
+      render(value) {
+        if (value === 0) {
+          return <Tag color="orange">Không hoạt động</Tag>
+        }
+        if (value === 1) {
+          return <Tag color="success">Hoạt động</Tag>
+        }
+      }
     },
     {
       title: "Hành động",
