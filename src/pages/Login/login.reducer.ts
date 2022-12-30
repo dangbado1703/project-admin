@@ -9,6 +9,7 @@ export const LoginAPI = createAsyncThunk(
   "Login/Login",
   async (data: IFormLogin) => {
     const result = await instance.post("/api/auth/user", data);
+    localStorage.setItem("user", JSON.stringify(result.data.userDTO));
     localStorage.setItem("auth", result.data.token);
   }
 );

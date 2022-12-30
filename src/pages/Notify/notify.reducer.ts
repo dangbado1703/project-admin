@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import instance from "../../contants/axios.config";
 
 const initState = {
@@ -19,6 +20,15 @@ export const getDetailNotify = createAsyncThunk(
   async (id: string) => {
     const result = await instance.get(`/api/v1/notification/detail/${id}`);
     console.log("result", result);
+    return result;
+  }
+);
+
+export const replyComment = createAsyncThunk(
+  "notify/replyComment",
+  async (data: any) => {
+    const result = await instance.post("/api/v1/notification/reply", data);
+    toast.success("Trả lời thành công");
     return result;
   }
 );
