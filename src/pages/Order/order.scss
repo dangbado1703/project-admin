@@ -1,7 +1,7 @@
 .title-order {
   margin-bottom: 12px;
   & > div:first-child {
-    background: #475BE8;;
+    background: rgb(3, 201, 215);;
     border-radius: 3px;
     padding: 8px 0 8px 12px;
     margin-bottom: 8px;
@@ -52,7 +52,7 @@
 
 .list-order {
   .ant-table-thead > tr > th {
-    background-color: #475BE8;;
+    background-color: rgb(3, 201, 215);
   }
 }
 

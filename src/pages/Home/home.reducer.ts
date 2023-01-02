@@ -51,7 +51,7 @@ export const getDataStatisticProducts = createAsyncThunk(
     if (result.data.data.length) {
       result.data.data.forEach((value: any) => {
         arr.push({
-          type: `Mã sản phẩm ${value.code}`,
+          type: `Tên sản phẩm ${value.name}`,
           sales: value.saleTotal,
         });
       });

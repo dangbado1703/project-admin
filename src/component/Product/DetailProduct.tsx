@@ -1,4 +1,4 @@
-import { CloseOutlined, UploadOutlined } from "@ant-design/icons";
+import { CloseCircleFilled, UploadOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Input, Row, Upload, UploadProps } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { RcFile, UploadChangeParam, UploadFile } from "antd/es/upload";
@@ -79,9 +79,9 @@ const DetailProduct = () => {
     dispatch(getDetail(id)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         const resPayload: any = res.payload;
-        const arrImg = resPayload.data.data.images.map(
+        const arrImg = resPayload.data.data.path.map(
           (item: any, index: any) => {
-            return `data:image/jpeg;base64,${item}`;
+            return {item};
           }
         );
         setImageUrl(arrImg);
@@ -138,6 +138,7 @@ const DetailProduct = () => {
         <Row gutter={10}>
           <Col span={8}>
             <Form.Item
+              label="Tên sản phẩm"
               name="name"
               rules={[
                 {
@@ -157,6 +158,7 @@ const DetailProduct = () => {
           </Col>
           <Col span={8}>
             <Form.Item
+              label="Mã sản phẩm"
               name="code"
               rules={[
                 {
@@ -177,6 +179,7 @@ const DetailProduct = () => {
           <Col span={8}>
             <Form.Item
               name="productTypeId"
+              label="Danh mục"
               rules={[
                 {
                   required: action === "update" || action === "addnew",
@@ -192,7 +195,7 @@ const DetailProduct = () => {
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="year">
+            <Form.Item name="year" label="Năm sản xuất">
               <Input
                 placeholder="Năm sản xuất"
                 onBlur={(e) =>
@@ -205,6 +208,7 @@ const DetailProduct = () => {
           <Col span={8}>
             <Form.Item
               name="makeId"
+              label="Nhãn hãng"
               rules={[
                 {
                   required: action === "update" || action === "addnew",
@@ -222,6 +226,7 @@ const DetailProduct = () => {
           <Col span={8}>
             <Form.Item
               name="weight"
+              label="Khối lượng"
               rules={[
                 {
                   required: action === "update" || action === "addnew",
@@ -239,7 +244,7 @@ const DetailProduct = () => {
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="operationSystem">
+            <Form.Item name="operationSystem" label="Hệ điều hành">
               <Input
                 placeholder="Hệ điều hành"
                 onBlur={(e) =>
@@ -252,6 +257,8 @@ const DetailProduct = () => {
           <Col span={8}>
             <Form.Item
               name="price"
+              label="Giá sản phẩm"
+
               rules={[
                 {
                   required: action === "update" || action === "addnew",
@@ -272,6 +279,7 @@ const DetailProduct = () => {
           <Col span={8}>
             <Form.Item
               name="stockQty"
+              label="Số lượng nhập"
               rules={[
                 {
                   required: action === "update" || action === "addnew",
@@ -290,7 +298,7 @@ const DetailProduct = () => {
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="processSpeed">
+            <Form.Item name="processSpeed" label="Tốc độ xử lý">
               <Input
                 placeholder="Tốc độ vi xử lý"
                 onBlur={(e) =>
@@ -302,7 +310,7 @@ const DetailProduct = () => {
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="originalCountry">
+            <Form.Item name="originalCountry" label="Xuất sứ">
               <Input
                 placeholder="Xuất sứ"
                 onBlur={(e) =>
@@ -313,7 +321,7 @@ const DetailProduct = () => {
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="coreQuantity">
+            <Form.Item name="coreQuantity" label="Vi xử lý">
               <Input
                 placeholder="Vi xử lí"
                 onBlur={(e) =>
@@ -324,7 +332,7 @@ const DetailProduct = () => {
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="ram">
+            <Form.Item name="ram" label="Ram">
               <Input
                 placeholder="Ram"
                 onBlur={(e) => form.setFieldValue("ram", e.target.value.trim())}
@@ -333,7 +341,7 @@ const DetailProduct = () => {
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="card">
+            <Form.Item name="card" label="Card hình">
               <Input
                 placeholder="Card hình"
                 onBlur={(e) =>
@@ -344,7 +352,7 @@ const DetailProduct = () => {
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="screenSize">
+            <Form.Item name="screenSize" label="Kích thước màn hình">
               <Input
                 placeholder="Kích thước màn hình"
                 onBlur={(e) =>
@@ -355,7 +363,7 @@ const DetailProduct = () => {
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="screenHd">
+            <Form.Item name="screenHd" label="Độ phân giải màn hình">
               <Input
                 placeholder="Độ phân giải"
                 onBlur={(e) =>
@@ -366,7 +374,7 @@ const DetailProduct = () => {
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="hardDisk">
+            <Form.Item name="hardDisk" label="Ổ cứng">
               <Input
                 placeholder="Ổ cứng"
                 onBlur={(e) =>
@@ -377,7 +385,7 @@ const DetailProduct = () => {
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="pin">
+            <Form.Item name="pin" label="Pin">
               <Input
                 placeholder="Pin"
                 onBlur={(e) => form.setFieldValue("pin", e.target.value.trim())}
@@ -386,7 +394,7 @@ const DetailProduct = () => {
             </Form.Item>
           </Col>
           <Col span={18}>
-            <Form.Item name="description">
+            <Form.Item name="description" label="Mô tả sản phẩm">
               <TextArea
                 rows={4}
                 maxLength={250}
@@ -409,7 +417,7 @@ const DetailProduct = () => {
             >
               <Form.Item>
                 <Button className="search" htmlType="submit">
-                  Save
+                  Lưu
                 </Button>
               </Form.Item>
             </Col>
@@ -444,13 +452,14 @@ const DetailProduct = () => {
                   style={{ width: "100%", height: "100%", marginRight: "4px" }}
                   alt="anh dep"
                 />
-                <CloseOutlined
+                <CloseCircleFilled
                   style={{
                     position: "absolute",
                     right: 0,
                     top: 0,
                     cursor: "pointer",
-                    color: "red",
+                    color: "rgb(3, 201, 215)",
+                    borderRadius:"5px",
                     display: action === "view" ? "none" : "block",
                   }}
                   onClick={() => handleRemoveImage(index)}
@@ -468,7 +477,7 @@ const DetailProduct = () => {
                 accept="image/png, image/gif, image/jpeg"
                 headers={{ authorization: "authorization-text" }}
               >
-                <div className="upload-image">
+                <div className="upload-image ant-menu-item-selected">
                   <UploadOutlined />
                   <span>Tải ảnh lên</span>
                 </div>

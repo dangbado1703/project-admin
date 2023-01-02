@@ -1,15 +1,13 @@
 import { Key } from "antd/es/table/interface";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import FormSearch from "../../component/DanhMuc/FormSearch";
 import FormTable from "../../component/DanhMuc/FormTable";
 import { IFormSearchDanhMuc } from "../../model/DanhMuc.model";
 import { useAppDispatch } from "../../store/hooks";
 import {
-  getName,
   getCode,
   getCreatedBy,
-  getDanhMuc,
-  getParent,
+  getDanhMuc, getName, getParent
 } from "./danhmuc.reducer";
 
 const DanhMucPage = () => {

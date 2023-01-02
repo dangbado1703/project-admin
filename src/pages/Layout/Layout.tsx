@@ -1,6 +1,7 @@
-import { LogoutOutlined } from "@ant-design/icons";
-import { Button, Card, Layout } from "antd";
-import React from "react";
+import { LogoutOutlined, MenuFoldOutlined, ShoppingCartOutlined, WechatOutlined, BellOutlined } from "@ant-design/icons";
+import { Button, Card, Layout, theme } from "antd";
+import { Header } from "antd/lib/layout/layout";
+import React, { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import MenuItems from "../../contants/Menu";
 
@@ -11,9 +12,11 @@ const LayoutMain = () => {
     localStorage.clear();
     navigate("/login");
   };
+  const [collapsed, setCollapsed] = useState(false);
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
+        theme="light"
         width={225}
         style={{
           position: "fixed",
@@ -26,7 +29,7 @@ const LayoutMain = () => {
         <div style={{ color: "white" }}>
           <Button
             icon={<LogoutOutlined />}
-            className="delete"
+            className="logout"
             style={{
               width: "100%",
               marginLeft: 0,
@@ -40,7 +43,17 @@ const LayoutMain = () => {
         </div>
       </Sider>
       <Layout>
-        <Content style={{ margin: "24px 0 0 230px" }}>
+        <Header className="header" style={{ padding: 0, background: "#fff", marginLeft: "230px" }}>
+          <div className="app-header-sticky">
+            <div><MenuFoldOutlined className="right-header" /></div>
+            <div>
+              <ShoppingCartOutlined className="right-header"/>
+              <WechatOutlined className="right-header" />
+              <BellOutlined className="right-header" />
+            </div>
+          </div>
+        </Header>
+        <Content style={{ margin: "60px 0 0 230px" }}>
           <div style={{ background: "#fff" }}>
             <Card size="small">
               <Outlet />

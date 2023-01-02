@@ -3,18 +3,15 @@ import { Popconfirm, Tag, Tooltip } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { TableRowSelection } from "antd/es/table/interface";
 import moment from "moment";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   IFormColumnsDanhMuc,
-  IFormSearchDanhMuc,
+  IFormSearchDanhMuc
 } from "../../model/DanhMuc.model";
-import { IFormColumnsStaff, IFormSearchStaff } from "../../model/Staff.model";
 import { IFormProps } from "../../model/utils";
 import { deleteDanhMuc, getDanhMuc } from "../../pages/DanhMuc/danhmuc.reducer";
 import {
-  changeAction,
-  deleteUser,
-  getUser,
+  changeAction
 } from "../../pages/Staff/staff.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonTable from "../../utils/CommonTable";
@@ -160,7 +157,7 @@ const FormTable = ({
         pageSize={size}
         setPage={setPage}
         setSize={setSize}
-        rowKey="userId"
+        rowKey="id"
       />
       <ViewModal
         isOpen={isOpen}

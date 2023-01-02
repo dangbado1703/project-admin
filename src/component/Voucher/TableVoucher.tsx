@@ -42,7 +42,7 @@ const TableVoucher = ({
   );
   const columns: ColumnsType<IFormColumnsVoucher> = [
     {
-      title: "ABC",
+      title: "Mã khuyễn mãi",
       dataIndex: "code",
     },
     {

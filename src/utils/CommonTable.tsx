@@ -76,7 +76,8 @@ const CommonTable = ({
       size="small"
       bordered
       columns={columns}
-      scroll={{ x: 1500 }}
+      // scroll={{ x: 1500 }}
+      scroll={{ y: 450,x: 1500 }}
       pagination={{
         total,
         showTotal: (total, range) =>

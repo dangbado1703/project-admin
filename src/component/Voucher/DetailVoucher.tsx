@@ -1,14 +1,16 @@
 import { Button, Col, DatePicker, Form, Input, Row } from "antd";
 import React, { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { changeAction, getDetail } from "../../pages/Voucher/voucher.reducer";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { changeAction, createVoucher, getDetail, getProduct } from "../../pages/Voucher/voucher.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   DATE_FORMAT_TYPE_DDMMYYYY,
-  DATE_FORMAT_TYPE_YYYYMMDD,
 } from "../../utils/contants";
-import moment from "moment";
 import TextArea from "antd/es/input/TextArea";
+import { path } from "../../router/path";
+import SelectCommon from "../../utils/SelectCommon";
+import { filterSelectOption, STATUS, TYPEVOUCHER,TYPE } from "../../utils/filterOptions";
+import { toast } from "react-toastify";
 
 const DetailVoucher = () => {
   const validateMessages = {
@@ -19,15 +21,25 @@ const DetailVoucher = () => {
   const { id } = useParams();
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
-  const { action, dataDetail } = useAppSelector(
+  const { action, dataProduct } = useAppSelector(
     (state) => state.voucherReducer
   );
+  const nagivate = useNavigate();
+  console.log("dataProduct = ", dataProduct);
+  useEffect(() => {
+    Promise.all([
+      dispatch(getProduct()),
+    ]);
+  }, [dispatch]);
   useEffect(() => {
     if (pathname.includes("detail")) {
       dispatch(changeAction("view"));
     }
     if (pathname.includes("update")) {
       dispatch(changeAction("update"));
+    }
+    if(pathname.includes("add")){
+      dispatch(changeAction("add"))
     }
   }, [pathname, dispatch]);
   useEffect(() => {
@@ -38,17 +50,24 @@ const DetailVoucher = () => {
         form.setFieldsValue({
           ...resPayload.data.data,
           expiredDate: resPayload.data.data.expiredDate
-            ? moment(resPayload.data.data.expiredDate).format(
-                DATE_FORMAT_TYPE_YYYYMMDD
-              )
-            : null,
         });
       }
     });
   }, [id, dispatch, form]);
   const handleSubmit = (data: any) => {
     console.log("data", data);
+    dispatch(createVoucher(data)).then(res => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        toast.success("Sửa sản phẩm thành công");
+        nagivate(path.voucher);
+      }
+    })
+    return
   };
+
+  const handleCancel=()=>{
+    nagivate(path.voucher);
+  }
   return (
     <div>
       <Form
@@ -64,7 +83,7 @@ const DetailVoucher = () => {
               label="Mã khuyến mãi"
               rules={[
                 {
-                  required: action === "update",
+                  required: action === "update"||action==="add",
                 },
               ]}
             >
@@ -79,20 +98,40 @@ const DetailVoucher = () => {
           </Col>
           <Col span={8}>
             <Form.Item
+              name="typeVoucher"
+              label="Loại khuyễn mãi"
+              rules={[
+                {
+                  required: action === "update"||action==="add",
+                },
+              ]}
+            >
+              <SelectCommon options={TYPEVOUCHER} filterOption={filterSelectOption} allowClear disabled={action === "view"}/>
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
+              name="type"
+              label="Loại giảm giá"
+            >
+              <SelectCommon options={TYPE} filterOption={filterSelectOption} allowClear disabled={action === "view"}/>
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
               name="expiredDate"
               label="Ngày hiệu lực"
               rules={[
                 {
-                  required: action === "update",
+                  required: action === "update"||action==="add",
                 },
               ]}
             >
-              <Input
+              <DatePicker
                 placeholder="Ngày hiệu lực"
-                onBlur={(e) =>
-                  form.setFieldValue("expiredDate", e.target.value.trim())
-                }
-                disabled={action === "view"}
+                format={DATE_FORMAT_TYPE_DDMMYYYY}
+                allowClear
+                className="date-picker"
               />
             </Form.Item>
           </Col>
@@ -100,11 +139,6 @@ const DetailVoucher = () => {
             <Form.Item
               name="discountPrice"
               label="Giá giảm áp dụng"
-              rules={[
-                {
-                  required: action === "update",
-                },
-              ]}
             >
               <Input
                 placeholder="Giá giảm áp dụng"
@@ -121,19 +155,19 @@ const DetailVoucher = () => {
               label="Trạng thái"
               rules={[
                 {
-                  required: action === "update",
+                  required: action === "update"||action==="add",
                 },
               ]}
             >
-              <Input
-                placeholder="Trạng thái"
-                onBlur={(e) => {
-                  form.getFieldValue("status") == 1
-                    ? form.setFieldValue("status", "Hoạt động")
-                    : form.setFieldValue("status", "Không hoạt động");
-                }}
-                disabled={action === "view"}
-              />
+              <SelectCommon options={STATUS} filterOption={filterSelectOption} allowClear/>
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              name="productId"
+              label="Sản phẩm áp dụng"
+            >
+              <SelectCommon mode='multiple' maxTagCount = 'responsive' options={dataProduct} filterOption={filterSelectOption} allowClear/>
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -157,19 +191,19 @@ const DetailVoucher = () => {
               />
             </Form.Item>
           </Col>
-          {action === "update" && (
+          {(action === "update" ||action==="add")? (
             <Col
               span={24}
               style={{ display: "flex", justifyContent: "flex-end" }}
             >
               <Form.Item>
                 <Button className="search" htmlType="submit">
-                  Save
+                  Lưu
                 </Button>
-                <Button className="delete">Cancel</Button>
+                <Button onClick={handleCancel} className="delete">Hủy</Button>
               </Form.Item>
             </Col>
-          )}
+          ):null}
         </Row>
       </Form>
     </div>

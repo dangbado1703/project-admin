@@ -78,6 +78,10 @@ const Router = () => {
           element: <DetailVoucher />,
         },
         {
+          path: path.addVoucher,
+          element: <DetailVoucher />,
+        },
+        {
           path: path.detailOrder,
           element: <DetailOrder />,
         },

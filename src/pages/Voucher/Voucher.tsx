@@ -1,10 +1,12 @@
-import { Key } from "antd/es/table/interface";
+import { Key } from "antd/lib/table/interface";
 import React, { useState, useEffect } from "react";
 import SearchVoucher from "../../component/Voucher/SearchVoucher";
 import TableVoucher from "../../component/Voucher/TableVoucher";
 import { IFormSearchVoucher } from "../../model/Voucher.model";
 import { useAppDispatch } from "../../store/hooks";
-import { getAllVoucher } from "./voucher.reducer";
+import {
+  getAllVoucher
+} from "./voucher.reducer";
 
 const Voucher = () => {
   const [page, setPage] = useState(1);

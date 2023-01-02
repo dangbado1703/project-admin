@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, isFulfilled } from "@reduxjs/toolkit";
 import { Key } from "antd/es/table/interface";
 import { toast } from "react-toastify";
+import { isDebuggerStatement } from "typescript";
 import instance from "../../contants/axios.config";
 import {
   IFormDataDanhMuc,
@@ -16,20 +17,6 @@ const initState = {
   dataParent: [],
   action: "",
 };
-
-const getDataFunc = async (type: string) => {
-  const result = await instance.get(
-    `/api/v1/product-type/suggestion?enums=${type}&keyWord=`
-  );
-  const newResult = result.data.data.map((item: any) => {
-    return {
-      label: item,
-      value: item,
-    };
-  });
-  return newResult;
-};
-
 export const getDanhMuc = createAsyncThunk(
   "DanhMuc/getDanhMuc",
   async (data: IFormSearchDanhMuc) => {
@@ -39,24 +26,58 @@ export const getDanhMuc = createAsyncThunk(
 );
 
 export const getName = createAsyncThunk("DanhMuc/getName", async () => {
-  return await getDataFunc("NAME");
+  const result = await instance.get(
+    "/api/v1/product-type/suggestion?enums=NAME&keyWord="
+  );
+  const newResult = result.data.data.map((item: any, index: number) => {
+    return {
+      value: item,
+      label: item,
+    };
+  });
+  debugger;
+  return newResult;
 });
-
 export const getCode = createAsyncThunk("DanhMuc/getCode", async () => {
-  const result = await getDataFunc("CODE");
-  return result;
+  const result = await instance.get(
+    "/api/v1/product-type/suggestion?enums=CODE&keyWord="
+  );
+  const newResult = result.data.data.map((item: any, index: number) => {
+    return {
+      value: item,
+      label: item,
+    };
+  });
+  debugger;
+  return newResult;
 });
-export const getCreatedBy = createAsyncThunk(
-  "DanhMuc/getCreatedBy",
-  async () => {
-    return await getDataFunc("CREATED_BY");
-  }
-);
+export const getCreatedBy = createAsyncThunk("DanhMuc/getCreatedBy", async () => {
+  const result = await instance.get(
+    "/api/v1/product-type/suggestion?enums=CREATED_BY&keyWord="
+  );
+  const newResult = result.data.data.map((item: any, index: number) => {
+    return {
+      value: item,
+      label: item,
+    };
+  });
+  debugger;
+  return newResult;
+});
 
 export const getParent = createAsyncThunk("DanhMuc/getParent", async () => {
-  return await getDataFunc("PARENT");
+  const result = await instance.get(
+    "/api/v1/product-type/suggestion?enums=PARENT&keyWord="
+  );
+  const newResult = result.data.data.map((item: any, index: number) => {
+    return {
+      value: item,
+      label: item,
+    };
+  });
+  debugger;
+  return newResult;
 });
-
 export const deleteDanhMuc = createAsyncThunk(
   "DanhMuc/deleteDanhMuc",
   async (id: Key[]) => {
@@ -77,6 +98,7 @@ export const createDanhMuc = createAsyncThunk(
   "DanhMuc/createDanhMuc",
   async (data: Partial<IFormDataDanhMuc>) => {
     const result = await instance.post("/api/v1/product-type/create", data);
+    debugger;
     return result;
   }
 );
@@ -91,24 +113,24 @@ const danhMucSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(getDanhMuc.fulfilled, (state, action) => {
       state.dataForm = action.payload.data.data.content;
-    });
-    builder.addMatcher(
-      isFulfilled(getCode, getName, getCreatedBy, getParent),
-      (state, action) => {
-        if (action.type === "DanhMuc/getName/fulfilled") {
-          state.dataName = action.payload;
-        }
-        if (action.type === "DanhMuc/getCode/fulfilled") {
-          state.dataCode = action.payload;
-        }
-        if (action.type === "DanhMuc/getCreatedBy/fulfilled") {
-          state.dataCreatedBy = action.payload;
-        }
-        if (action.type === "DanhMuc/getParent/fulfilled") {
-          state.dataParent = action.payload;
-        }
-      }
-    );
+    })
+    .addCase(getCode.fulfilled, (state, action) => {
+      state.dataCode = action.payload;
+    })
+
+    .addCase(getName.fulfilled, (state, action) => {
+      state.dataName = action.payload;
+    })
+    .addCase(getCreatedBy.fulfilled, (state, action) => {
+      state.dataCreatedBy = action.payload;
+    })
+    .addCase(getParent.fulfilled, (state, action) => {
+      debugger;
+      console.log("state", state);
+      console.log("action", action.payload)
+      debugger;
+      state.dataParent = action.payload;
+    })
   },
 });
 

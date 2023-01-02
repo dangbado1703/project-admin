@@ -41,74 +41,74 @@ const SearchProduct = ({ setValueSearch }: IFormProps) => {
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         <Row gutter={10}>
           <Col span={6}>
-            <CommonFormItem name="name" label="Product Name" isRequired={false}>
+            <CommonFormItem name="name" label="Tên sản phẩm" isRequired={false}>
               <SelectCommon
                 options={dataName}
                 filterOption={filterSelectOption}
-                placeholder="Product Name"
+                placeholder="Tên sản phẩm"
               />
             </CommonFormItem>
           </Col>
           <Col span={6}>
-            <CommonFormItem name="code" label="Product Code" isRequired={false}>
+            <CommonFormItem name="code" label="Mã sản phẩm" isRequired={false}>
               <SelectCommon
                 className="custom-selected"
                 options={dataCode}
                 filterOption={filterSelectOption}
                 allowClear
                 showSearch
-                placeholder="Product Code"
+                placeholder="Mã sản phẩm"
               />
             </CommonFormItem>
           </Col>
           <Col span={6}>
             <CommonFormItem
               name="fromPrice"
-              label="From Price"
+              label="Giá từ"
               isRequired={false}
             >
-              <Input placeholder="From Price" />
+              <Input className="custom-input" placeholder="Giá từ" />
             </CommonFormItem>
           </Col>
           <Col span={6}>
-            <CommonFormItem name="toPrice" label="To Price" isRequired={false}>
-              <Input placeholder="To Price" />
+            <CommonFormItem name="toPrice" label="Giá đến" isRequired={false}>
+              <Input className="custom-input" placeholder="Giá đến" />
             </CommonFormItem>
           </Col>
           <Col span={6}>
             <CommonFormItem
               name="fromStockQty"
-              label="From StockQty"
+              label="Số lượng từ"
               isRequired={false}
             >
-              <Input placeholder="From StockQty" />
+              <Input className="custom-input" placeholder="Số lượng từ" />
             </CommonFormItem>
           </Col>
           <Col span={6}>
             <CommonFormItem
               name="toStockQty"
-              label="To StockQty"
+              label="Số lượng đến"
               isRequired={false}
             >
-              <Input placeholder="To StockQty" />
+              <Input className="custom-input" placeholder="Số lượng đến" />
             </CommonFormItem>
           </Col>
           <Col span={6}>
-            <CommonFormItem name="makeId" label="Make Name" isRequired={false}>
+            <CommonFormItem name="makeId" label="Nhãn hàng" isRequired={false}>
               <SelectCommon
                 options={dataMake}
                 className="custom-selected"
                 filterOption={filterSelectOption}
                 allowClear
                 showSearch
-                placeholder="Make Name"
+                placeholder="Nhãn hàng"
               />
             </CommonFormItem>
           </Col>
           <Col span={6}>
             <CommonFormItem
               name="productTypeId"
-              label="Product Type"
+              label="Danh mục"
               isRequired={false}
             >
               <SelectCommon
@@ -117,14 +117,14 @@ const SearchProduct = ({ setValueSearch }: IFormProps) => {
                 filterOption={filterSelectOption}
                 allowClear
                 showSearch
-                placeholder="Product Type"
+                placeholder="Danh mục"
               />
             </CommonFormItem>
           </Col>
           <Col span={6}>
             <CommonFormItem
               name="created"
-              label="Created By"
+              label="Người tạo"
               isRequired={false}
             >
               <SelectCommon
@@ -133,13 +133,23 @@ const SearchProduct = ({ setValueSearch }: IFormProps) => {
                 filterOption={filterSelectOption}
                 allowClear
                 showSearch
-                placeholder="Created By"
+                placeholder="Người tạo"
               />
             </CommonFormItem>
           </Col>
-          <Col span={6}>
-            <Form.Item name="expiredDate" label="Expired Date">
+          {/* <Col span={6}>
+            <Form.Item name="expiredDate" label="">
               <DatePicker
+                format={DATE_FORMAT_TYPE_DDMMYYYY}
+                allowClear
+                className="date-picker"
+              />
+            </Form.Item>
+          </Col> */}
+          <Col span={6}>
+            <Form.Item name="fromDate" label="Ngày nhập từ">
+              <DatePicker
+                placeholder="Chọn ngày"
                 format={DATE_FORMAT_TYPE_DDMMYYYY}
                 allowClear
                 className="date-picker"
@@ -147,17 +157,9 @@ const SearchProduct = ({ setValueSearch }: IFormProps) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item name="fromDate" label="From Date">
+            <Form.Item name="toDate" label="Ngày nhập đến">
               <DatePicker
-                format={DATE_FORMAT_TYPE_DDMMYYYY}
-                allowClear
-                className="date-picker"
-              />
-            </Form.Item>
-          </Col>
-          <Col span={6}>
-            <Form.Item name="toDate" label="To Date">
-              <DatePicker
+                placeholder="Chọn ngày"
                 format={DATE_FORMAT_TYPE_DDMMYYYY}
                 allowClear
                 className="date-picker"

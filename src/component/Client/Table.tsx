@@ -49,11 +49,11 @@ const TableClient = ({
   const dispatch = useAppDispatch();
   const columns: ColumnsType<IFormColumns> = [
     {
-      title: "Username",
+      title: "Tên đăng nhập",
       dataIndex: "username",
     },
     {
-      title: "FullName",
+      title: "Họ tên",
       dataIndex: "fullName",
     },
     {
@@ -61,7 +61,7 @@ const TableClient = ({
       dataIndex: "email",
     },
     {
-      title: "Phone",
+      title: "Số điện thoại",
       dataIndex: "phone",
     },
     {

@@ -35,32 +35,32 @@ const TableProduct = ({
   );
   const columns: ColumnsType<IFormColumnsProduct> = [
     {
-      title: "Name",
+      title: "Tên sản phẩm",
       dataIndex: "name",
     },
     {
-      title: "Code",
+      title: "Mã sản phẩm",
       dataIndex: "code",
     },
     {
-      title: "Price",
+      title: "Giá",
       dataIndex: "price",
     },
     {
-      title: "Stock Quantity",
+      title: "Số lượng tồn kho",
       dataIndex: "stockQty",
     },
     {
-      title: "Make name",
+      title: "Nhãn hàng",
       dataIndex: "makeName",
     },
     {
-      title: "ProductType",
+      title: "Danh mục",
       dataIndex: "productType",
     },
 
     {
-      title: "Created By",
+      title: "Người tạo",
       dataIndex: "createdBy",
     },
     {

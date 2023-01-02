@@ -48,11 +48,11 @@ const TableStaff = ({
   };
   const columns: ColumnsType<IFormColumnsStaff> = [
     {
-      title: "Username",
+      title: "Tên đăng nhập",
       dataIndex: "username",
     },
     {
-      title: "FullName",
+      title: "Họ tên",
       dataIndex: "fullName",
     },
     {
@@ -60,7 +60,7 @@ const TableStaff = ({
       dataIndex: "email",
     },
     {
-      title: "Phone",
+      title: "Số điện thoại",
       dataIndex: "phone",
     },
     {

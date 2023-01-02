@@ -6,6 +6,7 @@ import { Key } from "antd/es/table/interface";
 const initState = {
   dataVoucher: [] as IFormDataVoucher[],
   dataDetail: {},
+  dataProduct:[],
   action: "",
   totalElements: 0,
 };
@@ -42,6 +43,28 @@ export const deleteVoucher = createAsyncThunk(
     return result;
   }
 );
+export const createVoucher = createAsyncThunk(
+  "Voucher/createVoucher",
+  async (data:any) => {
+    const result = await instance.post("/api/v1/voucher/create", data);
+    toast.success("Thêm khuyến mãi thành công");
+    return result;
+  }
+);
+export const getProduct = createAsyncThunk(
+  "Voucher/createVoucher",
+  async () => {
+    const result = await instance.get("/api/v1/voucher/product");
+    const newResult = result.data.data.map((item: any) => {
+      return {
+        value: item.id,
+        label: item.name,
+      };
+    });
+    console.log("newResult", newResult);
+    return newResult;
+  }
+);
 const voucherSlice = createSlice({
   name: "voucher",
   initialState: initState,
@@ -58,6 +81,9 @@ const voucherSlice = createSlice({
       })
       .addCase(getDetail.fulfilled, (state, action) => {
         state.dataDetail = action.payload.data.data;
+      })
+      .addCase(getProduct.fulfilled, (state, action) => {
+        state.dataProduct = action.payload;
       });
   },
 });

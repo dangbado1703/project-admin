@@ -1,13 +1,15 @@
 import { Button, Col, DatePicker, Form, Popconfirm, Row, Select } from "antd";
 import { useForm } from "antd/es/form/Form";
+import { useEffect, useState } from "react";
 import { IFormSearchDanhMuc } from "../../model/DanhMuc.model";
 import { IFormProps } from "../../model/utils";
-import { getDanhMuc } from "../../pages/DanhMuc/danhmuc.reducer";
+import { changeAction, getCode, getCreatedBy, getDanhMuc, getName, getParent } from "../../pages/DanhMuc/danhmuc.reducer";
 import { deleteUser, getUser } from "../../pages/Staff/staff.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
 import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
 import { filterSelectOption, STATUS } from "../../utils/filterOptions";
+import ViewModal from "./ViewModal";
 
 const FormSearch = ({
   setValueSearch,
@@ -20,9 +22,13 @@ const FormSearch = ({
 >) => {
   const [form] = useForm();
   const dispatch = useAppDispatch();
-  const { dataCode, dataName, dataCreatedBy, dataParent,dataForm } = useAppSelector(
+  const [isOpen, setIsOpen] = useState(false);
+  const { dataCode, dataName, dataCreatedBy, dataParent } = useAppSelector(
     (state) => state.danhMucReducer
   );
+console.log("dataCode= ", dataCode);
+console.log("dataName= ", dataName);
+console.log("dataParent= ", dataParent);
   const handleSearch = (data: any) => {
     setValueSearch(data);
   };
@@ -33,6 +39,10 @@ const FormSearch = ({
         dispatch(getDanhMuc(valueSearch));
       }
     });
+  };
+  const handleOpenAddNew = () => {
+    setIsOpen(true);
+    dispatch(changeAction("add"));
   };
   return (
     <div>
@@ -115,6 +125,7 @@ const FormSearch = ({
                 <Button htmlType="submit" className="search">
                   Tìm kiếm
                 </Button>
+                <Button className="search" onClick={handleOpenAddNew}>Thêm mới</Button>
                 <Popconfirm
                   placement="topRight"
                   title={
@@ -151,6 +162,11 @@ const FormSearch = ({
           </Col>
         </Row>
       </Form>
+      <ViewModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        valueSearch={valueSearch}
+      />
     </div>
   );
 };

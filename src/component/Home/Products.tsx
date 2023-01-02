@@ -28,7 +28,7 @@ const Products = () => {
     },
     meta: {
       type: {
-        alias: "Mã sản phẩm",
+        alias: "Tên sản phẩm",
       },
       sales: {
         alias: "Số lượng đã bán",

@@ -3,6 +3,7 @@ import { redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const instance = axios.create({
+  // baseURL: "http://admin-env.eba-fmussg3m.us-east-1.elasticbeanstalk.com",
   baseURL: "http://127.0.0.1:8081",
 });
 instance.interceptors.request.use((config: AxiosRequestConfig) => {

@@ -13,7 +13,8 @@ export const path = {
   productType: "/productType",
   voucher: "/voucher",
   voucherDetail: "/voucher/detail/:id",
-  updateVoucher: "product/update/:id",
+  addVoucher: "/voucher/add",
+  updateVoucher: "voucher/update/:id",
   detailOrder: "/order/detail/:orderId",
   notify: "/notify",
 };

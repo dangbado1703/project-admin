@@ -15,9 +15,11 @@ input[type="number"] {
 .anticon-delete {
   color: red;
 }
-
+body{
+  font-family: "Open Sans", sans-serif;
+}
 .ant-table-thead > tr > th {
-  background-color: #87d068;
+  background-color: rgb(3, 201, 215);
   color: white;
   text-align: center;
 }
@@ -38,7 +40,7 @@ input[type="number"] {
 
 .ant-btn.search {
   color: white;
-  background-color: #87d068;
+  background-color: rgb(3, 201, 215);
   width: 100px;
   height: 40px;
   border-radius: 8px;
@@ -57,9 +59,22 @@ input[type="number"] {
   margin-left: 10px;
   border: none;
 }
+.ant-btn.logout {
+  color: white;
+  background-color: rgb(3, 201, 215);
+  width: 100px;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-left: 10px;
+  border: none;
+}
 .ant-btn.search:hover,
 .ant-btn.delete:hover {
   color: white;
+}
+.ant-btn.item-menu:hover{
+  color:#000 !important
 }
 .custom-select {
   .ant-select-selector {
@@ -88,7 +103,7 @@ input[type="number"] {
 }
 
 .ant-menu-item.ant-menu-item-selected {
-  background-color: #87d068 !important;
+  background-color: rgb(3, 201, 215) !important;
   border-radius: 8px;
 }
 
@@ -103,4 +118,31 @@ input[type="number"] {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.header-sticky{
+  display: flex;
+}
+.app-header-sticky{
+  display: flex;
+  justify-content: space-between;
+}
+.header{
+  position:fixed;
+    width:100%;
+    // left:0;
+    top:0;
+    // right: 0;
+    z-index: 1000;
+}
+.right-header{
+  margin-right: 20px;
+  color:rgb(3, 201, 215);
+  font-size: 20px;
+  z-index: 1000;
+}
+
+.button-group{
+  display: flex;
+  justify-content: space-around;
 }

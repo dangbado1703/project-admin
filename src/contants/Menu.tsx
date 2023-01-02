@@ -44,7 +44,8 @@ const MenuItems = () => {
   }, [pathname]);
   return (
     <Menu
-      theme="dark"
+      className="item-menu"
+      theme="light"
       items={items}
       mode="inline"
       selectedKeys={[currentKey]}

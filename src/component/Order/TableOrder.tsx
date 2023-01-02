@@ -22,7 +22,7 @@ const TableOrder = ({ valueSearch, setPage, setSize, page, size }: Omit<IFormPro
   const { dataOrder, totalElements, isLoading } = useAppSelector(state => state.orderReducer)
   const columns: ColumnsType<IFormColumnsOrder> = [
     {
-      title: "Customer Name",
+      title: "Khách hàng",
       dataIndex: "customerName",
     },
     {
@@ -51,7 +51,7 @@ const TableOrder = ({ valueSearch, setPage, setSize, page, size }: Omit<IFormPro
       title: 'Giá trị đơn hàng',
       dataIndex: 'price',
       render(value) {
-        return <span>{value}</span>
+        return <span>{value} VND</span>
       }
     },
     {
@@ -65,7 +65,7 @@ const TableOrder = ({ valueSearch, setPage, setSize, page, size }: Omit<IFormPro
       title: 'Phí vận chuyển',
       dataIndex: 'shippingTotal',
       render(value) {
-        return <span>{value ? `$${value}` : ''}</span>
+        return <span>{value ? `$${value}` : ''} VND</span>
       }
     },
     {

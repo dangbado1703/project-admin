@@ -87,7 +87,7 @@ const DetailOrder = () => {
 
                             <span>Trạng thái:   {dataDetailOrder?.order?.status === 0 ? <span>Đang chờ</span> : ''}
                                 {dataDetailOrder?.order?.status === 1 ? <span>Chấp nhận</span> : ''}
-                                {dataDetailOrder?.order?.status !== 0 || dataDetailOrder?.order?.status !== 0 ? <span>Đã huỷ</span> : ''}</span>
+                                {dataDetailOrder?.order?.status !== 0 && dataDetailOrder?.order?.status !== 1 ? <span>Đã huỷ</span> : ''}</span>
                         </Col>
                     </Row>
                 </div>
