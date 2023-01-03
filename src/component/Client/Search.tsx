@@ -44,20 +44,20 @@ const SearchClient = ({
     <Form form={form} layout="vertical" onFinish={handleSearch}>
       <Row gutter={10}>
         <Col span={8}>
-          <CommonFormItem name="username" label="Username" isRequired={false}>
+          <CommonFormItem name="username" label="Tên đăng nhập" isRequired={false}>
             <SelectCommon
               options={dataUsername}
               filterOption={filterSelectOption}
-              placeholder="Username"
+              placeholder="Tên đăng nhập"
             />
           </CommonFormItem>
         </Col>
         <Col span={8}>
-          <CommonFormItem name="fullName" label="Full Name" isRequired={false}>
+          <CommonFormItem name="fullName" label="Họ Tên" isRequired={false}>
             <SelectCommon
               options={dataFullName}
               filterOption={filterSelectOption}
-              placeholder="Full Name"
+              placeholder="Họ tên"
             />
           </CommonFormItem>
         </Col>
@@ -71,20 +71,20 @@ const SearchClient = ({
           </CommonFormItem>
         </Col>
         <Col span={8}>
-          <CommonFormItem name="phone" label="Phone" isRequired={false}>
+          <CommonFormItem name="phone" label="Số điện thoại" isRequired={false}>
             <SelectCommon
               options={dataPhone}
               filterOption={filterSelectOption}
-              placeholder="Phone"
+              placeholder="Số điện thoại"
             />
           </CommonFormItem>
         </Col>
         <Col span={8}>
-          <Form.Item name="status" label="Status">
+          <Form.Item name="status" label="Trạng thái">
             <SelectCommon
               options={STATUS}
               filterOption={filterSelectOption}
-              placeholder="Status"
+              placeholder="Trạng thái"
             />
           </Form.Item>
         </Col>

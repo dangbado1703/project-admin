@@ -24,7 +24,7 @@ const DanhMucPage = () => {
     dispatch(getDanhMuc({ ...valueSearch, page, size }));
   }, [dispatch, valueSearch, page, size]);
   useEffect(() => {
-    Promise.any([
+    Promise.all([
       dispatch(getCode()),
       dispatch(getName()),
       dispatch(getCreatedBy()),

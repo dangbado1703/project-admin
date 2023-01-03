@@ -22,6 +22,7 @@ import {
 import { path } from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { DATE_FORMAT_TYPE_YYYYMMDD } from "../../utils/contants";
+import { STATUS } from "../../utils/filterOptions";
 import SelectCommon from "../../utils/SelectCommon";
 
 const DetailProduct = () => {
@@ -79,12 +80,12 @@ const DetailProduct = () => {
     dispatch(getDetail(id)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         const resPayload: any = res.payload;
-        const arrImg = resPayload.data.data.path.map(
-          (item: any, index: any) => {
-            return {item};
-          }
-        );
-        setImageUrl(arrImg);
+        // const arrImg = resPayload.data.data.path.map(
+        //   (item: any, index: any) => {
+        //     return {item};
+        //   }
+        // );
+        setImageUrl(resPayload.data.data.path);
         form.setFieldsValue({
           ...resPayload.data.data,
           makeId: resPayload.data.data.make.id,
@@ -105,6 +106,7 @@ const DetailProduct = () => {
       formData.append("path", item);
     });
     if (action === 'update') {
+      formData.append("id", id as string)
       dispatch(updateProduct(formData)).then(res => {
         if (res.meta.requestStatus === 'fulfilled') {
           toast.success("Sửa sản phẩm thành công");
@@ -406,13 +408,31 @@ const DetailProduct = () => {
               />
             </Form.Item>
           </Col>
+          <Col span={6}>
+            <Form.Item
+              name="status"
+              label="Trạng thái"
+              rules={[
+                {
+                  required: action === "update" || action === "addnew",
+                  message: "Trạng thái không được để trống",
+                },
+              ]}
+            >
+              <SelectCommon
+                placeholder="Trạng thái"
+                options={STATUS}
+                disabled={action === "view"}
+              />
+            </Form.Item>
+          </Col>
           {action === "addnew" ? (
             <Col
               span={6}
               style={{
                 display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
               }}
             >
               <Form.Item>
@@ -427,8 +447,8 @@ const DetailProduct = () => {
               span={6}
               style={{
                 display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
               }}
             >
               <Form.Item>

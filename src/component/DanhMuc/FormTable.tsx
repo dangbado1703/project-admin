@@ -9,10 +9,7 @@ import {
   IFormSearchDanhMuc
 } from "../../model/DanhMuc.model";
 import { IFormProps } from "../../model/utils";
-import { deleteDanhMuc, getDanhMuc } from "../../pages/DanhMuc/danhmuc.reducer";
-import {
-  changeAction
-} from "../../pages/Staff/staff.reducer";
+import { deleteDanhMuc, getDanhMuc, changeAction } from "../../pages/DanhMuc/danhmuc.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonTable from "../../utils/CommonTable";
 import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";

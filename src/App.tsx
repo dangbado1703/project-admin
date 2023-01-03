@@ -2,7 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
-import "antd/dist/reset.css";
+// import 'antd/dist/antd.css';
 import Router from "./router/Router";
 import TimeAgo from "javascript-time-ago";
 import vi from "javascript-time-ago/locale/vi.json";

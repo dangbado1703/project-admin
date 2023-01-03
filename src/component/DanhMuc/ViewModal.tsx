@@ -1,4 +1,5 @@
 import { Button, Col, Form, Input, Modal, Row } from "antd";
+import { useEffect } from "react";
 import { IFormColumnsDanhMuc, IFormSearchDanhMuc } from "../../model/DanhMuc.model";
 import { IFormPropsModal } from "../../model/utils";
 import { createDanhMuc, getDanhMuc, updateDanhMuc } from "../../pages/DanhMuc/danhmuc.reducer";
@@ -18,6 +19,11 @@ const ViewModal = ({
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
   const { action, dataParent } = useAppSelector((state) => state.danhMucReducer);
+  useEffect(() => {
+    if(valueDetail && Object.keys(valueDetail).length) {
+      form.setFieldsValue({...valueDetail})
+    }
+  }, [valueDetail, form])
   const setTitle = () => {
     if (action === "view") {
       return "Xem chi tiết";

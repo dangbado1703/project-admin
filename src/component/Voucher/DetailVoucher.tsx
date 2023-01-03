@@ -11,6 +11,7 @@ import { path } from "../../router/path";
 import SelectCommon from "../../utils/SelectCommon";
 import { filterSelectOption, STATUS, TYPEVOUCHER,TYPE } from "../../utils/filterOptions";
 import { toast } from "react-toastify";
+import dayjs from "dayjs";
 
 const DetailVoucher = () => {
   const validateMessages = {
@@ -47,9 +48,12 @@ const DetailVoucher = () => {
     dispatch(getDetail(id)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         const resPayload: any = res.payload;
+        console.log('ád',resPayload.data.data)
+        const arrProductsId = resPayload.data.data.products.map((item:any) => item.id)
         form.setFieldsValue({
           ...resPayload.data.data,
-          expiredDate: resPayload.data.data.expiredDate
+          expiredDate: resPayload.data.data.expiredDate ? dayjs(resPayload.data.data.expiredDate) : null,
+          productId: arrProductsId
         });
       }
     });

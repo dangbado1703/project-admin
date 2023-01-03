@@ -15,7 +15,7 @@ const initState = {
   dataCode: [],
   dataCreatedBy: [],
   dataParent: [],
-  action: "",
+  action: "" as "add" | "update" | 'view',
 };
 export const getDanhMuc = createAsyncThunk(
   "DanhMuc/getDanhMuc",
@@ -29,39 +29,36 @@ export const getName = createAsyncThunk("DanhMuc/getName", async () => {
   const result = await instance.get(
     "/api/v1/product-type/suggestion?enums=NAME&keyWord="
   );
-  const newResult = result.data.data.map((item: any, index: number) => {
+  const newResult = result.data.data.name.map((item: any, index: number) => {
     return {
       value: item,
       label: item,
     };
   });
-  debugger;
   return newResult;
 });
 export const getCode = createAsyncThunk("DanhMuc/getCode", async () => {
   const result = await instance.get(
     "/api/v1/product-type/suggestion?enums=CODE&keyWord="
   );
-  const newResult = result.data.data.map((item: any, index: number) => {
+  const newResult = result.data.data.code.map((item: any, index: number) => {
     return {
       value: item,
       label: item,
     };
   });
-  debugger;
   return newResult;
 });
 export const getCreatedBy = createAsyncThunk("DanhMuc/getCreatedBy", async () => {
   const result = await instance.get(
     "/api/v1/product-type/suggestion?enums=CREATED_BY&keyWord="
   );
-  const newResult = result.data.data.map((item: any, index: number) => {
+  const newResult = result.data.data.createdBy.map((item: any, index: number) => {
     return {
       value: item,
       label: item,
     };
   });
-  debugger;
   return newResult;
 });
 
@@ -69,13 +66,13 @@ export const getParent = createAsyncThunk("DanhMuc/getParent", async () => {
   const result = await instance.get(
     "/api/v1/product-type/suggestion?enums=PARENT&keyWord="
   );
-  const newResult = result.data.data.map((item: any, index: number) => {
+  
+  const newResult = result.data.data.productTypeDTOS.map((item: any, index: number) => {
     return {
-      value: item,
-      label: item,
+      value: item.id,
+      label: item.name,
     };
   });
-  debugger;
   return newResult;
 });
 export const deleteDanhMuc = createAsyncThunk(
@@ -98,7 +95,6 @@ export const createDanhMuc = createAsyncThunk(
   "DanhMuc/createDanhMuc",
   async (data: Partial<IFormDataDanhMuc>) => {
     const result = await instance.post("/api/v1/product-type/create", data);
-    debugger;
     return result;
   }
 );
