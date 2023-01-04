@@ -128,7 +128,9 @@ const DetailProduct = () => {
     setImageUrl(imageUrl.filter((item, position) => position !== index));
     setFileList(fileList.filter((item, position) => position !== index));
   };
-
+  const handleCancel=()=>{
+    return navigate(path.product)
+  }
   return (
     <div>
       <Form
@@ -426,13 +428,27 @@ const DetailProduct = () => {
               />
             </Form.Item>
           </Col>
-          {action === "addnew" ? (
-            <Col
+          <Col
               span={6}
               style={{
                 display: "flex",
                 justifyContent: "flex-start",
                 alignItems: "flex-start",
+              }}
+            >
+              <Form.Item>
+                <Button className="search" onClick={handleCancel}>
+                  Hủy
+                </Button>
+              </Form.Item>
+            </Col>
+          {action === "addnew" ? (
+            <Col
+              span={18}
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
               }}
             >
               <Form.Item>
@@ -444,11 +460,11 @@ const DetailProduct = () => {
           ) : null}
           {action === 'update' ?
             <Col
-              span={6}
+              span={18}
               style={{
                 display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
               }}
             >
               <Form.Item>

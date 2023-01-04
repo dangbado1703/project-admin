@@ -16,7 +16,7 @@ import { path } from "../../router/path";
 import { useAppSelector } from "../../store/hooks";
 import CommonFormItem from "../../utils/CommonFormItem";
 import { DATE_FORMAT_TYPE_DDMMYYYY } from "../../utils/contants";
-import { filterSelectOption } from "../../utils/filterOptions";
+import { filterSelectOption, STATUS } from "../../utils/filterOptions";
 import SelectCommon from "../../utils/SelectCommon";
 
 interface IFormProps {
@@ -166,12 +166,27 @@ const SearchProduct = ({ setValueSearch }: IFormProps) => {
               />
             </Form.Item>
           </Col>
+          <Col span={6}>
+            <CommonFormItem
+              name="status"
+              label="Trạng thái"
+              isRequired={false}
+            >
+              <SelectCommon
+                className="custom-selected"
+                options={STATUS}
+                filterOption={filterSelectOption}
+                allowClear
+                showSearch
+                placeholder="Trạng thái"
+              />
+            </CommonFormItem>
+          </Col>
           <Col
             span={24}
             style={{
               display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-end",
+              justifyContent: "space-between",
             }}
           >
             <CommonFormItem isRequired={false}>
