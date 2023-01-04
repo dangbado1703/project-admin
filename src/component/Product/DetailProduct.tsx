@@ -437,7 +437,7 @@ const DetailProduct = () => {
               }}
             >
               <Form.Item>
-                <Button className="search" onClick={handleCancel}>
+                <Button className="delete" onClick={handleCancel}>
                   Hủy
                 </Button>
               </Form.Item>

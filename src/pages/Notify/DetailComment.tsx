@@ -3,7 +3,7 @@ import { Avatar, Button, Modal, Form } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { replyComment } from "./notify.reducer";
+import { getDataNotify, replyComment } from "./notify.reducer";
 
 interface IFormProps {
   isOpen: boolean;
@@ -25,6 +25,7 @@ const DetailComment = ({ isOpen, setIsOpen }: IFormProps) => {
       if (res.meta.requestStatus === "fulfilled") {
         setIsOpen(false);
         form.resetFields();
+        dispatch(getDataNotify());
       }
     });
   };

@@ -121,10 +121,8 @@ const danhMucSlice = createSlice({
       state.dataCreatedBy = action.payload;
     })
     .addCase(getParent.fulfilled, (state, action) => {
-      debugger;
       console.log("state", state);
       console.log("action", action.payload)
-      debugger;
       state.dataParent = action.payload;
     })
   },

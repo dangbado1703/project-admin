@@ -1,3 +1,4 @@
+import { Key } from 'antd/lib/table/interface';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../../contants/axios.config";
 import { IFormDataProduct, IFormSearch } from "../../model/Product.model";
@@ -130,7 +131,13 @@ export const addNewProduct = createAsyncThunk(
     return result;
   }
 );
-
+export const deleteProduct = createAsyncThunk(
+  "product/deleteProduct",
+  async (id: Key[]) => {
+    const result = await instance.post("/api/v1/product/delete", id);
+    return result;
+  }
+);
 const productSlice = createSlice({
   name: "product",
   initialState: initState,

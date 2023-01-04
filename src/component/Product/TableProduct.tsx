@@ -4,7 +4,7 @@ import { ColumnsType, Key, TableRowSelection } from "antd/es/table/interface";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { IFormColumnsProduct } from "../../model/Product.model";
-import { changeAction } from "../../pages/Product/product.reducer";
+import { changeAction, deleteProduct, getAllProduct } from "../../pages/Product/product.reducer";
 import { path } from "../../router/path";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CommonTable from "../../utils/CommonTable";
@@ -123,6 +123,11 @@ const TableProduct = ({
   };
   const handleDelete = (id: number) => {
     console.log("id", id);
+    dispatch(deleteProduct(selectedRowKeys)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        dispatch(getAllProduct(valueSearch));
+      }
+    });
   };
   const rowSelection: TableRowSelection<any> = {
     selectedRowKeys,

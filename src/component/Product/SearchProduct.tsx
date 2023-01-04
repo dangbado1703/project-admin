@@ -184,13 +184,12 @@ const SearchProduct = ({ setValueSearch }: IFormProps) => {
           </Col>
           <Col
             span={24}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
           >
             <CommonFormItem isRequired={false}>
-              <div>
+              <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}>
                 <Button htmlType="submit" className="search">
                   Tìm kiếm
                 </Button>
