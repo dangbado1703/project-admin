@@ -48,6 +48,9 @@ const TableVoucher = ({
     {
       title: "Ngày hết hạn",
       dataIndex: "expiredDate",
+      render: (value) => {
+        return <span>{moment(value).format(DATE_FORMAT_TYPE_DDMMYYYY)}</span>
+      }
     },
     {
       title: "Giá khuyến mãi",

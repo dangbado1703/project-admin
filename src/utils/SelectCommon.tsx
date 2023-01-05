@@ -6,8 +6,8 @@ const SelectCommon = ({ ...rest }: SelectProps) => {
   return (
     <div>
       <Select
-        showArrow={false}
         {...rest}
+        showArrow={false}
         allowClear
         showSearch
         filterOption={filterSelectOption}

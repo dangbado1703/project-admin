@@ -10,6 +10,7 @@ import {
   getListCreated,
   getListMake,
   getListName,
+  getListProductMake,
   getListProductType,
 } from "./product.reducer";
 import "./products.scss";
@@ -39,11 +40,12 @@ const Product = () => {
   }, [dispatch, valueSearch, page, size]);
   useEffect(() => {
     Promise.all([
-      dispatch(getListMake()),
+
       dispatch(getListProductType()),
       dispatch(getListName()),
       dispatch(getListCode()),
       dispatch(getListCreated()),
+      dispatch(getListProductMake()),
     ]);
   }, [dispatch]);
   return (

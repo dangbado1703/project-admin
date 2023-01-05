@@ -23,7 +23,6 @@ export const getDetail = createAsyncThunk(
   "Voucher/getDetail",
   async (id: string) => {
     const result = await instance.get(`/api/v1/voucher/detail/${id}`);
-    console.log("result", result);
     return result;
   }
 );
@@ -52,7 +51,7 @@ export const createVoucher = createAsyncThunk(
   }
 );
 export const getProduct = createAsyncThunk(
-  "Voucher/createVoucher",
+  "Voucher/getProduct",
   async () => {
     const result = await instance.get("/api/v1/voucher/product");
     const newResult = result.data.data.map((item: any) => {
@@ -61,7 +60,6 @@ export const getProduct = createAsyncThunk(
         label: item.name,
       };
     });
-    console.log("newResult", newResult);
     return newResult;
   }
 );

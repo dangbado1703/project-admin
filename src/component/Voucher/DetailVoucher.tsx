@@ -26,7 +26,6 @@ const DetailVoucher = () => {
     (state) => state.voucherReducer
   );
   const nagivate = useNavigate();
-  console.log("dataProduct = ", dataProduct);
   useEffect(() => {
     Promise.all([
       dispatch(getProduct()),
@@ -59,14 +58,12 @@ const DetailVoucher = () => {
     });
   }, [id, dispatch, form]);
   const handleSubmit = (data: any) => {
-    console.log("data", data);
     dispatch(createVoucher(data)).then(res => {
       if (res.meta.requestStatus === 'fulfilled') {
-        toast.success("Sửa sản phẩm thành công");
+        console.log('hello')
         nagivate(path.voucher);
       }
     })
-    return
   };
 
   const handleCancel=()=>{
@@ -110,7 +107,7 @@ const DetailVoucher = () => {
                 },
               ]}
             >
-              <SelectCommon options={TYPEVOUCHER} filterOption={filterSelectOption} allowClear disabled={action === "view"}/>
+              <SelectCommon options={TYPEVOUCHER} disabled={action === "view"}/>
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -118,7 +115,7 @@ const DetailVoucher = () => {
               name="type"
               label="Loại giảm giá"
             >
-              <SelectCommon options={TYPE} filterOption={filterSelectOption} allowClear disabled={action === "view"}/>
+              <SelectCommon options={TYPE} disabled={action === "view"}/>
             </Form.Item>
           </Col>
           <Col span={8}>

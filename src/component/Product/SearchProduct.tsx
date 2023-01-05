@@ -28,7 +28,7 @@ interface IFormProps {
 const SearchProduct = ({ setValueSearch }: IFormProps) => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const { dataMake, dataProductType, dataCode, dataName, dataCreated } =
+  const { dataMake, dataProductType, dataCode, dataName, dataCreated, dataProductMake } =
     useAppSelector((state) => state.productReducer);
   const handleSubmit = (data: any) => {
     setValueSearch(data);
@@ -96,7 +96,7 @@ const SearchProduct = ({ setValueSearch }: IFormProps) => {
           <Col span={6}>
             <CommonFormItem name="makeId" label="Nhãn hàng" isRequired={false}>
               <SelectCommon
-                options={dataMake}
+                options={dataProductMake}
                 className="custom-selected"
                 filterOption={filterSelectOption}
                 allowClear

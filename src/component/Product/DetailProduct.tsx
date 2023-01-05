@@ -15,6 +15,7 @@ import {
   addNewProduct,
   changeAction,
   getDetail,
+  getListMake,
   getListProductMake,
   getListProductType,
   updateProduct,
@@ -33,12 +34,12 @@ const DetailProduct = () => {
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { action, dataDetail, dataProductType, dataProductMake } =
+  const { action, dataDetail, dataProductType, dataProductMake, dataMake } =
     useAppSelector((state) => state.productReducer);
   useEffect(() => {
     Promise.all([
       dispatch(getListProductType()),
-      dispatch(getListProductMake()),
+      dispatch(getListMake()),
     ]);
   }, [dispatch]);
   const getBase64 = (img: RcFile, callback: (url: string) => void) => {
@@ -164,19 +165,13 @@ const DetailProduct = () => {
             <Form.Item
               label="Mã sản phẩm"
               name="code"
-              rules={[
-                {
-                  required: action === "update" || action === "addnew",
-                  message: "Mã sản phẩm không được để trống",
-                },
-              ]}
             >
               <Input
                 placeholder="Mã sản phẩm"
                 onBlur={(e) =>
-                  form.setFieldValue("name", e.target.value.trim())
+                  form.setFieldValue("code", e.target.value.trim())
                 }
-                disabled={action === "view"}
+                disabled={action === "view"||action === "addnew"||action === "update"}
               />
             </Form.Item>
           </Col>
@@ -222,7 +217,7 @@ const DetailProduct = () => {
             >
               <SelectCommon
                 placeholder="Nhà sản xuất"
-                options={dataProductMake}
+                options={dataMake}
                 disabled={action === "view"}
               />
             </Form.Item>
@@ -309,7 +304,6 @@ const DetailProduct = () => {
                   form.setFieldValue("processSpeed", e.target.value.trim())
                 }
                 disabled={action === "view"}
-                type="number"
               />
             </Form.Item>
           </Col>
