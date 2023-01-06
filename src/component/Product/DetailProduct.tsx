@@ -96,9 +96,9 @@ const DetailProduct = () => {
     });
   }, [id, dispatch, form]);
   const handleSubmit = (data: any) => {
-    if (!fileList.length) {
-      return toast.error("Vui lòng tải ảnh lên");
-    }
+    // if (!fileList.length) {
+    //   return toast.error("Vui lòng tải ảnh lên");
+    // }
     const formData = new FormData();
     Object.keys(data).forEach((item) => {
       formData.append(item, data[item]);

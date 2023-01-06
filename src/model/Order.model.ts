@@ -90,3 +90,19 @@ export interface IFormDetailOrder {
     shippingMethod: string;
   };
 }
+
+
+export interface IFormColumnsOrderCancel extends IFormDataOrderCancel {
+  stt: number;
+}
+export interface IFormDataOrderCancel {
+  oderCancelId: number;
+  customerName: string;
+  employee: string;
+  type: string;
+  reason: string
+}
+export interface IFormSearchOrderCancel {
+  page?: number;
+  size?: number;
+}

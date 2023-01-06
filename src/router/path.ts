@@ -17,4 +17,5 @@ export const path = {
   updateVoucher: "voucher/update/:id",
   detailOrder: "/order/detail/:orderId",
   notify: "/notify",
+  orderCancel: "/order-cancel",
 };

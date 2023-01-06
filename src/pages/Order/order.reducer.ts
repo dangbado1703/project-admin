@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import instance from "../../contants/axios.config";
-import { IFormDetailOrder, IFormSearchOrder } from "../../model/Order.model";
+import { IFormDetailOrder, IFormSearchOrder, IFormSearchOrderCancel } from "../../model/Order.model";
 
 const initState = {
   dataOrder: [],
+  dataOrderCancel: [],
   isLoading: false,
   totalElements: 0,
   dataDetailOrder: {} as IFormDetailOrder,
@@ -17,6 +18,15 @@ export const getDataSearch = createAsyncThunk(
     const result = await instance.post(
       `/api/v1/order/search?page=${Number(page) - 1}&size=${size}`,
       rest
+    );
+    return result;
+  }
+);
+export const getOrderCancel = createAsyncThunk(
+  "Order/getOrderCancel",
+  async ({ page, size}: IFormSearchOrderCancel) => {
+    const result = await instance.post(
+      `/api/v1/order/cancel-list?page=${Number(page) - 1}&size=${size}`
     );
     return result;
   }
@@ -72,12 +82,10 @@ const orderSlice = createSlice({
         state.dataOrder = action.payload.data.data.content;
         state.totalElements = action.payload.data.data.totalElements;
       })
-      .addCase(getDetailOrder.fulfilled, (state, action) => {
-        state.dataDetailOrder = action.payload.data.data;
+      .addCase(getOrderCancel.fulfilled, (state, action) => {
+        state.dataOrderCancel = action.payload.data.data.content;
+        state.totalElements = action.payload.data.data.totalElements;
       })
-      .addCase(getUserOrder.fulfilled, (state, action) => {
-        state.dataUserOrder = action.payload;
-      });
   },
 });
 

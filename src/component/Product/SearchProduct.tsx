@@ -94,7 +94,7 @@ const SearchProduct = ({ setValueSearch }: IFormProps) => {
             </CommonFormItem>
           </Col>
           <Col span={6}>
-            <CommonFormItem name="makeId" label="Nhãn hàng" isRequired={false}>
+            <Form.Item name="makeId" label="Nhãn hàng">
               <SelectCommon
                 options={dataProductMake}
                 className="custom-selected"
@@ -103,13 +103,12 @@ const SearchProduct = ({ setValueSearch }: IFormProps) => {
                 showSearch
                 placeholder="Nhãn hàng"
               />
-            </CommonFormItem>
+            </Form.Item>
           </Col>
           <Col span={6}>
-            <CommonFormItem
+            <Form.Item
               name="productTypeId"
               label="Danh mục"
-              isRequired={false}
             >
               <SelectCommon
                 options={dataProductType}
@@ -119,7 +118,7 @@ const SearchProduct = ({ setValueSearch }: IFormProps) => {
                 showSearch
                 placeholder="Danh mục"
               />
-            </CommonFormItem>
+            </Form.Item>
           </Col>
           <Col span={6}>
             <CommonFormItem
