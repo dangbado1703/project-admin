@@ -125,7 +125,6 @@ const clientSlice = createSlice({
         state.dataUsername = action.payload;
       })
       .addCase(getAllEmail.fulfilled, (state, action) => {
-        debugger;
         state.dataEmail = action.payload;
       })
       .addCase(getAllPhone.fulfilled, (state, action) => {

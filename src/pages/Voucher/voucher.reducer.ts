@@ -29,7 +29,7 @@ export const getDetail = createAsyncThunk(
 
 export const updateVoucher = createAsyncThunk(
   "Voucher/updateVoucher",
-  async (data) => {
+  async (data:Partial<IFormDataVoucher>) => {
     const result = await instance.post("/api/v1/voucher/update", data);
     return result;
   }

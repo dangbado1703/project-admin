@@ -1,7 +1,7 @@
 import { Button, Col, DatePicker, Form, Input, Row } from "antd";
 import React, { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { changeAction, createVoucher, getDetail, getProduct } from "../../pages/Voucher/voucher.reducer";
+import { changeAction, createVoucher, getDetail, getProduct, updateVoucher } from "../../pages/Voucher/voucher.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   DATE_FORMAT_TYPE_DDMMYYYY,
@@ -12,6 +12,7 @@ import SelectCommon from "../../utils/SelectCommon";
 import { filterSelectOption, STATUS, TYPEVOUCHER,TYPE } from "../../utils/filterOptions";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
+import { Toast } from "react-toastify/dist/components";
 
 const DetailVoucher = () => {
   const validateMessages = {
@@ -58,12 +59,22 @@ const DetailVoucher = () => {
     });
   }, [id, dispatch, form]);
   const handleSubmit = (data: any) => {
-    dispatch(createVoucher(data)).then(res => {
-      if (res.meta.requestStatus === 'fulfilled') {
-        console.log('hello')
-        nagivate(path.voucher);
-      }
-    })
+    if (pathname.includes("update")) {
+      dispatch(updateVoucher({...data, voucherId: id })).then(res => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          toast("Cập nhật thành công")
+          nagivate(path.voucher);
+        }
+      })
+    }
+    else{
+      dispatch(createVoucher(data)).then(res => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          console.log('hello')
+          nagivate(path.voucher);
+        }
+      })
+    }
   };
 
   const handleCancel=()=>{

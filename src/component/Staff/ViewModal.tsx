@@ -2,6 +2,7 @@ import { Button, Col, DatePicker, Form, Input, Modal, Radio, Row } from "antd";
 import { useForm } from "antd/es/form/Form";
 import moment from "moment";
 import React, { useEffect } from "react";
+import { toast } from "react-toastify";
 import { IFormColumnsStaff, IFormSearchStaff } from "../../model/Staff.model";
 import { IFormPropsModal } from "../../model/utils";
 import { addNewUser, getUser, updateUser } from "../../pages/Staff/staff.reducer";
@@ -53,6 +54,7 @@ const ViewModal = ({
       dispatch(addNewUser(data)).then(res => {
         if (res.meta.requestStatus === 'fulfilled') {
           setIsOpen(false);
+          toast("Thêm người dùng thành công")
           dispatch(getUser(valueSearch));
         }
       })
